@@ -6,7 +6,7 @@ FROM node:lts-slim as dev
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends python3 && \
+    apt-get install -y --no-install-recommends python3 build-essential && \
     rm -rf /var/lib/apt/lists/*
 
 COPY package.json ./
