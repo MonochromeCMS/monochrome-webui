@@ -1,0 +1,9 @@
+{$VUE_APP_PROTOCOL}://{$VUE_APP_PROTOCOL} {
+    encode zstd gzip
+
+    header /opensearch.xml Content-Type "application/opensearchdescription+xml"
+
+    root * /srv
+    file_server
+    try_files {path} /
+}

@@ -10,7 +10,7 @@ test_exit ?= 0
 user ?= `id -u`
 dir ?= `pwd`
 
-BUILD_ARGS = `bash -c 'IFS=$$(echo -en "\n\b");for i in $$(cat .env | grep -v ^\#); do out+="--build-arg \"$$i\" " ; done; echo $$out;out=""'`
+BUILD_ARGS := `bash -c 'IFS=$$(echo -en "\n\b");for i in $$(cat .env | grep -v ^\#); do out+="--build-arg \"$$i\" " ; done; echo $$out;out=""'`
 
 .PHONY: help
 help: ## Show this help
@@ -19,16 +19,20 @@ help: ## Show this help
 # Docker specific commands
 
 .PHONY: build
+.ONESHELL: build
 build:	## Build image
 ifneq ($(native),0)
 	yarn
 	@export `grep -v '^#' .env | xargs -d '\n'`
 	yarn build
 else
+	export DOCKER_BUILDKIT=$(buildkit)
+	@args=$(BUILD_ARGS)
 ifneq ($(dev),0)
-	@DOCKER_BUILDKIT=$(buildkit) docker build $(BUILD_ARGS) --target dev -t $(tag):dev .
+	# This crap is needed because sh sucks
+	bash -c "docker build $$args --target dev -t $(tag):dev ."
 else
-	@DOCKER_BUILDKIT=$(buildkit) docker build $(BUILD_ARGS) --target $(target) -t $(tag) .
+	bash -c "docker build $$args --target $(target) -t $(tag) ."
 endif
 endif
 
@@ -41,9 +45,9 @@ ifneq ($(native),0)
 	yarn serve
 else
 ifneq ($(dev),0)
-	@docker run --rm --name monochrome-webui -p 80:80 --env-file .env -v "`pwd`/src:/app/src" $(tag):dev
+	-@docker run -ti --rm --name monochrome-webui -p 80:80 --env-file .env -v "`pwd`/src:/app/src" $(tag):dev
 else
-	@docker run --rm --name monochrome-webui -p 80:80 -p 443:443 $(tag)
+	@docker run --rm --name monochrome-webui -p 80:80 --env-file .env -p 443:443 $(tag)
 endif
 endif
 
@@ -53,7 +57,7 @@ logs:	## Read the container's logs
 
 .PHONY: sh
 sh: ## Open a shell in the running container
-	docker -ti exec monochrome-webui sh
+	docker exec -ti monochrome-webui sh
 
 # Utils
 
