@@ -6,9 +6,8 @@ FROM node:lts-slim as dev
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends python python-pip && \
-    rm -rf /var/lib/apt/lists/* && \
-    pip install --no-cache-dir -U setuptools wheel
+    apt-get install -y --no-install-recommends python3 && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY package.json ./
 COPY yarn.lock ./
