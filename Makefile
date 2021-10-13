@@ -63,7 +63,11 @@ sh: ## Open a shell in the running container
 
 .PHONY: format
 format:  ## Format project code
+ifneq ($(native),0)
+	yarn lint
+else
 	@docker run --env-file .env --rm -v "`pwd`/src:/app/src" $(tag):dev yarn lint
+endif
 
 .PHONY: secret
 secret: ## Generate a secret

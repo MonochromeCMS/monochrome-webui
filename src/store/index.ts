@@ -11,7 +11,7 @@ const ls = new SecureLS({
 
 // SecureLS will throw a tantrum if the secret changes, this prevents it
 try {
-  ls.getItem("vuex");
+  ls.get('vuex');
 } catch {
   localStorage.removeItem('vuex');
 }
