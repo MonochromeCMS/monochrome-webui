@@ -24,6 +24,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
+import Base from '@/api/Base';
 
 @Component
 export default class AdminActions extends Vue {
@@ -50,7 +51,7 @@ export default class AdminActions extends Vue {
     },
     {
       text: 'API Documentation',
-      href: '/api/docs',
+      href: `${Base.prefix}/docs`,
       target: '_blank',
     },
   ];

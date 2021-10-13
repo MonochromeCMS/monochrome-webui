@@ -1,0 +1,78 @@
+ARG BASE_IMAGE_CADDY=none
+ARG BASE_IMAGE_NGINX=none
+
+
+FROM node:lts-slim as dev
+WORKDIR /app
+COPY package.json ./
+COPY yarn.lock ./
+RUN yarn
+
+ARG VUE_APP_DOMAIN_NAME=localhost
+ARG VUE_APP_PROTOCOL=http
+ARG VUE_APP_TITLE=Monochrome
+ARG VUE_APP_MEDIA_PATH=$(VUE_APP_PROTOCOL)://$(VUE_APP_DOMAIN_NAME)/media
+ARG VUE_APP_API_PATH=$(VUE_APP_PROTOCOL)://$(VUE_APP_DOMAIN_NAME)/api
+ARG VUE_APP_DESCRIPTION
+ARG VUE_APP_SECRET
+
+COPY . .
+CMD ["yarn", "serve"]
+
+
+FROM dev as build
+RUN yarn build
+
+
+FROM $BASE_IMAGE_NGINX as nginx
+ARG BASE_IMAGE_NGINX
+ARG BUILD_DATE
+ARG IMAGE_VERSION
+ARG GIT_COMMIT
+ARG RELEASE_TAG
+
+LABEL maintainer="MonochromeCMS" \
+      org.opencontainers.image.title="Monochrome WebUI" \
+      org.opencontainers.image.authors="https://github.com/MonochromeCMS" \
+      org.opencontainers.image.url="https://github.com/MonochromeCMS/monochrome-webui/pkgs/container/monochrome-webui" \
+      org.opencontainers.image.source="https://github.com/MonochromeCMS/monochrome-webui" \
+      org.opencontainers.image.description="This image is used to start Monochrome's Vue.js WebUI in a container" \
+      base_image=$BASE_IMAGE_NGINX \
+      org.opencontainers.image.vendor="MonochromeCMS" \
+      org.opencontainers.image.created=$BUILD_DATE \
+      org.opencontainers.image.version=$IMAGE_VERSION \
+      "monochrome.git_commit"=$GIT_COMMIT \
+      "monochrome.release_tag"=$RELEASE_TAG \
+      org.opencontainers.image.licenses="AGPL-3.0"
+
+COPY ./nginx.conf /etc/nginx/nginx.conf
+WORKDIR /srv
+COPY --from=build /app/dist .
+RUN mkdir /srv/media
+
+
+FROM $BASE_IMAGE_CADDY as caddy
+ARG BASE_IMAGE_CADDY
+ARG BUILD_DATE
+ARG IMAGE_VERSION
+ARG GIT_COMMIT
+ARG RELEASE_TAG
+
+LABEL maintainer="MonochromeCMS" \
+      org.opencontainers.image.title="Monochrome WebUI" \
+      org.opencontainers.image.authors="https://github.com/MonochromeCMS" \
+      org.opencontainers.image.url="https://github.com/MonochromeCMS/monochrome-webui/pkgs/container/monochrome-webui" \
+      org.opencontainers.image.source="https://github.com/MonochromeCMS/monochrome-webui" \
+      org.opencontainers.image.description="This image is used to start Monochrome's Vue.js WebUI in a container" \
+      base_image=$BASE_IMAGE_CADDY \
+      org.opencontainers.image.vendor="MonochromeCMS" \
+      org.opencontainers.image.created=$BUILD_DATE \
+      org.opencontainers.image.version=$IMAGE_VERSION \
+      "monochrome.git_commit"=$GIT_COMMIT \
+      "monochrome.release_tag"=$RELEASE_TAG \
+      org.opencontainers.image.licenses="AGPL-3.0"
+
+COPY ./Caddyfile /etc/caddy/Caddyfile
+WORKDIR /srv
+COPY --from=build /app/dist .
+RUN mkdir /srv/media

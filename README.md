@@ -42,7 +42,6 @@ A dev setting is available to use hot reloading and format the code:
 make dev=1 format
 make dev=1 build start
 ```
-
 ### Environment variables
 ```javascript
 // Domain this UI will be served on
@@ -61,6 +60,10 @@ VUE_APP_DESCRIPTION
 // Secret used to encrypt the local storage
 VUE_APP_SECRET
 ```
+
+## Media
+Those production images can be used to serve the media handled by an API that stores it in the local FS,
+to do that simply mount the media folder on `/srv/media`.
 
 ## Tools used
 * vuetify
