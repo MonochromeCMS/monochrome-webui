@@ -56,16 +56,17 @@ jobs:
           build_date=$(date "+%F")
           echo "::set-output name=build_date::$build_date"
 
-      - name: Build and push release
-        id: docker_build_release
+      - name: Build and push nginx release
+        id: docker_build_release_nginx
         uses: docker/build-push-action@v2
         with:
           context: .
           file: .github/GHActions_Dockerfile
           platforms: ${{ env.BASE_IMAGE_PLATFORMS }}
           push: true
+          target: nginx
           build-args: |
-            BASE_IMAGE=${{ env.BASE_IMAGE }}
+            BASE_IMAGE_NGINX=${{ env.BASE_IMAGE_NGINX }}
             BUILD_DATE=${{ steps.get_release_metadata.outputs.build_date }}
             IMAGE_VERSION=${{ steps.get_release_metadata.outputs.release_version }}
             GIT_COMMIT=${{ steps.get_release_metadata.outputs.release_commit }}
@@ -78,7 +79,35 @@ jobs:
             VUE_APP_DESCRIPTION=${{ secrets.app_description }}
             VUE_APP_SECRET=${{ secrets.session_secret }}
           tags: |
-            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:latest
-            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:${{ steps.get_release_metadata.outputs.release_tag }}
+            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:nginx
+            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:${{ steps.get_release_metadata.outputs.release_tag }}-nginx
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push caddy release
+        id: docker_build_release_caddy
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: .github/GHActions_Dockerfile
+          platforms: ${{ env.BASE_IMAGE_PLATFORMS }}
+          push: true
+          target: caddy
+          build-args: |
+            BASE_IMAGE_CADDY=${{ env.BASE_IMAGE_CADDY }}
+            BUILD_DATE=${{ steps.get_release_metadata.outputs.build_date }}
+            IMAGE_VERSION=${{ steps.get_release_metadata.outputs.release_version }}
+            GIT_COMMIT=${{ steps.get_release_metadata.outputs.release_commit }}
+            RELEASE_TAG=${{ steps.get_release_metadata.outputs.release_tag }}
+            VUE_APP_DOMAIN_NAME=${{ secrets.domain_name }}
+            VUE_APP_PROTOCOL=${{ secrets.protocol }}
+            VUE_APP_TITLE=${{ secrets.app_title }}
+            VUE_APP_MEDIA_PATH=${{ secrets.media_path }}
+            VUE_APP_API_PATH=${{ secrets.api_path }}
+            VUE_APP_DESCRIPTION=${{ secrets.app_description }}
+            VUE_APP_SECRET=${{ secrets.session_secret }}
+          tags: |
+            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:caddy
+            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:${{ steps.get_release_metadata.outputs.release_tag }}-caddy
           cache-from: type=gha
           cache-to: type=gha,mode=max
