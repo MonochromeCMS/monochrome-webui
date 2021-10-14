@@ -1,4 +1,4 @@
-{$VUE_APP_PROTOCOL}://{$VUE_APP_PROTOCOL} {
+{$VUE_APP_PROTOCOL}://{VUE_APP_DOMAIN_NAME} {
     encode zstd gzip
 
     header /opensearch.xml Content-Type "application/opensearchdescription+xml"
