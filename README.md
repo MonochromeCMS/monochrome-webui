@@ -1,7 +1,7 @@
 # Monochrome
 Monochrome's WebUI, implemented with Vue.js.
 
-Most users will prefer the Monochrome full stack, which contains the API, the frontend and the backend.
+Most users will prefer the [Monochrome full stack](/MonochromeCMS/Monochrome), which contains the API, the frontend and the backend.
 
 ## Usage
 ### Makefile
@@ -9,8 +9,8 @@ A Makefile is provided with this repository, to simplify the development and usa
 ```
 help                 Show this help message
 up start             Run a container from the image, or start it natively
+build                Build image, or ./dist natively
 # Docker utils
-build                Build image, or dist natively
 logs                 Read the container's logs
 sh                   Open a shell in the running container
 # Dev utils
@@ -43,7 +43,7 @@ make dev=1 format
 make dev=1 build start
 ```
 ### Environment variables
-```javascript
+```python
 // Domain this UI will be served on
 VUE_APP_DOMAIN_NAME = "localhost"
 // Protocol this UI will be served with
