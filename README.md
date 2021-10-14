@@ -1,7 +1,7 @@
 # Monochrome
 Monochrome's WebUI, implemented with Vue.js.
 
-Most users will prefer the [Monochrome full stack](/MonochromeCMS/Monochrome), which contains the API, the frontend and the backend.
+Most users will prefer the [Monochrome full stack](https://github.com/MonochromeCMS/Monochrome), which contains the API, the frontend and the backend.
 
 ## Usage
 ### Makefile
