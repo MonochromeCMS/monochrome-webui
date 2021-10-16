@@ -43,7 +43,7 @@ make dev=1 format
 make dev=1 build start
 ```
 ### Environment variables
-```python
+```javascript
 // Domain this UI will be served on
 VUE_APP_DOMAIN_NAME = "localhost"
 // Protocol this UI will be served with
