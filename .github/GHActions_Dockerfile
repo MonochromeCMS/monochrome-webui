@@ -2,33 +2,6 @@ ARG BASE_IMAGE_CADDY=none
 ARG BASE_IMAGE_NGINX=none
 
 
-FROM node:lts-slim as dev
-WORKDIR /app
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends python3 build-essential && \
-    rm -rf /var/lib/apt/lists/*
-
-COPY package.json ./
-COPY yarn.lock ./
-RUN yarn
-
-ARG VUE_APP_DOMAIN_NAME=localhost
-ARG VUE_APP_PROTOCOL=http
-ARG VUE_APP_TITLE=Monochrome
-ARG VUE_APP_MEDIA_PATH=$(VUE_APP_PROTOCOL)://$(VUE_APP_DOMAIN_NAME)/media
-ARG VUE_APP_API_PATH=$(VUE_APP_PROTOCOL)://$(VUE_APP_DOMAIN_NAME)/api
-ARG VUE_APP_DESCRIPTION
-ARG VUE_APP_SECRET
-
-COPY . .
-CMD ["yarn", "serve"]
-
-
-FROM dev as build
-RUN yarn build
-
-
 FROM $BASE_IMAGE_NGINX as nginx
 ARG BASE_IMAGE_NGINX
 ARG BUILD_DATE
@@ -52,7 +25,7 @@ LABEL maintainer="MonochromeCMS" \
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
 WORKDIR /srv
-COPY --from=build /app/dist .
+COPY ./dist .
 RUN mkdir /srv/media
 
 
@@ -79,5 +52,5 @@ LABEL maintainer="MonochromeCMS" \
 
 COPY ./Caddyfile /etc/caddy/Caddyfile
 WORKDIR /srv
-COPY --from=build /app/dist .
+COPY ./dist .
 RUN mkdir /srv/media

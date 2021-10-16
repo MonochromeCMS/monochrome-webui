@@ -8,7 +8,7 @@ env:
   REGISTRY: ghcr.io
   BASE_IMAGE_NGINX: 'nginx:1.21-alpine'
   BASE_IMAGE_CADDY: 'caddy:2.4.5-alpine'
-  BASE_IMAGE_PLATFORMS: 'linux/amd64,linux/arm64/v8'
+  BASE_IMAGE_PLATFORMS: 'linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x'
 
 jobs:
   build-and-push-image:
@@ -56,6 +56,30 @@ jobs:
           build_date=$(date "+%F")
           echo "::set-output name=build_date::$build_date"
 
+
+      - name: Node.js setup
+        id: node-setup
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        id: node-deps
+        run: yarn
+
+      - name: Build dist folder
+        id: node-build
+        run: yarn build
+        env:
+          VUE_APP_DOMAIN_NAME: ${{ secrets.domain_name }}
+          VUE_APP_TITLE: ${{ secrets.app_title }}
+          VUE_APP_MEDIA_PATH: ${{ secrets.media_path }}
+          VUE_APP_API_PATH: ${{ secrets.api_path }}
+          VUE_APP_DESCRIPTION: ${{ secrets.app_description }}
+          VUE_APP_SECRET: ${{ secrets.session_secret }}
+          VUE_APP_PROTOCOL: ${{ secrets.protocol }}
+
       - name: Build and push nginx release
         id: docker_build_release_nginx
         uses: docker/build-push-action@v2
@@ -71,13 +95,6 @@ jobs:
             IMAGE_VERSION=${{ steps.get_release_metadata.outputs.release_version }}
             GIT_COMMIT=${{ steps.get_release_metadata.outputs.release_commit }}
             RELEASE_TAG=${{ steps.get_release_metadata.outputs.release_tag }}
-            VUE_APP_DOMAIN_NAME=${{ secrets.domain_name }}
-            VUE_APP_PROTOCOL=${{ secrets.protocol }}
-            VUE_APP_TITLE=${{ secrets.app_title }}
-            VUE_APP_MEDIA_PATH=${{ secrets.media_path }}
-            VUE_APP_API_PATH=${{ secrets.api_path }}
-            VUE_APP_DESCRIPTION=${{ secrets.app_description }}
-            VUE_APP_SECRET=${{ secrets.session_secret }}
           tags: |
             ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:nginx
             ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:${{ steps.get_release_metadata.outputs.release_tag }}-nginx
@@ -99,13 +116,6 @@ jobs:
             IMAGE_VERSION=${{ steps.get_release_metadata.outputs.release_version }}
             GIT_COMMIT=${{ steps.get_release_metadata.outputs.release_commit }}
             RELEASE_TAG=${{ steps.get_release_metadata.outputs.release_tag }}
-            VUE_APP_DOMAIN_NAME=${{ secrets.domain_name }}
-            VUE_APP_PROTOCOL=${{ secrets.protocol }}
-            VUE_APP_TITLE=${{ secrets.app_title }}
-            VUE_APP_MEDIA_PATH=${{ secrets.media_path }}
-            VUE_APP_API_PATH=${{ secrets.api_path }}
-            VUE_APP_DESCRIPTION=${{ secrets.app_description }}
-            VUE_APP_SECRET=${{ secrets.session_secret }}
           tags: |
             ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:caddy
             ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:${{ steps.get_release_metadata.outputs.release_tag }}-caddy
