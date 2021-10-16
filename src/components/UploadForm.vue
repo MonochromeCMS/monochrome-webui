@@ -76,7 +76,7 @@
       <page-input v-if="session" :session="session" v-model="pageOrder" />
 
       <div class="text-center mt-4">
-        <v-btn type="submit" block color="background" class="text--primary">
+        <v-btn :loading="loading" type="submit" block color="background" class="text--primary">
           {{ chapter ? 'Edit chapter' : 'Upload chapter' }}
         </v-btn>
       </div>
@@ -122,6 +122,8 @@ export default class UploadForm extends Vue {
   @Prop() readonly chapter!: any;
 
   groupAutocomplete: string[] = [];
+
+  loading = false;
 
   name = '';
 
@@ -189,6 +191,7 @@ export default class UploadForm extends Vue {
       return;
     }
 
+    this.loading = true;
     const config = this.authConfig;
     const response = await Upload.commit(this.session.id, chapterDraft, pageOrder, config);
 
@@ -205,9 +208,11 @@ export default class UploadForm extends Vue {
     if (response.status === 401) {
       this.$store.commit('logout');
     }
+    this.loading = false;
   }
 
   async editChapter(chapterDraft: ChapterSchema): Promise<void> {
+    this.loading = true;
     const response = await Chapter.edit(this.chapter.id, chapterDraft, this.authConfig);
 
     if (response.data) {
@@ -223,6 +228,7 @@ export default class UploadForm extends Vue {
     if (response.status === 401) {
       this.$store.commit('logout');
     }
+    this.loading = false;
   }
 
   async autocomplete(): Promise<void> {

@@ -23,7 +23,12 @@
         <v-card color="background" @click="uploadClick" :disabled="loading">
           <v-responsive :aspect-ratio="4 / 5">
             <div class="d-flex fill-height">
-              <v-progress-circular v-if="loading" :value="progress" class="ma-auto d-block" />
+              <v-progress-circular
+                v-if="loading"
+                :indeterminate="progress === 100"
+                :value="progress"
+                class="ma-auto d-block"
+              />
               <v-icon v-else x-large class="ma-auto d-block">{{ icons.mdiPlus }}</v-icon>
             </div>
           </v-responsive>
