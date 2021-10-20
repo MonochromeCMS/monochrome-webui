@@ -14,7 +14,7 @@ export default class Autocomplete extends Base {
         result.data = response.data;
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }

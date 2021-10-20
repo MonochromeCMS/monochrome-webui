@@ -33,7 +33,7 @@ export default class Auth extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }

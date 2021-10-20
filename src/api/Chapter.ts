@@ -2,6 +2,7 @@ import type { ApiResponse, Pagination } from './Base';
 import Base from './Base';
 import type { AxiosRequestConfig } from 'axios';
 import type { MangaResponse } from '@/api/Manga';
+import type { Role } from '@/api/User';
 
 export interface ChapterSchema {
   name: string;
@@ -17,6 +18,7 @@ export interface ChapterResponse extends ChapterSchema {
   mangaId: string;
   length: number;
   uploadTime: string;
+  ownerId: string;
 }
 
 export interface DetailedChapterResponse extends ChapterResponse {
@@ -27,6 +29,14 @@ type LatestChaptersResponse = Pagination<DetailedChapterResponse>;
 
 export default class Chapter extends Base {
   public static readonly router: string = '/chapter';
+
+  public static canCreate(role: Role) {
+    return ['uploader', 'admin'].includes(role);
+  }
+
+  public static canEdit(chapter: ChapterResponse, userId: string, role: Role) {
+    return role === 'admin' || (role === 'uploader' && chapter.ownerId === userId);
+  }
 
   public static async latest(limit = 10, offset = 0, delay = false) {
     const url = `?limit=${limit}&offset=${offset}`;
@@ -43,7 +53,7 @@ export default class Chapter extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -64,7 +74,7 @@ export default class Chapter extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -88,7 +98,7 @@ export default class Chapter extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -112,7 +122,7 @@ export default class Chapter extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }

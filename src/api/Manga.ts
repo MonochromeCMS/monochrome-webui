@@ -2,6 +2,7 @@ import Base from './Base';
 import type { ApiResponse, Pagination } from './Base';
 import type { ChapterResponse } from './Chapter';
 import type { AxiosRequestConfig } from 'axios';
+import type { Role } from '@/api/User';
 
 export type Status = 'ongoing' | 'completed' | 'hiatus' | 'cancelled';
 
@@ -18,12 +19,21 @@ export interface MangaResponse extends MangaSchema {
   id: string;
   version: number;
   createTime: Date;
+  ownerId: string;
 }
 
 type MangaSearchResponse = Pagination<MangaResponse>;
 
 export default class Manga extends Base {
   public static readonly router: string = '/manga';
+
+  public static canCreate(role: Role) {
+    return ['uploader', 'admin'].includes(role);
+  }
+
+  public static canEdit(manga: MangaResponse, userId: string, role: Role) {
+    return role === 'admin' || (role === 'uploader' && manga.ownerId === userId);
+  }
 
   public static async search(title: string | null = null, limit = 10, offset = 0, delay = false) {
     let url = `?limit=${limit}&offset=${offset}`;
@@ -44,7 +54,7 @@ export default class Manga extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -65,7 +75,7 @@ export default class Manga extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -86,7 +96,7 @@ export default class Manga extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -110,7 +120,7 @@ export default class Manga extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -134,7 +144,7 @@ export default class Manga extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -156,7 +166,7 @@ export default class Manga extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -187,7 +197,7 @@ export default class Manga extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }

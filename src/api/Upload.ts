@@ -16,6 +16,7 @@ export interface UploadedBlobResponse {
 export interface UploadSessionResponse extends UploadSessionSchema {
   id: string;
   blobs: UploadedBlobResponse[];
+  ownerId: string;
 }
 
 export interface CommitUploadSession {
@@ -49,7 +50,7 @@ export default class Upload extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -73,7 +74,7 @@ export default class Upload extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -121,7 +122,7 @@ export default class Upload extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -145,7 +146,7 @@ export default class Upload extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -182,7 +183,7 @@ export default class Upload extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -210,7 +211,7 @@ export default class Upload extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -232,7 +233,7 @@ export default class Upload extends Base {
         result.error = 'Upload session not found';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }

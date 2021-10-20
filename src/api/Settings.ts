@@ -1,6 +1,7 @@
 import type { ApiResponse } from './Base';
 import Base from './Base';
 import type { AxiosRequestConfig } from 'axios';
+import type { Role } from '@/api/User';
 
 export interface SettingsSchema {
   title1?: string;
@@ -10,6 +11,10 @@ export interface SettingsSchema {
 
 export default class Settings extends Base {
   public static readonly router: string = '/settings';
+
+  public static canEdit(role: Role) {
+    return role === 'admin';
+  }
 
   public static async get() {
     const response = await Settings._get('', {});
@@ -21,7 +26,7 @@ export default class Settings extends Base {
         result.data = response.data;
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -41,7 +46,7 @@ export default class Settings extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }

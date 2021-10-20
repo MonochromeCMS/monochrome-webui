@@ -2,9 +2,12 @@ import Base from './Base';
 import type { ApiResponse, Pagination } from './Base';
 import type { AxiosRequestConfig } from 'axios';
 
+export type Role = 'admin' | 'uploader' | 'user';
+
 export interface IUser {
   username: string;
   email?: string;
+  role: Role;
 }
 
 export interface UserSchema extends IUser {
@@ -13,12 +16,17 @@ export interface UserSchema extends IUser {
 
 export interface UserResponse extends IUser {
   id: string;
+  version: number;
 }
 
 export type UsersResponse = Pagination<UserResponse>;
 
 export default class User extends Base {
   public static readonly router: string = '/user';
+
+  public static canEdit(role: Role) {
+    return role === 'admin';
+  }
 
   public static async get_all(auth: AxiosRequestConfig, limit = 10, offset = 0, delay = false) {
     const url = `?limit=${limit}&offset=${offset}`;
@@ -37,7 +45,7 @@ export default class User extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -55,7 +63,7 @@ export default class User extends Base {
         result.error = 'Please log in again';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -79,7 +87,7 @@ export default class User extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -106,7 +114,7 @@ export default class User extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -133,7 +141,7 @@ export default class User extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
@@ -157,7 +165,7 @@ export default class User extends Base {
         result.error = 'The data provided is not valid';
         break;
       default:
-        result.error = response.data.detail ?? response.statusText;
+        result.error = response.data?.detail ?? response.statusText;
     }
     return result;
   }
