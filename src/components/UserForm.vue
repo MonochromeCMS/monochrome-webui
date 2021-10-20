@@ -1,7 +1,7 @@
 <template>
   <validation-observer ref="observer">
     <v-form @submit.prevent="submit">
-      <v-card color="background">
+      <v-card :color="color">
         <v-card-title> {{ user ? 'Edit' : 'Add' }} user </v-card-title>
         <v-alert type="warning" v-if="ownUser" dense class="ma-3">
           You'll be logged out after editing your own user !
@@ -35,6 +35,16 @@
               outlined
               :type="showPass ? 'text' : 'password'"
             ></v-text-field>
+            <validation-provider v-slot="{ errors }" name="Role" rules="required">
+              <v-select
+                :items="roleItems"
+                v-model="role"
+                :error-messages="errors"
+                label="Role"
+                outlined
+                :disabled="!canEditRoles"
+              ></v-select>
+            </validation-provider>
           </validation-provider>
         </v-card-text>
 
@@ -88,6 +98,8 @@ extend('required', {
 export default class UserForm extends Vue {
   @Prop() readonly user!: any;
 
+  @Prop({ type: String, default: 'background' }) readonly color!: string;
+
   @Prop(Boolean) readonly ownUser!: boolean;
 
   icons = {
@@ -105,12 +117,25 @@ export default class UserForm extends Vue {
 
   loading = false;
 
+  role = null;
+
+  roleItems = [
+    { value: 'admin', text: 'Admin' },
+    { value: 'uploader', text: 'Uploader' },
+    { value: 'user', text: 'User' },
+  ];
+
   mounted(): void {
     if (this.user) {
       this.username = this.user.username;
       this.password = this.user.password;
       this.email = this.user.email;
+      this.role = this.user.role;
     }
+  }
+
+  get canEditRoles(): boolean {
+    return User.canEdit(this.$store.getters.userRole);
   }
 
   get params(): any {
@@ -118,6 +143,7 @@ export default class UserForm extends Vue {
       username: this.username,
       password: this.password,
       email: this.email || undefined,
+      role: this.role || undefined,
     };
   }
 
@@ -146,6 +172,7 @@ export default class UserForm extends Vue {
     this.username = '';
     this.email = null;
     this.password = '';
+    this.role = null;
   }
 
   async editUser(userId: string, params: UserSchema): Promise<void> {
@@ -155,6 +182,9 @@ export default class UserForm extends Vue {
     if (response.data) {
       this.$emit('update', true);
       this.close();
+      if (this.ownUser) {
+        this.$store.commit('logout');
+      }
     } else {
       const notification = {
         context: 'Edit user',
