@@ -4,18 +4,15 @@ import type { AxiosRequestConfig } from 'axios';
 import Auth from '@/api/Auth';
 import type { TokenResponse } from '@/api/Auth';
 import User from '@/api/User';
-import type { UserResponse } from '@/api/User';
+import type { UserResponse, Role } from '@/api/User';
 import type { ApiResponse } from '@/api/Base';
 
-interface IUser {
+interface UserState {
   token: string;
   username?: string;
   email?: string;
   id?: string;
-}
-
-export interface UserState {
-  user: IUser;
+  role?: Role;
 }
 
 export interface UserLogin {
@@ -24,37 +21,40 @@ export interface UserLogin {
 }
 
 const state = (): UserState => ({
-  user: {
-    token: '',
-  },
+  token: '',
 });
 
 const mutations = {
   setToken(state: UserState, payload: TokenResponse): void {
-    state.user.token = payload.access_token;
+    state.token = payload.access_token;
   },
   logout(state: UserState): void {
-    state.user = {
-      token: '',
-    };
+    state.token = '';
   },
   updateUser(state: UserState, payload: UserResponse): void {
-    Object.assign(state.user, payload);
+    state.username = payload.username;
+    state.role = payload.role;
+    state.email = payload.email;
+    state.id = payload.id;
   },
 };
 
 const getters = {
   userId(state: UserState): string | null {
-    return state.user.id ?? null;
+    return state.id ?? null;
+  },
+  userRole(state: UserState): string | null {
+    return state.role ?? null;
   },
   isConnected(state: UserState): boolean {
-    return !!state.user.token;
+    const result = state.token && state.id;
+    return !!result;
   },
   authConfig(state: UserState): AxiosRequestConfig {
     return {
       headers: {
         Accept: '*/*',
-        Authorization: 'Bearer '.concat(state.user.token),
+        Authorization: 'Bearer '.concat(state.token),
       },
       withCredentials: true,
     };
@@ -70,7 +70,7 @@ const actions = {
 
     if (response.data) {
       commit('setToken', response.data);
-      dispatch('getUserData').then();
+      await dispatch('getUserData');
     }
     return response;
   },
