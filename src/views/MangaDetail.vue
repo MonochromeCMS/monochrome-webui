@@ -5,7 +5,7 @@
         <v-sheet rounded="lg" color="backgroundAlt">
           <v-container>
             <manga-row :loading="loading" :manga="manga" :cover="cover || ''">
-              <div v-if="isConnected || firstChapter" class="d-flex flex-wrap">
+              <div class="d-flex flex-wrap">
                 <v-btn
                   v-if="firstChapter"
                   :to="`/chapters/${firstChapter}`"
@@ -15,17 +15,22 @@
                   Start reading
                 </v-btn>
                 <v-btn
-                  v-if="isConnected"
+                  v-if="canUpload"
                   :to="`/manga/${mangaId}/upload`"
                   color="green darken-2"
                   class="ma-2"
                 >
                   Add chapter
                 </v-btn>
-                <v-btn v-if="isConnected" :to="`/manga/${mangaId}/edit`" color="info" class="ma-2">
+                <v-btn
+                  v-if="canEdit(manga)"
+                  :to="`/manga/${mangaId}/edit`"
+                  color="info"
+                  class="ma-2"
+                >
                   Edit manga
                 </v-btn>
-                <v-dialog v-if="isConnected" v-model="deleteDialog" max-width="30rem">
+                <v-dialog v-if="canEdit(manga)" v-model="deleteDialog" max-width="30rem">
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn color="error" v-bind="attrs" v-on="on" class="ma-2">
                       Delete manga
@@ -67,6 +72,8 @@ import Manga from '@/api/Manga';
 import Media from '@/api/Media';
 import type { AxiosRequestConfig } from 'axios';
 import type { MangaResponse } from '@/api/Manga';
+import type { Role } from '@/api/User';
+import Chapter from '@/api/Chapter';
 
 @Component({
   components: { MangaChapters, MangaRow },
@@ -91,8 +98,22 @@ export default class MangaDetail extends Vue {
     return null;
   }
 
-  get isConnected(): boolean {
-    return this.$store.getters.isConnected;
+  get userRole(): Role {
+    return this.$store.getters.userRole;
+  }
+
+  get userId(): Role {
+    return this.$store.getters.userId;
+  }
+
+  get canUpload(): boolean {
+    return this.$store.getters.isConnected && Chapter.canCreate(this.userRole);
+  }
+
+  canEdit(manga: MangaResponse | null): boolean {
+    return (
+      manga && this.$store.getters.isConnected && Manga.canEdit(manga, this.userId, this.userRole)
+    );
   }
 
   get authConfig(): AxiosRequestConfig {

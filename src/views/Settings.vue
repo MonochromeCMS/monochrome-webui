@@ -16,6 +16,8 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import SettingsForm from '@/components/SettingsForm.vue';
+import SettingsAPI from '@/api/Settings';
+import type { Role } from '@/api/User';
 
 @Component({
   components: { SettingsForm },
@@ -25,8 +27,12 @@ export default class Settings extends Vue {
     return this.$store.getters.isConnected;
   }
 
+  get userRole(): Role {
+    return this.$store.getters.userRole;
+  }
+
   mounted(): void {
-    if (!this.isConnected) this.$router.replace('/');
+    if (!this.isConnected || !SettingsAPI.canEdit(this.userRole)) this.$router.replace('/');
   }
 }
 </script>

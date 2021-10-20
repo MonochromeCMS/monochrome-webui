@@ -55,6 +55,7 @@ import User from '@/api/User';
 import { mdiPlus } from '@mdi/js';
 import type { UserResponse } from '@/api/User';
 import type { AxiosRequestConfig } from 'axios';
+import type { Role } from '@/api/User';
 
 @Component({
   components: { UsersList, UserForm },
@@ -78,6 +79,10 @@ export default class About extends Vue {
 
   get isConnected(): boolean {
     return this.$store.getters.isConnected;
+  }
+
+  get userRole(): Role {
+    return this.$store.getters.userRole;
   }
 
   get authConfig(): AxiosRequestConfig {
@@ -121,7 +126,7 @@ export default class About extends Vue {
   }
 
   mounted(): void {
-    if (!this.isConnected) {
+    if (!this.isConnected || !User.canEdit(this.userRole)) {
       this.$router.replace('/');
     } else {
       this.getUsers();

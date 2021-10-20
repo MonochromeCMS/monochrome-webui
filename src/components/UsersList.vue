@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <v-row class="user-row text--primary" align="center">
+      <v-col class="text-center text-h5"> Role </v-col>
       <v-col class="text-center text-h5"> Username </v-col>
       <v-col class="text-center text-h5 hidden-sm-and-down"> Email </v-col>
       <v-col class="text-center text-h5"> Actions </v-col>
@@ -21,6 +22,9 @@
       v-for="(item, index) in users"
       :key="index"
     >
+      <v-col class="text-center text-body-1 first-capital">
+        {{ item.role }}
+      </v-col>
       <v-col class="text-center text-body-1">
         {{ item.username }}
       </v-col>
@@ -68,6 +72,10 @@ export default class UsersList extends Vue {
   &:last-child {
     border-radius: 0 0 0.5rem 0.5rem;
   }
+}
+
+.first-capital::first-letter {
+  text-transform: capitalize;
 }
 
 .theme--dark {

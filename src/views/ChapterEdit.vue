@@ -15,13 +15,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Watch } from 'vue-property-decorator';
 import MangaRow from '@/components/MangaRow.vue';
 import UploadForm from '@/components/UploadForm.vue';
 import Chapter from '@/api/Chapter';
 import Media from '@/api/Media';
-import type { DetailedChapterResponse } from '@/api/Chapter';
+import type { DetailedChapterResponse, ChapterResponse } from '@/api/Chapter';
 import type { MangaResponse } from '@/api/Manga';
+import type { Role } from '@/api/User';
 
 @Component({
   components: { MangaRow, UploadForm },
@@ -47,6 +48,14 @@ export default class About extends Vue {
     }
   }
 
+  get userId(): string {
+    return this.$store.getters.userId;
+  }
+
+  get userRole(): Role {
+    return this.$store.getters.userRole;
+  }
+
   async getChapter(): Promise<void> {
     const response = await Chapter.get(this.chapterId);
 
@@ -60,6 +69,19 @@ export default class About extends Vue {
         color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
+    }
+  }
+
+  @Watch('chapter')
+  async onChapterUpdate(chapter: ChapterResponse) {
+    if (!Chapter.canEdit(chapter, this.userId, this.userRole)) {
+      const notification = {
+        context: 'Edit chapter',
+        message: "You aren't allowed to edit this chapter",
+        color: 'error',
+      };
+      await this.$store.dispatch('pushNotification', notification);
+      await this.$router.replace('/');
     }
   }
 

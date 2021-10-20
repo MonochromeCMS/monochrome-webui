@@ -18,9 +18,11 @@
 import { Vue, Component } from 'vue-property-decorator';
 import MangaRow from '@/components/MangaRow.vue';
 import UploadForm from '@/components/UploadForm.vue';
-import type { MangaResponse } from '@/api/Manga';
 import Manga from '@/api/Manga';
 import Media from '@/api/Media';
+import Chapter from '@/api/Chapter';
+import type { MangaResponse } from '@/api/Manga';
+import type { Role } from '@/api/User';
 
 @Component({
   components: { MangaRow, UploadForm },
@@ -44,6 +46,10 @@ export default class ChapterUpload extends Vue {
     return this.$store.getters.isConnected;
   }
 
+  get userRole(): Role {
+    return this.$store.getters.userRole;
+  }
+
   async getManga(): Promise<void> {
     const response = await Manga.get(this.mangaId);
 
@@ -60,7 +66,7 @@ export default class ChapterUpload extends Vue {
   }
 
   mounted(): void {
-    if (!this.isConnected) {
+    if (!this.isConnected || !Chapter.canCreate(this.userRole)) {
       this.$router.replace('/');
     } else {
       this.getManga();

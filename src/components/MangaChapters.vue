@@ -41,9 +41,9 @@
             </v-col>
           </v-row>
         </router-link>
-        <v-menu v-if="isConnected" offset-y close-on-content-click>
+        <v-menu v-if="canEdit(item)" offset-y close-on-content-click>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn icon v-on="on" v-bind="attrs" class="mr-1" aria-label="More options">
+            <v-btn tile icon v-on="on" v-bind="attrs" class="mr-1" aria-label="More options">
               <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
             </v-btn>
           </template>
@@ -70,8 +70,10 @@
 import { Vue, Component, Prop, Watch, VModel } from 'vue-property-decorator';
 import ChapterDelete from '@/components/ChapterDelete.vue';
 import Manga from '@/api/Manga';
+import Chapter from '@/api/Chapter';
 import { mdiDotsVertical } from '@mdi/js';
 import type { ChapterResponse } from '@/api/Chapter';
+import type { Role } from '@/api/User';
 
 @Component({
   components: { ChapterDelete },
@@ -104,8 +106,16 @@ export default class MangaChapters extends Vue {
     return this.chapters.slice(start, start + this.limit);
   }
 
-  get isConnected(): boolean {
-    return this.$store.getters.isConnected;
+  get userId(): string {
+    return this.$store.getters.userId;
+  }
+
+  get userRole(): Role {
+    return this.$store.getters.userRole;
+  }
+
+  canEdit(chapter: ChapterResponse): boolean {
+    return Chapter.canEdit(chapter, this.userId, this.userRole);
   }
 
   popChapter(index: number): void {

@@ -15,7 +15,7 @@
       <v-tab v-if="!isConnected" to="/login" class="login-tab"> Login </v-tab>
       <v-menu v-else offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-tab v-on="on" v-bind="attrs" class="login-tab"> Admin </v-tab>
+          <v-tab v-on="on" v-bind="attrs" class="login-tab"> {{ userRole }} </v-tab>
         </template>
 
         <admin-actions :left="true" />
@@ -43,7 +43,7 @@
         <v-tab v-if="!isConnected" to="/login" class="login-tab"> Login </v-tab>
         <v-menu v-else offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-tab v-on="on" v-bind="attrs" class="login-tab"> Admin </v-tab>
+            <v-tab v-on="on" v-bind="attrs" class="login-tab"> {{ userRole }} </v-tab>
           </template>
 
           <admin-actions :left="true" />
@@ -57,6 +57,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import AdminActions from '@/components/AdminActions.vue';
 import { mdiMenu } from '@mdi/js';
+import type { Role } from '@/api/User';
 
 @Component({
   components: { AdminActions },
@@ -91,6 +92,10 @@ export default class NavBar extends Vue {
 
   get isConnected(): boolean {
     return this.$store.getters.isConnected;
+  }
+
+  get userRole(): Role {
+    return this.$store.getters.userRole;
   }
 
   get settings(): any {

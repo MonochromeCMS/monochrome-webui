@@ -16,17 +16,23 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import MangaForm from '@/components/MangaForm.vue';
+import Manga from '@/api/Manga';
+import type { Role } from '@/api/User';
 
 @Component({
   components: { MangaForm },
 })
 export default class MangaCreate extends Vue {
-  get isConnected(): boolean {
-    return this.$store.getters.isConnected;
+  get userRole(): Role {
+    return this.$store.getters.userRole;
+  }
+
+  get canCreate(): boolean {
+    return this.$store.getters.isConnected && Manga.canCreate(this.userRole);
   }
 
   mounted(): void {
-    if (!this.isConnected) this.$router.replace('/');
+    if (!this.canCreate) this.$router.replace('/');
   }
 }
 </script>
