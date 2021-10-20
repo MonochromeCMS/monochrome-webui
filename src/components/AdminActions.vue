@@ -25,6 +25,17 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import Base from '@/api/Base';
+import type { Role } from '@/api/User';
+import User from '@/api/User';
+import Settings from '@/api/Settings';
+import Manga from '@/api/Manga';
+
+interface Item {
+  text: string;
+  to?: string;
+  href?: string;
+  target?: string;
+}
 
 @Component
 export default class AdminActions extends Vue {
@@ -32,28 +43,49 @@ export default class AdminActions extends Vue {
 
   selectedItem = null;
 
-  items = [
-    {
-      text: 'Create manga',
-      to: '/manga/new',
-    },
-    {
-      text: 'Handle users',
-      to: '/users',
-    },
-    {
-      text: 'Customize website',
-      to: '/settings',
-    },
-    {
-      text: 'Logout',
-      to: '/logout',
-    },
-    {
-      text: 'API Documentation',
-      href: `${Base.prefix}/docs`,
-      target: '_blank',
-    },
-  ];
+  get userRole(): Role {
+    return this.$store.getters.userRole;
+  }
+
+  get items(): Item[] {
+    const result: Item[] = [];
+    if (Manga.canCreate(this.userRole))
+      result.push({
+        text: 'Create manga',
+        to: '/manga/new',
+      });
+
+    result.push(
+      User.canEdit(this.userRole)
+        ? {
+            text: 'Handle users',
+            to: '/users',
+          }
+        : {
+            text: 'My user',
+            to: '/users/me',
+          },
+    );
+
+    if (Settings.canEdit(this.userRole))
+      result.push({
+        text: 'Customize website',
+        to: '/settings',
+      });
+
+    result.push(
+      {
+        text: 'Logout',
+        to: '/logout',
+      },
+      {
+        text: 'API Documentation',
+        href: `${Base.prefix}/docs`,
+        target: '_blank',
+      },
+    );
+
+    return result;
+  }
 }
 </script>
