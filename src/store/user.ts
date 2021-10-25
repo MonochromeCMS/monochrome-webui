@@ -13,6 +13,7 @@ interface UserState {
   email?: string;
   id?: string;
   role?: Role;
+  version?: number;
 }
 
 export interface UserLogin {
@@ -22,6 +23,11 @@ export interface UserLogin {
 
 const state = (): UserState => ({
   token: '',
+  username: undefined,
+  role: undefined,
+  email: undefined,
+  id: undefined,
+  version: undefined,
 });
 
 const mutations = {
@@ -30,12 +36,18 @@ const mutations = {
   },
   logout(state: UserState): void {
     state.token = '';
+    state.username = undefined;
+    state.role = undefined;
+    state.email = undefined;
+    state.id = undefined;
+    state.version = undefined;
   },
   updateUser(state: UserState, payload: UserResponse): void {
     state.username = payload.username;
     state.role = payload.role;
     state.email = payload.email;
     state.id = payload.id;
+    state.version = payload.version;
   },
 };
 
