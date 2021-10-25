@@ -1,8 +1,7 @@
 <template>
-  <v-dialog v-model="dialog" max-width="30rem" persistent>
+  <v-dialog v-model="dialog" max-width="30rem">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-        :disabled="disabled"
         class="mx-2"
         width="3rem"
         color="error"
@@ -41,7 +40,7 @@ import type { AxiosRequestConfig } from 'axios';
 export default class UserDeleteButton extends Vue {
   @Prop() readonly user!: any;
 
-  @Prop(Boolean) readonly disabled!: boolean;
+  @Prop(Boolean) readonly ownUser!: boolean;
 
   icons = {
     mdiDelete,
@@ -67,6 +66,9 @@ export default class UserDeleteButton extends Vue {
     if (response.data) {
       this.$emit('update', true);
       this.dialog = false;
+      if (this.ownUser) {
+        this.$store.commit('logout');
+      }
     } else {
       const notification = {
         context: 'Delete user',
