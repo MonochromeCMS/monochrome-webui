@@ -1,49 +1,71 @@
 <template>
-  <v-container>
-    <v-row class="user-row text--primary" align="center">
-      <v-col class="text-center text-h5"> Role </v-col>
-      <v-col class="text-center text-h5"> Username </v-col>
-      <v-col class="text-center text-h5 hidden-sm-and-down"> Email </v-col>
-      <v-col class="text-center text-h5"> Actions </v-col>
-    </v-row>
-    <v-row v-if="loading" class="user-row text--primary" align="center">
-      <v-col>
-        <v-skeleton-loader type="heading" class="d-flex justify-center" />
-      </v-col>
-      <v-col>
-        <v-skeleton-loader type="heading" class="d-flex justify-center" />
-      </v-col>
-      <v-skeleton-loader width="33%" type="button,button" class="d-flex justify-space-around" />
-    </v-row>
-    <v-row
-      v-else
-      class="user-row text--primary"
-      align="center"
-      v-for="(item, index) in users"
-      :key="index"
-    >
-      <v-col class="text-center text-body-1 first-capital">
-        {{ item.role }}
-      </v-col>
-      <v-col class="text-center text-body-1">
-        {{ item.username }}
-      </v-col>
-      <v-col class="text-center text-body-1 hidden-sm-and-down">
-        {{ item.email }}
-      </v-col>
-      <v-col class="text-center text-body-1 d-flex justify-center">
-        <user-edit-button :user="item" :ownUser="userId === item.id" @update="update" />
-        <user-delete-button :user="item" :disabled="userId === item.id" @update="update" />
-      </v-col>
-    </v-row>
-    <slot />
-  </v-container>
+  <v-simple-table class="mb-4">
+    <template v-slot:default>
+      <thead>
+        <tr class="user-row">
+          <th
+            class="text-center text--primary text-h5"
+            v-for="(val, i) in headers"
+            :key="i"
+            :class="val.class"
+          >
+            {{ val.title }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="l in loading ? limit : 0" class="user-row" :key="l">
+          <td v-for="i in headers.length - 2" :key="i">
+            <v-skeleton-loader type="heading" class="d-flex justify-center" />
+          </td>
+          <td class="hidden-sm-and-down">
+            <v-skeleton-loader type="heading" class="d-flex justify-center" />
+          </td>
+          <td>
+            <v-skeleton-loader
+              width="150px"
+              type="button,button"
+              class="d-flex justify-space-around mx-auto"
+            />
+          </td>
+        </tr>
+        <tr
+          class="user-row text-center text-body-1 text--primary"
+          v-for="(item, i) in users"
+          :key="i"
+        >
+          <td class="first-capital">{{ item.role }}</td>
+          <td>
+            <div class="d-flex align-center">
+              <v-img
+                :src="avatar(item.id, item.version)"
+                :lazy-src="defAvatar"
+                width="1.5rem"
+                height="1.5rem"
+                class="rounded-circle"
+              />
+              <div style="width: 100%">
+                {{ item.username }}
+              </div>
+            </div>
+          </td>
+          <td class="hidden-sm-and-down ellipsis email">{{ item.email }}</td>
+          <td class="d-flex justify-center align-center">
+            <user-edit-button :user="item" :ownUser="userId === item.id" @update="update" />
+            <user-delete-button :user="item" :ownUser="userId === item.id" @update="update" />
+          </td>
+        </tr>
+        <slot />
+      </tbody>
+    </template>
+  </v-simple-table>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
 import UserEditButton from '@/components/UserEditButton.vue';
 import UserDeleteButton from '@/components/UserDeleteButton.vue';
+import Media from '@/api/Media';
 
 @Component({
   components: { UserDeleteButton, UserEditButton },
@@ -51,10 +73,34 @@ import UserDeleteButton from '@/components/UserDeleteButton.vue';
 export default class UsersList extends Vue {
   @Prop() readonly users!: any[];
 
+  @Prop(Number) readonly limit!: number;
+
   @Prop(Boolean) readonly loading!: boolean;
+
+  defAvatar = Media.defaultAvatar;
+
+  headers = [
+    {
+      title: 'Role',
+    },
+    {
+      title: 'Username',
+    },
+    {
+      title: 'Email',
+      class: 'hidden-sm-and-down',
+    },
+    {
+      title: 'Actions',
+    },
+  ];
 
   get userId(): string {
     return this.$store.getters.userId;
+  }
+
+  avatar(userId: string, version: number): string {
+    return Media.avatar(userId, version);
   }
 
   @Emit('update')
@@ -65,13 +111,8 @@ export default class UsersList extends Vue {
 </script>
 
 <style lang="scss">
-.user-row {
-  &:first-child {
-    border-radius: 0.5rem 0.5rem 0 0;
-  }
-  &:last-child {
-    border-radius: 0 0 0.5rem 0.5rem;
-  }
+.v-data-table__wrapper {
+  border-radius: 0.5rem;
 }
 
 .first-capital::first-letter {
@@ -89,5 +130,13 @@ export default class UsersList extends Vue {
     background-color: #eeeeee;
     border-bottom: white 0.2rem solid;
   }
+}
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.email {
+  max-width: 13rem;
 }
 </style>
