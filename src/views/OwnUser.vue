@@ -7,7 +7,7 @@
           :own-user="true"
           :user="user"
           @close="goBack"
-          @update="logout"
+          @update="updateUser"
         />
       </v-col>
     </v-row>
@@ -32,12 +32,12 @@ export default class About extends Vue {
     return this.$store.getters.isConnected;
   }
 
-  goBack(): void {
-    this.$router.go(-1);
+  updateUser(): void {
+    this.$store.dispatch('getUserData');
   }
 
-  logout(): void {
-    this.$store.commit('logout');
+  goBack(): void {
+    this.$router.go(-1);
   }
 
   mounted(): void {
