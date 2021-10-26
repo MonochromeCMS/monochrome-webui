@@ -5,10 +5,11 @@
         <v-card rounded="lg" color="backgroundAlt" elevation="0" class="pa-4">
           <v-card-title class="justify-center lemon-milk"> HANDLE USERS </v-card-title>
           <v-card-text>
-            <users-list :loading="loading" :users="users" @update="getUsers">
-              <v-row class="user-row" v-if="page >= pageAmount">
-                <v-col cols="12">
-                  <v-dialog v-model="addDialog" max-width="30rem" persistent>
+            <user-filter v-model="filters" @update="getUsers" />
+            <users-list :loading="loading" :users="users" :limit="limit" @update="getUsers">
+              <tr class="user-row" v-if="users.length < limit && !loading">
+                <td colspan="4">
+                  <v-dialog v-model="addDialog" max-width="30rem">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
                         tile
@@ -29,17 +30,17 @@
                       @update="getUsers"
                     />
                   </v-dialog>
-                </v-col>
-              </v-row>
-              <v-row class="user-row" v-if="pageAmount > 1">
-                <v-pagination
-                  class="mx-auto pb-4"
-                  color="backgroundAlt text--primary"
-                  v-model="page"
-                  :length="pageAmount"
-                ></v-pagination>
-              </v-row>
+                </td>
+              </tr>
             </users-list>
+            <v-row cols="12" v-if="pageAmount > 1">
+              <v-pagination
+                class="mx-auto pb-4"
+                color="background text--primary"
+                v-model="page"
+                :length="pageAmount"
+              ></v-pagination>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
@@ -56,11 +57,12 @@ import { mdiPlus } from '@mdi/js';
 import type { UserResponse } from '@/api/User';
 import type { AxiosRequestConfig } from 'axios';
 import type { Role } from '@/api/User';
+import UserFilter from '@/components/UserFilter.vue';
 
 @Component({
-  components: { UsersList, UserForm },
+  components: { UserFilter, UsersList, UserForm },
 })
-export default class About extends Vue {
+export default class Users extends Vue {
   icons = {
     mdiPlus,
   };
@@ -76,6 +78,8 @@ export default class About extends Vue {
   loading = true;
 
   addDialog = false;
+
+  filters = {};
 
   get isConnected(): boolean {
     return this.$store.getters.isConnected;
@@ -105,7 +109,7 @@ export default class About extends Vue {
   async getUsers(): Promise<void> {
     let config = this.authConfig;
 
-    const response = await User.get_all(config, this.limit, this.offset, this.loading);
+    const response = await User.search(config, this.filters, this.limit, this.offset);
 
     if (response.data) {
       this.total = response.data.total;
