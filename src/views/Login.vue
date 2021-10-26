@@ -6,6 +6,10 @@
           <v-card-title class="justify-center lemon-milk">LOGIN</v-card-title>
           <v-card-text>
             <login-form />
+            <v-divider class="my-4" />
+            <router-link to="/register" class="text-decoration-none subtitle-1 d-block text-center">
+              Create a new account
+            </router-link>
           </v-card-text>
         </v-card>
       </v-col>
