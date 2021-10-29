@@ -1,13 +1,13 @@
 <template>
   <v-container>
     <v-row>
-      <v-col v-if="isConnected" lg="2" class="hidden-md-and-down">
+      <v-col v-if="isConnected" lg="3" class="hidden-md-and-down">
         <v-sheet rounded="lg" color="backgroundAlt pa-1">
           <admin-actions :left="false" />
         </v-sheet>
       </v-col>
 
-      <v-col cols="12" md="8" :lg="isConnected ? 6 : 8">
+      <v-col cols="12" md="8" :lg="isConnected ? 5 : 8">
         <v-sheet rounded="lg" color="backgroundAlt">
           <latest-chapters />
         </v-sheet>
