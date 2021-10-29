@@ -12,6 +12,7 @@
       <v-tab v-for="link in links" :key="link.text" :to="link.to">
         {{ link.text }}
       </v-tab>
+      <locales-tab />
       <v-tab v-if="!isConnected" to="/login" class="login-tab"> Login </v-tab>
       <v-menu v-else offset-y>
         <template v-slot:activator="{ on, attrs }">
@@ -40,7 +41,8 @@
         <v-tab v-for="link in links" :key="link.text" :to="link.to">
           {{ link.text }}
         </v-tab>
-        <v-tab v-if="!isConnected" to="/login" class="login-tab"> Login </v-tab>
+        <locales-tab />
+        <v-tab v-if="!isConnected" to="/login"> Login </v-tab>
         <v-menu v-else offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-tab v-on="on" v-bind="attrs" class="login-tab"> {{ userRole }} </v-tab>
@@ -58,16 +60,17 @@ import { Vue, Component } from 'vue-property-decorator';
 import AdminActions from '@/components/AdminActions.vue';
 import { mdiMenu } from '@mdi/js';
 import type { Role } from '@/api/User';
+import LocalesTab from '@/components/LocalesTab.vue';
 
 @Component({
-  components: { AdminActions },
+  components: { LocalesTab, AdminActions },
 })
 export default class NavBar extends Vue {
   icons = {
     mdiMenu,
   };
 
-  tabs = '/';
+  tabs = null;
 
   links = [
     {
@@ -83,8 +86,6 @@ export default class NavBar extends Vue {
       to: '/about',
     },
   ];
-
-  drawer = false;
 
   get reader(): boolean {
     return this.$route.name === 'ChapterReader';
@@ -116,7 +117,6 @@ export default class NavBar extends Vue {
 }
 
 .login-tab {
-  margin-left: auto;
   margin-right: 0 !important;
 }
 </style>
