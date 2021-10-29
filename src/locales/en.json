@@ -1,0 +1,11 @@
+{
+  "roles": {
+    "admin": "admin",
+    "uploader": "uploader",
+    "user": "user"
+  },
+  "warning": "Warning!",
+  "warningBoldMessage": "This action can't be undone!",
+  "cancel": "Cancel",
+  "delete": "Delete"
+}

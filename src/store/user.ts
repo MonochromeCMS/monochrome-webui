@@ -7,6 +7,8 @@ import User from '@/api/User';
 import type { UserResponse, Role } from '@/api/User';
 import type { ApiResponse } from '@/api/Base';
 
+import i18n from '@/i18n';
+
 interface UserState {
   token: string;
   username?: string;
@@ -57,6 +59,9 @@ const getters = {
   },
   userRole(state: UserState): string | null {
     return state.role ?? null;
+  },
+  displayUserRole(state: UserState): string | null {
+    return state.role ? i18n.tc(`roles.${state.role}`) : null;
   },
   isConnected(state: UserState): boolean {
     const result = state.token && state.id;

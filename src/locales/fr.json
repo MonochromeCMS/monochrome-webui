@@ -1,0 +1,11 @@
+{
+  "roles": {
+    "admin": "administrateur",
+    "uploader": "éditeur",
+    "user": "utilisateur"
+  },
+  "warning": "Attention !",
+  "warningBoldMessage": "Cette action ne peut être annulée!",
+  "cancel": "Annuler",
+  "delete": "Supprimer"
+}
