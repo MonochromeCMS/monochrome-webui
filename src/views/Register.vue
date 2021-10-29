@@ -2,7 +2,13 @@
   <v-container>
     <v-row>
       <v-col cols="12" md="10" lg="8" class="mx-auto">
-        <user-form color="backgroundAlt" :own-user="false" :register="true" @update="goToLogin" />
+        <user-form
+          color="backgroundAlt"
+          :own-user="false"
+          :register="true"
+          @close="goToLogin"
+          @update="notification"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -26,14 +32,16 @@ export default class About extends Vue {
     return this.$store.getters.isConnected;
   }
 
-  goToLogin(): void {
+  notification(): void {
     const notification = {
       context: 'Register',
       message: 'Account created successfully',
       color: 'success',
     };
     this.$store.dispatch('pushNotification', notification);
+  }
 
+  goToLogin(): void {
     this.$router.push('/login');
   }
 
