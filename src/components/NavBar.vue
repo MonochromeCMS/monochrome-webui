@@ -13,10 +13,10 @@
         {{ link.text }}
       </v-tab>
       <locales-tab />
-      <v-tab v-if="!isConnected" to="/login" class="login-tab"> Login </v-tab>
+      <v-tab v-if="!isConnected" to="/login" class="login-tab">{{ $t('login') }}</v-tab>
       <v-menu v-else offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-tab v-on="on" v-bind="attrs" class="login-tab"> {{ userRole }} </v-tab>
+          <v-tab v-on="on" v-bind="attrs" class="login-tab"> {{ displayUserRole }} </v-tab>
         </template>
 
         <admin-actions :left="true" />
@@ -45,7 +45,7 @@
         <v-tab v-if="!isConnected" to="/login"> Login </v-tab>
         <v-menu v-else offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-tab v-on="on" v-bind="attrs" class="login-tab"> {{ userRole }} </v-tab>
+            <v-tab v-on="on" v-bind="attrs" class="login-tab"> {{ displayUserRole }} </v-tab>
           </template>
 
           <admin-actions :left="true" />
@@ -74,15 +74,15 @@ export default class NavBar extends Vue {
 
   links = [
     {
-      text: 'Home',
+      text: this.$t('home'),
       to: '/',
     },
     {
-      text: 'Manga',
+      text: this.$t('manga'),
       to: '/manga',
     },
     {
-      text: 'About',
+      text: this.$t('about'),
       to: '/about',
     },
   ];
@@ -97,6 +97,10 @@ export default class NavBar extends Vue {
 
   get userRole(): Role {
     return this.$store.getters.userRole;
+  }
+
+  get displayUserRole(): string {
+    return this.$store.getters.displayUserRole;
   }
 
   get settings(): any {
@@ -120,3 +124,17 @@ export default class NavBar extends Vue {
   margin-right: 0 !important;
 }
 </style>
+
+<i18n locale="en" lang="yaml">
+login: 'Login'
+home: 'Home'
+manga: 'Manga'
+about: 'About'
+</i18n>
+
+<i18n locale="en" lang="yaml">
+login: 'Se connecter'
+home: 'Accueil'
+manga: 'Manga'
+about: 'À propos'
+</i18n>

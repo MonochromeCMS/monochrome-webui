@@ -18,19 +18,19 @@
     </v-row>
     <v-row v-else>
       <v-col v-if="manga.length === 0" class="text-center text-body-1">
-        {{ search ? 'No manga could be found.' : 'No manga has been added yet.' }}
+        {{ search ? $t('noMangaFound') : $t('noManga') }}
       </v-col>
       <v-col v-else cols="12" sm="6" md="4" lg="3" v-for="(item, index) in manga" :key="index">
         <v-card color="background" :to="to(item)" height="100%" class="d-flex flex-column">
-          <v-img aspect-ratio="1" :src="cover(item)"></v-img>
+          <v-img aspect-ratio="1" :src="cover(item)" />
           <v-card-title v-text="item.title" />
           <v-card-subtitle v-text="item.author" />
-          <v-card-text v-text="item.description" class="card-description"></v-card-text>
+          <v-card-text v-text="item.description" class="card-description" />
           <v-divider></v-divider>
           <v-chip
             class="status-chip"
             :color="statusColor[item.status] || 'gray'"
-            v-text="upper(item.status)"
+            v-text="$t(`status.${item.status}`)"
           ></v-chip>
         </v-card>
       </v-col>
@@ -100,7 +100,7 @@ export default class MangaPage extends Vue {
       this.total = response.data.total;
     } else {
       const notification = {
-        context: 'Manga pagination',
+        context: this.$t('mangaPagination'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -108,10 +108,6 @@ export default class MangaPage extends Vue {
     }
 
     this.loading = false;
-  }
-
-  upper(status: string): string {
-    return status ? status.charAt(0).toUpperCase() + status.slice(1) : '';
   }
 
   @Watch('page')
@@ -156,3 +152,13 @@ export default class MangaPage extends Vue {
   height: 100%;
 }
 </style>
+
+<i18n locale="en" lang="yaml">
+noMangaFound: 'No manga could be found.'
+mangaPagination: 'Manga pagination'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+noMangaFound: "Aucun manga n'a pu être trouvé."
+mangaPagination: 'Liste manga'
+</i18n>

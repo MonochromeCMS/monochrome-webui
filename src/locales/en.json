@@ -4,10 +4,28 @@
     "uploader": "uploader",
     "user": "user"
   },
+  "status": {
+    "ongoing": "Ongoing",
+    "completed": "Completed",
+    "hiatus": "Hiatus",
+    "cancelled": "Cancelled"
+  },
+  "timeUnits": {
+    "second": "second | {n} second | {n} seconds",
+    "minute": "minute | {n} minute | {n} minutes",
+    "hour": "hour | {n} hour | {n} hours",
+    "day": "day | {n} day | {n} days",
+    "week": "week | {n} week | {n} weeks",
+    "month": "month | {n} month | {n} months",
+    "year": "year | {n} year | {n} years"
+  },
   "warning": "Warning!",
   "warningBoldMessage": "This action can't be undone!",
   "cancel": "Cancel",
-  "delete": "Delete"
+  "delete": "Delete",
+  "timeAgo": "{time} ago",
+  "noChapters": "No chapters have been uploaded yet.",
+  "noManga": "No manga has been added yet.",
   "api": {
     "422": "The data provided is not valid",
     "401": "Please log in again",

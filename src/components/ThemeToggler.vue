@@ -1,5 +1,12 @@
 <template>
-  <v-btn fab outlined color="primary" class="theme-toggle" @click="toggleTheme" aria-hidden="true">
+  <v-btn
+    fab
+    outlined
+    color="primary"
+    class="theme-toggle"
+    @click="toggleTheme"
+    aria-label="Theme toggler"
+  >
     <v-icon large> {{ icons.mdiLightbulb }} </v-icon>
   </v-btn>
 </template>

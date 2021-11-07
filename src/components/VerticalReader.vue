@@ -1,6 +1,8 @@
 <template>
   <v-row class="ma-0">
-    <v-btn block text width="15rem" @click="previousChapter" class="mb-3"> Previous chapter </v-btn>
+    <v-btn block text width="15rem" @click="previousChapter" class="mb-3">{{
+      $t('previousChapter')
+    }}</v-btn>
     <v-col :class="webtoon ? 'webtoon' : ''" cols="12" v-for="index in length" :key="index">
       <v-img contain :class="fit" :width="width" :src="page(index)" :lazy-src="defaultImage">
         <template v-slot:placeholder>
@@ -10,7 +12,9 @@
         </template>
       </v-img>
     </v-col>
-    <v-btn block text width="15rem" @click="nextChapter" class="mt-3"> Next chapter </v-btn>
+    <v-btn block text width="15rem" @click="nextChapter" class="mt-3">{{
+      $t('nextChapter')
+    }}</v-btn>
   </v-row>
 </template>
 
@@ -75,3 +79,13 @@ export default class VerticalReader extends Vue {
   max-width: 100%;
 }
 </style>
+
+<i18n locale="en" lang="yaml">
+previousChapter: 'Previous chapter'
+nextChapter: 'Next chapter'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+previousChapter: 'Chapitre précédant'
+nextChapter: 'Chapitre suivant'
+</i18n>

@@ -1,19 +1,17 @@
 <template>
-  <div>
-    <v-text-field
-      hide-details
-      clearable
-      label="Search"
-      solo
-      :value="value"
-      color="primary"
-      background-color="background"
-      :prepend-inner-icon="icons.mdiMagnify"
-      dense
-      @input="searchInput"
-    ></v-text-field>
-    <v-progress-linear indeterminate v-if="progress"></v-progress-linear>
-  </div>
+  <v-text-field
+    hide-details
+    clearable
+    :label="$t('search')"
+    solo
+    :value="value"
+    color="primary"
+    background-color="background"
+    :prepend-inner-icon="icons.mdiMagnify"
+    :loading="loading"
+    dense
+    @input="searchInput"
+  />
 </template>
 
 <script lang="ts">
@@ -29,18 +27,26 @@ export default class SearchBar extends Vue {
     mdiMagnify,
   };
 
-  progress = false;
+  loading = false;
 
   @debounce(1200)
   _searchInput(value: string): void {
     this.$emit('input', value);
     this.$emit('update:value', value);
-    this.progress = false;
+    this.loading = false;
   }
 
   searchInput(value: string): void {
-    this.progress = true;
+    this.loading = true;
     this._searchInput(value);
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+search: 'Search'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+search: 'Recherche'
+</i18n>

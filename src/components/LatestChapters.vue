@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card-title class="justify-center lemon-milk"> Latest chapters </v-card-title>
+    <v-card-title class="justify-center lemon-milk">{{ $tc('latestChapters') }}</v-card-title>
     <v-row v-if="loading" class="mx-0 mb-0">
       <v-col
         cols="12"
@@ -36,7 +36,7 @@
     </v-row>
     <v-row v-else class="mx-0 mb-0">
       <v-col cols="12" class="text-center text-body-1" v-if="chapters.length === 0">
-        No chapters have been uploaded yet.
+        {{ $tc('noChapters') }}
       </v-col>
       <v-col
         cols="12"
@@ -57,11 +57,13 @@
                 {{ chapter.manga.title }}
               </h2>
               <h3 class="text-subtitle-2 ellipsis">
-                {{ `Chapter ${chapter.number}${chapter.name ? ' - ' + chapter.name : ''}` }}
+                {{
+                  `${$t('chapter')} ${chapter.number}${chapter.name ? ' - ' + chapter.name : ''}`
+                }}
               </h3>
               <h4 class="text-caption">{{ chapter.scanGroup }}</h4>
               <v-chip color="backgroundAlt" class="chip-tag">
-                {{ ago(new Date(chapter.uploadTime).getTime()) }} ago
+                {{ $t('timeAgo', { time: ago(new Date(chapter.uploadTime).getTime()) }) }}
               </v-chip>
             </v-col>
           </v-row>
@@ -129,7 +131,7 @@ export default class LatestChapters extends Vue {
       this.total = response.data.total;
     } else {
       const notification = {
-        context: 'Latest chapters',
+        context: this.$tc('latestChapters'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -153,7 +155,7 @@ export default class LatestChapters extends Vue {
 
     for (const unit of Object.keys(length)) {
       const result = val % length[unit];
-      if (!(val = 0 | (val / length[unit]))) return result + ' ' + (result - 1 ? unit + 's' : unit);
+      if (!(val = 0 | (val / length[unit]))) return this.$tc(`timeUnits.${unit}`, result);
     }
     return 'ERROR';
   }
@@ -175,3 +177,13 @@ export default class LatestChapters extends Vue {
   text-overflow: ellipsis;
 }
 </style>
+
+<i18n locale="en" lang="yaml">
+latestChapters: 'Latest chapters'
+chapter: 'Chapter'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+latestChapters: 'Derniers chapitres'
+chapter: 'Chapitre'
+</i18n>

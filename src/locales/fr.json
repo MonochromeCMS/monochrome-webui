@@ -4,10 +4,28 @@
     "uploader": "éditeur",
     "user": "utilisateur"
   },
+  "status": {
+    "ongoing": "En cours",
+    "completed": "Complété",
+    "hiatus": "Hiatus",
+    "cancelled": "Annulé"
+  },
+  "timeUnits": {
+    "second": "seconde | {n} seconde | {n} secondes",
+    "minute": "minute | {n} minute | {n} minutes",
+    "hour": "heure | {n} heure | {n} heures",
+    "day": "jour | {n} jour | {n} jours",
+    "week": "semaine | {n} semaine | {n} semaines",
+    "month": "mois | {n} mois | {n} mois",
+    "year": "année | {n} année | {n} années"
+  },
   "warning": "Attention !",
   "warningBoldMessage": "Cette action ne peut être annulée!",
   "cancel": "Annuler",
-  "delete": "Supprimer"
+  "delete": "Supprimer",
+  "timeAgo": "Il y a {time}",
+  "noChapters": "Aucun chapitre n'a encore été ajouté.",
+  "noManga": "Aucun chapitre n'a encore été ajouté.",
   "api": {
     "422": "Les données fournies ne sont pas valides",
     "401": "Veuillez vous reconnecter",

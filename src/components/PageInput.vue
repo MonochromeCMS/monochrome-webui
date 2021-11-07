@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h2 class="text-h4 mt-0 mb-3">Pages</h2>
+    <h2 class="text-h4 mt-0 mb-3">{{ $t('pages') }}</h2>
     <draggable class="drag-pages" v-model="pages">
       <template v-for="(item, index) in pages">
         <v-col cols="6" sm="4" md="3" xl="2" :key="index">
@@ -35,14 +35,14 @@
         </v-card>
       </v-col>
     </draggable>
-    <v-btn text @click="quickSort"> Quick sort </v-btn>
-    <v-btn text color="error" @click="deletePages"> Delete all </v-btn>
+    <v-btn text @click="quickSort">{{ $t('quickSort') }}</v-btn>
+    <v-btn text color="error" @click="deletePages">{{ $t('deleteAll') }}</v-btn>
     <input ref="fileInput" type="file" @input="updateFile" multiple style="display: none" />
     <div>
       <ul>
-        <li>Supported image formats are JPEG, PNG, BMP and WebP.</li>
-        <li>Compressed files are also supported. They must not contain any folders.</li>
-        <li>You can upload multiple images at the same time.</li>
+        <li>{{ $t('uploadNotes1') }}</li>
+        <li>{{ $t('uploadNotes2') }}</li>
+        <li>{{ $t('uploadNotes3') }}</li>
       </ul>
     </div>
   </v-container>
@@ -82,8 +82,6 @@ export default class PageInput extends Vue {
   deleting = false;
 
   progress = 0;
-
-  pageUpload = null;
 
   get authConfig(): AxiosRequestConfig {
     return this.$store.getters.authConfig;
@@ -131,7 +129,7 @@ export default class PageInput extends Vue {
       this.pages.push(...response.data);
     } else {
       const notification = {
-        context: 'File upload',
+        context: this.$t('fileUpload'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -153,7 +151,7 @@ export default class PageInput extends Vue {
       this.pages = this.pages.slice(0, index).concat(this.pages.slice(index + 1));
     } else {
       const notification = {
-        context: 'Delete page',
+        context: this.$t('deletePage'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -175,7 +173,7 @@ export default class PageInput extends Vue {
       this.pages = [];
     } else {
       const notification = {
-        context: 'Delete all pages',
+        context: this.$t('deleteAllPages'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -213,3 +211,27 @@ export default class PageInput extends Vue {
   flex-wrap: wrap;
 }
 </style>
+
+<i18n locale="en" lang="yaml">
+pages: 'Pages'
+quickSort: 'Quick sort'
+deleteAll: 'Delete all'
+uploadNotes1: 'Supported image formats are JPEG, PNG, BMP and WebP.'
+uploadNotes2: 'Compressed files are also supported. They must not contain any folders.'
+uploadNotes3: 'You can upload multiple images at the same time.'
+fileUpload: 'File upload'
+deletePage: 'Delete page'
+deleteAllPages: 'Delete all pages'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+pages: 'Pages'
+quickSort: 'Tri rapide'
+deleteAll: 'Tout supprimer'
+uploadNotes1: "Les formats d'image pris en charge sont JPEG, PNG, BMP et WebP."
+uploadNotes2: 'Les fichiers compressés sont aussi pris en charge. Ils ne doivent contenir aucun dossier.'
+uploadNotes3: 'Vous pouvez ajouter plusieurs fichiers en même temps.'
+fileUpload: 'Ajout de fichier'
+deletePage: 'Supprimer la page'
+deleteAllPages: 'Supprimer toutes les pages'
+</i18n>

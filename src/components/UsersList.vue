@@ -81,17 +81,17 @@ export default class UsersList extends Vue {
 
   headers = [
     {
-      title: 'Role',
+      title: this.$t('role'),
     },
     {
-      title: 'Username',
+      title: this.$t('username'),
     },
     {
-      title: 'Email',
+      title: this.$t('email'),
       class: 'hidden-sm-and-down',
     },
     {
-      title: 'Actions',
+      title: this.$t('actions'),
     },
   ];
 
@@ -140,3 +140,17 @@ export default class UsersList extends Vue {
   max-width: 13rem;
 }
 </style>
+
+<i18n locale="en" lang="yaml">
+role: 'Role'
+username: 'Username'
+email: 'Email'
+actions: 'Actions'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+role: 'Rôle'
+username: "Nom d'utilisateur"
+email: 'Email'
+actions: 'Actions'
+</i18n>

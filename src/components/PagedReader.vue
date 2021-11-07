@@ -9,13 +9,13 @@
       class="reader-tabs"
     >
       <v-tab :key="0">
-        {{ reverse ? 'Next chapter' : 'Previous chapter' }}
+        {{ reverse ? $t('nextChapter') : $t('previousChapter') }}
       </v-tab>
       <v-tab v-for="index in amountTabs" :key="index">
         {{ reverse ? amountTabs - index + 1 : index }}
       </v-tab>
       <v-tab :key="amountTabs + 1">
-        {{ reverse ? 'Previous chapter' : 'Next chapter' }}
+        {{ reverse ? $t('previousChapter') : $t('nextChapter') }}
       </v-tab>
     </v-tabs>
 
@@ -278,3 +278,13 @@ export default class PagedReader extends Vue {
   margin-bottom: 0.8rem;
 }
 </style>
+
+<i18n locale="en" lang="yaml">
+nextChapter: 'Next chapter'
+previousChapter: 'Previous chapter'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+nextChapter: 'Chapitre suivant'
+previousChapter: 'Chapitre précédent'
+</i18n>

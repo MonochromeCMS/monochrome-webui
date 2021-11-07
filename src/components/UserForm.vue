@@ -4,34 +4,38 @@
       <v-card :color="color">
         <v-card-title> {{ title }} </v-card-title>
         <v-alert type="warning" v-if="ownUser" dense class="ma-3">
-          You'll be logged out after editing your own user !
+          {{ $t('ownUserWarning') }}
         </v-alert>
         <v-card-text>
           <v-row>
             <avatar-input v-if="user" :user="user" @update="update()" />
             <v-col class="d-flex justify-end flex-column">
-              <validation-provider v-slot="{ errors }" name="Username" rules="required|max:15">
+              <validation-provider
+                v-slot="{ errors }"
+                :name="$t('username')"
+                rules="required|max:15"
+              >
                 <v-text-field
                   v-model="username"
                   :error-messages="errors"
-                  label="Username"
+                  :label="$t('username')"
                   required
                   outlined
                 ></v-text-field>
               </validation-provider>
-              <validation-provider v-slot="{ errors }" name="Email" rules="email">
+              <validation-provider v-slot="{ errors }" :name="$t('email')" rules="email">
                 <v-text-field
                   v-model="email"
                   :error-messages="errors"
-                  label="Email"
+                  :label="$t('email')"
                   outlined
                 ></v-text-field>
               </validation-provider>
-              <validation-provider v-slot="{ errors }" name="Password" rules="required">
+              <validation-provider v-slot="{ errors }" :name="$t('password')" rules="required">
                 <v-text-field
                   v-model="password"
                   :error-messages="errors"
-                  label="Password"
+                  :label="$t('password')"
                   :append-icon="showPass ? icons.mdiEye : icons.mdiEyeOff"
                   @click:append="showPass = !showPass"
                   required
@@ -44,14 +48,14 @@
           <validation-provider
             v-if="canEditRoles || user"
             v-slot="{ errors }"
-            name="Role"
+            :name="$t('role')"
             rules="required"
           >
             <v-select
               :items="roleItems"
               v-model="role"
               :error-messages="errors"
-              label="Role"
+              :label="$t('role')"
               outlined
               :disabled="!canEditRoles"
             ></v-select>
@@ -62,7 +66,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <slot />
-          <v-btn color="gray" text @click="close"> Cancel </v-btn>
+          <v-btn color="gray" text @click="close">{{ $t('cancel') }}</v-btn>
           <v-btn :disabled="loading" type="submit" color="green" class="text--white">
             {{ buttonText }}
           </v-btn>
@@ -107,6 +111,10 @@ extend('required', {
   },
 })
 export default class UserForm extends Vue {
+  $refs!: {
+    observer: InstanceType<typeof ValidationObserver>;
+  };
+
   @Prop({ default: null }) readonly user!: any;
 
   @Prop({ default: false, type: Boolean }) readonly register!: any;
@@ -133,9 +141,9 @@ export default class UserForm extends Vue {
   role = null;
 
   roleItems = [
-    { value: 'admin', text: 'Admin' },
-    { value: 'uploader', text: 'Uploader' },
-    { value: 'user', text: 'User' },
+    { value: 'admin', text: this.upper(this.$tc('roles.admin')) },
+    { value: 'uploader', text: this.upper(this.$tc('roles.uploader')) },
+    { value: 'user', text: this.upper(this.$tc('roles.user')) },
   ];
 
   mounted(): void {
@@ -147,30 +155,30 @@ export default class UserForm extends Vue {
     }
   }
 
+  upper(str: string): string {
+    return str ? str[0].toUpperCase() + str.slice(1) : '';
+  }
+
   get title(): string {
     switch (true) {
       case this.register:
-        return 'Register user';
+        return this.$tc('registerUser');
       case !!this.user:
-        return 'Edit user';
+        return this.$tc('editUser');
       default:
-        return 'Add user';
+        return this.$tc('addUser');
     }
   }
 
   get buttonText(): string {
     switch (true) {
       case this.register:
-        return 'Register';
+        return this.$tc('register');
       case !!this.user:
-        return 'Edit';
+        return this.$tc('edit');
       default:
-        return 'Add';
+        return this.$tc('add');
     }
-  }
-
-  get userRole(): string {
-    return this.$store.getters.userRole;
   }
 
   get canEditRoles(): boolean {
@@ -196,7 +204,6 @@ export default class UserForm extends Vue {
   }
 
   async submit(): Promise<void> {
-    //@ts-expect-error I can't define this $ref, so let's assume it works
     const valid = await this.$refs.observer.validate();
     if (valid) {
       if (this.user) {
@@ -228,7 +235,7 @@ export default class UserForm extends Vue {
       }
     } else {
       const notification = {
-        context: 'Edit user',
+        context: this.$t('editUser'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -251,7 +258,7 @@ export default class UserForm extends Vue {
       this.close();
     } else {
       const notification = {
-        context: 'Create user',
+        context: this.$t('addUser'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -274,7 +281,7 @@ export default class UserForm extends Vue {
       this.close();
     } else {
       const notification = {
-        context: 'Register user',
+        context: this.$t('registerUser'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -301,3 +308,31 @@ export default class UserForm extends Vue {
   right: 1rem;
 }
 </style>
+
+<i18n locale="en" lang="yaml">
+ownUserWarning: "You'll be logged out after editing your own user!"
+username: 'Username'
+email: 'Email'
+password: 'Password'
+role: 'Role'
+registerUser: 'Register user'
+editUser: 'Edit user'
+addUser: 'Add user'
+register: 'Register'
+edit: 'Edit'
+add: 'Add'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+ownUserWarning: 'Vous allez être déconnecté après avoir modifié votre propre utilisateur!'
+username: "Nom d'utilisateur"
+email: 'Email'
+password: 'Mot de passe'
+role: 'Rôle'
+registerUser: 'Inscription'
+editUser: "Modification d'utilisateur"
+addUser: "Ajout d'utilisateur"
+register: "S'inscrire"
+edit: 'Modifier'
+add: 'Ajouter'
+</i18n>

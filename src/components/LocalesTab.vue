@@ -1,7 +1,9 @@
 <template>
   <v-menu offset-y>
     <template v-slot:activator="{ on, attrs }">
-      <v-tab v-on="on" v-bind="attrs" class="lang-tab text-uppercase"> {{ currentLocale }} </v-tab>
+      <v-tab v-if="locales.length > 1" v-on="on" v-bind="attrs" class="lang-tab text-uppercase">
+        {{ currentLocale }}
+      </v-tab>
     </template>
     <v-list>
       <v-list-item
@@ -29,7 +31,12 @@ export default class LocalesTab extends Vue {
   }
 
   changeLocale(locale: string): void {
+    window.localStorage.setItem('monochrome-lang', locale);
     this.$root.$i18n.locale = locale;
+  }
+
+  mounted(): void {
+    this.$root.$i18n.locale = window.localStorage.getItem('monochrome-lang') || this.$i18n.locale;
   }
 }
 </script>

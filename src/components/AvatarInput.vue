@@ -62,7 +62,7 @@ export default class AvatarInput extends Vue {
       this.update();
     } else {
       const notification = {
-        context: 'Avatar upload',
+        context: this.$t('avatarUpload'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -85,3 +85,11 @@ export default class AvatarInput extends Vue {
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+avatarUpload: 'Avatar upload'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+avatarUpload: "Mise à jour d'avatar"
+</i18n>

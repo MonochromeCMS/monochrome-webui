@@ -2,49 +2,49 @@
   <validation-observer ref="observer">
     <v-form @submit.prevent="submit">
       <!-- TITLE FIELD -->
-      <validation-provider v-slot="{ errors }" name="Title" rules="required">
+      <validation-provider v-slot="{ errors }" :name="$t('title')" rules="required">
         <v-text-field
           v-model="title"
           :error-messages="errors"
-          label="Title"
+          :label="$t('title')"
           required
           outlined
-        ></v-text-field>
+        />
       </validation-provider>
       <!-- DESC FIELD -->
-      <validation-provider v-slot="{ errors }" name="Description" rules="required">
+      <validation-provider v-slot="{ errors }" :name="$t('description')" rules="required">
         <v-textarea
           v-model="description"
           :error-messages="errors"
-          label="Description"
+          :label="$t('description')"
           required
           outlined
-        ></v-textarea>
+        />
       </validation-provider>
       <!-- AUTHOR FIELD -->
-      <validation-provider v-slot="{ errors }" name="Author" rules="required">
+      <validation-provider v-slot="{ errors }" :name="$t('author')" rules="required">
         <v-text-field
           v-model="author"
           :error-messages="errors"
-          label="Author"
+          :label="$t('author')"
           required
           outlined
-        ></v-text-field>
+        />
       </validation-provider>
       <!-- ARTIST FIELD -->
-      <validation-provider v-slot="{ errors }" name="Artist" rules="required">
+      <validation-provider v-slot="{ errors }" :name="$t('artist')" rules="required">
         <v-text-field
           v-model="artist"
           :error-messages="errors"
-          label="Artist"
+          :label="$t('artist')"
           required
           outlined
-        ></v-text-field>
+        />
       </validation-provider>
       <!-- YEAR FIELD -->
       <validation-provider
         v-slot="{ errors }"
-        name="Year of release"
+        :name="$t('year')"
         :rules="{
           digits: 4,
         }"
@@ -52,30 +52,35 @@
         <v-text-field
           v-model="year"
           :error-messages="errors"
-          label="Year of release"
+          :label="$t('year')"
           required
           outlined
-        ></v-text-field>
+        />
       </validation-provider>
       <!-- STATUS FIELD -->
-      <validation-provider v-slot="{ errors }" name="Status" rules="required">
+      <validation-provider v-slot="{ errors }" :name="$t('status')" rules="required">
         <v-select
           :items="statusItems"
           v-model="status"
           :error-messages="errors"
-          label="Status"
+          :label="$t('status')"
           outlined
-        ></v-select>
+        />
       </validation-provider>
       <!-- COVER FIELD -->
-      <validation-provider v-slot="{ errors }" name="Cover" :rules="manga ? '' : 'required'">
-        <v-file-input v-model="cover" :error-messages="errors" accept="image/*" label="Cover">
+      <validation-provider v-slot="{ errors }" :name="$t('cover')" :rules="manga ? '' : 'required'">
+        <v-file-input
+          v-model="cover"
+          :error-messages="errors"
+          accept="image/*"
+          :label="$t('cover')"
+        >
         </v-file-input>
       </validation-provider>
       <!-- PREVIEW -->
       <v-expansion-panels class="mb-4">
         <v-expansion-panel>
-          <v-expansion-panel-header> Preview </v-expansion-panel-header>
+          <v-expansion-panel-header>{{ $t('preview') }}</v-expansion-panel-header>
           <v-expansion-panel-content>
             <manga-row :loading="false" :manga="params" :cover="url(cover) || ''" />
           </v-expansion-panel-content>
@@ -83,7 +88,7 @@
       </v-expansion-panels>
       <div class="text-center">
         <v-btn type="submit" block color="background" class="text--primary">
-          {{ manga ? 'Edit Manga' : 'Create Manga' }}
+          {{ manga ? $t('editManga') : $t('createManga') }}
         </v-btn>
       </div>
     </v-form>
@@ -119,6 +124,10 @@ extend('digits', {
   },
 })
 export default class MangaForm extends Vue {
+  $refs!: {
+    observer: InstanceType<typeof ValidationObserver>;
+  };
+
   @Prop() readonly manga!: MangaResponse | null;
 
   title = '';
@@ -135,13 +144,11 @@ export default class MangaForm extends Vue {
 
   cover: File | null = null;
 
-  buffer = null;
-
   statusItems = [
-    { value: 'ongoing', text: 'Ongoing' },
-    { value: 'hiatus', text: 'Hiatus' },
-    { value: 'completed', text: 'Completed' },
-    { value: 'cancelled', text: 'Cancelled' },
+    { value: 'ongoing', text: this.$t('ongoing') },
+    { value: 'hiatus', text: this.$t('hiatus') },
+    { value: 'completed', text: this.$t('completed') },
+    { value: 'cancelled', text: this.$t('cancelled') },
   ];
 
   get params(): MangaSchema {
@@ -168,7 +175,6 @@ export default class MangaForm extends Vue {
   }
 
   async submit(): Promise<void> {
-    //@ts-expect-error I can't define this $ref, so let's assume it works
     const valid = await this.$refs.observer.validate();
     if (valid) {
       if (this.manga) {
@@ -195,7 +201,7 @@ export default class MangaForm extends Vue {
       await this.setCover(response.data.id, this.cover);
     } else {
       const notification = {
-        context: 'Create manga',
+        context: this.$t('createManga'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -217,7 +223,7 @@ export default class MangaForm extends Vue {
       }
     } else {
       const notification = {
-        context: 'Edit manga',
+        context: this.$t('editManga'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -239,7 +245,7 @@ export default class MangaForm extends Vue {
       await this.$router.push(`/manga/${mangaId}`);
     } else {
       const notification = {
-        context: 'Set cover',
+        context: this.$t('setCover'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -262,3 +268,31 @@ export default class MangaForm extends Vue {
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+title: 'Title'
+description: 'Description'
+author: 'Author'
+artist: 'Artist'
+year: 'Year of release'
+status: 'Status'
+cover: 'Cover'
+preview: 'Preview'
+editManga: 'Edit manga'
+createManga: 'Create manga'
+setCover: 'Set cover'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+title: 'Titre'
+description: 'Description'
+author: 'Auteur'
+artist: 'Artiste'
+year: 'Année de sortie'
+status: 'Status'
+cover: 'Couverture'
+preview: 'Aperçu'
+editManga: 'Modifier manga'
+createManga: 'Créer manga'
+setCover: 'Définir couverture'
+</i18n>

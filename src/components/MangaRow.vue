@@ -31,13 +31,13 @@
             v-text="upper(manga.status)"
           ></v-chip>
           <v-chip class="chip-tag" color="background">
-            <span>Author: </span> {{ manga.author }}
+            <span>{{ $t('author') }}</span> {{ manga.author }}
           </v-chip>
           <v-chip class="chip-tag" color="background">
-            <span>Artist: </span> {{ manga.artist }}
+            <span>{{ $t('artist') }}</span> {{ manga.artist }}
           </v-chip>
           <v-chip v-if="manga.year" class="chip-tag" color="background">
-            <span>Release: </span> {{ manga.year }}
+            <span>{{ $t('release') }}</span> {{ manga.year }}
           </v-chip>
         </v-chip-group>
         <div class="manga-desc">{{ manga.description }}</div>
@@ -49,11 +49,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import type { MangaResponse } from '@/api/Manga';
+import type { MangaSchema } from '@/api/Manga';
 
 @Component
 export default class MangaRow extends Vue {
-  @Prop() readonly manga!: MangaResponse;
+  @Prop() readonly manga!: MangaSchema;
 
   @Prop(String) readonly cover!: string;
 
@@ -94,3 +94,15 @@ export default class MangaRow extends Vue {
   }
 }
 </style>
+
+<i18n locale="en" lang="yaml">
+author: 'Author:'
+artist: 'Artist:'
+release: 'Release:'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+author: 'Auteur:'
+artist: 'Artiste:'
+release: 'Parution:'
+</i18n>

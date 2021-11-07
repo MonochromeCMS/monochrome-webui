@@ -1,8 +1,10 @@
 <template>
-  <v-snackbar :value="notificationsAmount" :color="notification ? notification.color : 'info'">
-    {{
-      notification ? `${notification.context}: ${notification.message}` : 'No notifications left'
-    }}
+  <v-snackbar
+    :value="notificationsAmount"
+    :color="notification ? notification.color : 'gray'"
+    timeout="4000"
+  >
+    {{ notification ? `${notification.context}: ${notification.message}` : $t('noNotifications') }}
 
     <template v-slot:action="{ attrs }">
       <v-badge
@@ -46,4 +48,10 @@ export default class ThemeToggler extends Vue {
 }
 </script>
 
-<style lang="scss"></style>
+<i18n locale="en" lang="yaml">
+noNotifications: 'No notifications left'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+noNotifications: 'Il ne reste aucune notification'
+</i18n>

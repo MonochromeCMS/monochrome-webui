@@ -1,6 +1,8 @@
 <template>
   <v-list color="backgroundAlt">
-    <v-subheader>Admin actions</v-subheader>
+    <v-subheader>
+      <div class="capitalize">{{ $t('userActions', { role: displayUserRole }) }}</div>
+    </v-subheader>
     <v-list-item-group v-model="selectedItem" color="primary">
       <v-list-item
         v-for="(item, i) in items"
@@ -47,39 +49,43 @@ export default class AdminActions extends Vue {
     return this.$store.getters.userRole;
   }
 
+  get displayUserRole(): string {
+    return this.$store.getters.displayUserRole;
+  }
+
   get items(): Item[] {
     const result: Item[] = [];
     if (Manga.canCreate(this.userRole))
       result.push({
-        text: 'Create manga',
+        text: this.$tc('createManga'),
         to: '/manga/new',
       });
 
     result.push(
       User.canEdit(this.userRole)
         ? {
-            text: 'Handle users',
+            text: this.$tc('handleUsers'),
             to: '/users',
           }
         : {
-            text: 'My user',
+            text: this.$tc('myUser'),
             to: '/users/me',
           },
     );
 
     if (Settings.canEdit(this.userRole))
       result.push({
-        text: 'Customize website',
+        text: this.$tc('customizeWebsite'),
         to: '/settings',
       });
 
     result.push(
       {
-        text: 'Logout',
+        text: this.$tc('logout'),
         to: '/logout',
       },
       {
-        text: 'API Documentation',
+        text: this.$tc('apiDocs'),
         href: `${Base.prefix}/docs`,
         target: '_blank',
       },
@@ -89,3 +95,29 @@ export default class AdminActions extends Vue {
   }
 }
 </script>
+
+<style>
+.capitalize:first-letter {
+  text-transform: uppercase;
+}
+</style>
+
+<i18n locale="en" lang="yaml">
+userActions: '{role} actions'
+createManga: 'Create manga'
+handleUsers: 'Handle users'
+myUser: 'My user'
+customizeWebsite: 'Customize website'
+logout: 'Logout'
+apiDocs: 'API Documentation'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+userActions: "Actions d'{role}"
+createManga: 'Ajouter un manga'
+handleUsers: 'Gérer les utilisateurs'
+myUser: 'Mon utilisateur'
+customizeWebsite: 'Personaliser le site'
+logout: 'Se déconnecter'
+apiDocs: 'Documentation API'
+</i18n>

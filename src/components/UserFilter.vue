@@ -6,7 +6,7 @@
         @input="updateFilter('username', $event)"
         clearable
         dense
-        label="Username"
+        :label="$t('username')"
         hide-details
         :prepend-icon="icons.mdiMagnify"
         @click:prepend="useFilters()"
@@ -16,14 +16,14 @@
       <v-select
         :items="roleItems"
         :value="filters.role"
-        label="Role"
+        :label="$t('role')"
         dense
         hide-details
         @input="updateFilter('role', $event)"
       />
     </v-col>
     <v-col cols="12" sm="4">
-      <v-btn class="float-right" @click="useFilters()">Filter</v-btn>
+      <v-btn class="float-right" @click="useFilters()">{{ $t('filter') }}</v-btn>
     </v-col>
   </v-row>
 </template>
@@ -43,9 +43,9 @@ export default class UserFilter extends Vue {
 
   roleItems = [
     { value: null, text: '---' },
-    { value: 'admin', text: 'Admin' },
-    { value: 'uploader', text: 'Uploader' },
-    { value: 'user', text: 'User' },
+    { value: 'admin', text: this.upper(this.$tc('roles.admin')) },
+    { value: 'uploader', text: this.upper(this.$tc('roles.uploader')) },
+    { value: 'user', text: this.upper(this.$tc('roles.user')) },
   ];
 
   updateFilter(field: string, value: any): void {
@@ -54,9 +54,25 @@ export default class UserFilter extends Vue {
     this.filters = filters;
   }
 
+  upper(str: string): string {
+    return str ? str[0].toUpperCase() + str.slice(1) : '';
+  }
+
   @Emit('update')
   useFilters(): boolean {
     return true;
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+username: 'Username'
+role: 'Role'
+filter: 'Filter'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+username: "Nom d'utilisateur"
+role: 'Rôle'
+filter: 'Filtrer'
+</i18n>

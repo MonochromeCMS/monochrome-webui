@@ -16,15 +16,15 @@
       </v-card-title>
       <v-card-text>
         <v-select
-          label="Chapter"
+          :label="$t('chapter')"
           hide-details
           :value="chapter.id"
           :items="chapterItems"
           @change="goToChapter"
         />
         <v-divider class="mt-3" />
-        <v-subheader> Reader settings </v-subheader>
-        <v-select label="Reader Mode" hide-details v-model="readerMode" :items="modeItems" />
+        <v-subheader>{{ $t('readerSettings') }}</v-subheader>
+        <v-select :label="$t('readerMode')" hide-details v-model="readerMode" :items="modeItems" />
         <!-- Width setting -->
         <v-slider
           class="ma-4 mb-1"
@@ -35,20 +35,20 @@
           min="5"
           thumb-color="text--primary background"
           max="100"
-          label="Width"
+          :label="$t('width')"
           thumb-label
         >
           <template v-slot:thumb-label="{ value }"> {{ value }}% </template>
         </v-slider>
         <!-- Fit setting -->
         <v-row v-else align="center" class="ma-1">
-          <v-col class="text-body-1"> Image fit: </v-col>
+          <v-col class="text-body-1">{{ $t('imageFit') }}</v-col>
           <v-col class="text-right pa-2">
             <v-btn-toggle v-model="fit" mandatory>
               <v-btn color="background">
                 <v-icon>{{ icons.mdiArrowExpandHorizontal }}</v-icon>
               </v-btn>
-              <v-btn color="background"> Default </v-btn>
+              <v-btn color="background">{{ $t('default') }}</v-btn>
               <v-btn color="background">
                 <v-icon>{{ icons.mdiArrowExpandVertical }}</v-icon>
               </v-btn>
@@ -57,25 +57,25 @@
         </v-row>
         <!-- Direction setting -->
         <v-row align="center" class="ma-1" v-if="['Single', 'Double'].includes(readerMode)">
-          <v-col class="text-body-1"> Page direction: </v-col>
+          <v-col class="text-body-1">{{ $t('pageDirection') }}</v-col>
           <v-col class="text-right pa-2">
             <v-btn-toggle v-model="direction" mandatory>
-              <v-btn color="background"
-                ><v-icon>{{ icons.mdiArrowLeft }}</v-icon></v-btn
-              >
-              <v-btn color="background"
-                ><v-icon>{{ icons.mdiArrowRight }}</v-icon></v-btn
-              >
+              <v-btn color="background">
+                <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
+              </v-btn>
+              <v-btn color="background">
+                <v-icon>{{ icons.mdiArrowRight }}</v-icon>
+              </v-btn>
             </v-btn-toggle>
           </v-col>
         </v-row>
         <!-- Double parity setting -->
         <v-row align="center" class="ma-1" v-if="readerMode === 'Double'">
-          <v-col class="text-body-1"> Double page parity: </v-col>
+          <v-col class="text-body-1">{{ $t('doublePageParity') }}</v-col>
           <v-col class="text-right pa-2">
             <v-btn-toggle v-model="doubleParity" mandatory>
-              <v-btn color="background">Even</v-btn>
-              <v-btn color="background">Odd</v-btn>
+              <v-btn color="background">{{ $t('even') }}</v-btn>
+              <v-btn color="background">{{ $t('odd') }}</v-btn>
             </v-btn-toggle>
           </v-col>
         </v-row>
@@ -190,3 +190,29 @@ export default class ReaderMenu extends Vue {
   bottom: 1rem;
 }
 </style>
+
+<i18n locale="en" lang="yaml">
+chapter: 'Chapter'
+readerSettings: 'Reader settings'
+readerMode: 'Reader mode'
+width: 'Width'
+imageFit: 'Image fit'
+pageDirection: 'Page direction'
+doublePageParity: 'Double page parity'
+default: 'Default'
+even: 'Even'
+odd: 'Odd'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+chapter: 'Chapitre'
+readerSettings: 'Paramètres du lecteur'
+readerMode: 'Mode de lecture'
+width: 'Largeur'
+imageFit: "Ajustement de l'image"
+pageDirection: 'Direction de lecture'
+doublePageParity: 'Parité des pages'
+default: 'Défaut'
+even: 'Paire'
+odd: 'Impaire'
+</i18n>

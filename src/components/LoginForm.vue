@@ -1,20 +1,20 @@
 <template>
   <validation-observer ref="observer">
     <v-form @submit.prevent="submit">
-      <validation-provider v-slot="{ errors }" name="Username/email" rules="required">
+      <validation-provider v-slot="{ errors }" :name="$t('usernameEmail')" rules="required">
         <v-text-field
           v-model="username"
           :error-messages="errors"
-          label="Username/email"
+          :label="$t('usernameEmail')"
           required
           outlined
         />
       </validation-provider>
-      <validation-provider v-slot="{ errors }" name="Password" rules="required">
+      <validation-provider v-slot="{ errors }" :name="$t('password')" rules="required">
         <v-text-field
           v-model="password"
           :error-messages="errors"
-          label="Password"
+          :label="$t('password')"
           :append-icon="showPass ? icons.mdiEye : icons.mdiEyeOff"
           @click:append="showPass = !showPass"
           required
@@ -23,7 +23,9 @@
         />
       </validation-provider>
       <div class="text-center">
-        <v-btn type="submit" block color="background" class="text--primary"> Sign In </v-btn>
+        <v-btn type="submit" block color="background" class="text--primary">{{
+          $t('signIn')
+        }}</v-btn>
       </div>
     </v-form>
   </validation-observer>
@@ -49,6 +51,10 @@ extend('required', {
   },
 })
 export default class LoginForm extends Vue {
+  $refs!: {
+    observer: InstanceType<typeof ValidationObserver>;
+  };
+
   icons = {
     mdiEye,
     mdiEyeOff,
@@ -68,10 +74,9 @@ export default class LoginForm extends Vue {
   }
 
   async submit(): Promise<void> {
-    //@ts-expect-error I can't define this $ref, so let's assume it works
     const valid = await this.$refs.observer.validate();
     if (valid) {
-      await this.login(this.params); // action to login
+      await this.login(this.params);
     }
   }
 
@@ -87,7 +92,7 @@ export default class LoginForm extends Vue {
       this.clear();
     } else {
       const notification = {
-        context: 'Login',
+        context: this.$t('login'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -96,3 +101,17 @@ export default class LoginForm extends Vue {
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+usernameEmail: 'Username/Email'
+password: 'Password'
+signIn: 'Sign In'
+login: 'Login'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+usernameEmail: "Nom d'utilisateur/Email"
+password: 'Mot de passe'
+signIn: 'Se connecter'
+login: 'Connexion'
+</i18n>

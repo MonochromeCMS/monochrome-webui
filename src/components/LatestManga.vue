@@ -2,7 +2,7 @@
   <v-container>
     <v-card-title
       class="justify-center lemon-milk"
-      v-text="total <= limit ? 'MANGA' : 'RECENTLY ADDED'"
+      v-text="$t(total <= limit ? 'manga' : 'recentlyAdded')"
     />
     <v-row v-if="!loading">
       <v-col class="pt-0">
@@ -22,7 +22,7 @@
             </v-list-item>
           </template>
         </v-list>
-        <div v-if="manga.length === 0" class="text-center mb-2">No manga has been added yet.</div>
+        <div v-if="manga.length === 0" class="text-center mb-2">{{ $t('noManga') }}</div>
       </v-col>
     </v-row>
     <v-row v-else>
@@ -79,7 +79,7 @@ export default class LatestManga extends Vue {
       this.total = response.data.total;
     } else {
       const notification = {
-        context: 'Latest manga',
+        context: this.$tc('latestManga'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -94,3 +94,15 @@ export default class LatestManga extends Vue {
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+latestManga: 'Latest manga'
+manga: 'Manga'
+recentlyAdded: 'Recently added'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+latestManga: 'Derniers mangas ajoutés'
+manga: 'Manga'
+recentlyAdded: 'Ajoutés récemment'
+</i18n>

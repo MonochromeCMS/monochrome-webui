@@ -13,18 +13,20 @@
       </v-btn>
     </template>
     <v-card>
-      <v-card-title class="text-h5 background mb-2"> Warning </v-card-title>
+      <v-card-title class="text-h5 background mb-2">{{ $t('warning') }}</v-card-title>
       <v-card-text class="body-1">
-        <span class="font-weight-bold">This action can't be undone!</span>
-        Are you sure you want to delete this user?
+        <span class="font-weight-bold">{{ $t('warningBoldMessage') }}</span>
+        {{ $t('warningMessage') }}
       </v-card-text>
 
       <v-divider></v-divider>
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="gray" text @click="dialog = false"> Cancel </v-btn>
-        <v-btn color="error" @click="deleteUser(user.id)" :loading="loading"> Delete </v-btn>
+        <v-btn color="gray" text @click="dialog = false">{{ $t('cancel') }}</v-btn>
+        <v-btn color="error" @click="deleteUser(user.id)" :loading="loading">{{
+          $t('delete')
+        }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -64,14 +66,14 @@ export default class UserDeleteButton extends Vue {
     const response = await User.delete(userId, this.authConfig);
 
     if (response.data) {
-      this.$emit('update', true);
+      this.update();
       this.dialog = false;
       if (this.ownUser) {
         this.$store.commit('logout');
       }
     } else {
       const notification = {
-        context: 'Delete user',
+        context: this.$t('deleteUser'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -84,3 +86,13 @@ export default class UserDeleteButton extends Vue {
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+warningMessage: 'Are you sure you want to delete this user?'
+deleteUser: 'Delete user'
+</i18n>
+
+<i18n locale="en" lang="yaml">
+warningMessage: 'Êtes-vous sûr de vouloir supprimer cet utilisateur ?'
+deleteUser: "Suppression d'utilisateur"
+</i18n>
