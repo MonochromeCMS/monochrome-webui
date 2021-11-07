@@ -2,7 +2,7 @@
   <v-row class="ma-0">
     <v-btn block text width="15rem" @click="previousChapter" class="mb-3"> Previous chapter </v-btn>
     <v-col :class="webtoon ? 'webtoon' : ''" cols="12" v-for="index in length" :key="index">
-      <v-img contain :class="fit" :width="width" :src="page(index)">
+      <v-img contain :class="fit" :width="width" :src="page(index)" :lazy-src="defaultImage">
         <template v-slot:placeholder>
           <v-row class="fill-height ma-0" align="center" justify="center">
             <v-progress-circular indeterminate />
@@ -29,6 +29,9 @@ export default class VerticalReader extends Vue {
   @Prop(Number) readonly length!: number;
 
   @Prop(Boolean) readonly webtoon!: boolean;
+
+  defaultImage =
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAFUlEQVQ4y2NgGAWjYBSMglEwCqgDAAZUAAFDhx+cAAAAAElFTkSuQmCC';
 
   @Emit('next')
   nextChapter() {
