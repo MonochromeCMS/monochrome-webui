@@ -8,4 +8,32 @@
   "warningBoldMessage": "This action can't be undone!",
   "cancel": "Cancel",
   "delete": "Delete"
+  "api": {
+    "422": "The data provided is not valid",
+    "401": "Please log in again",
+    "404": "Resource not found",
+    "auth": {
+      "401": "Credentials don't match"
+    },
+    "chapter": {
+      "404": "Chapter not found"
+    },
+    "manga": {
+      "404": "Manga not found",
+      "cover_400": "The cover provided is not an image"
+    },
+    "upload": {
+      "parent_400": "The chapter doesn't belong to this manga",
+      "file_400": "One of the files isn't valid",
+      "no_page_400": "That page doesn't exist in the current session",
+      "pages_400": "Some pages don't belong to the session",
+      "404": "Session not found"
+    },
+    "user": {
+      "404": "User not found",
+      "avatar_400": "The file isn't valid",
+      "username_email_400": "Username/email already in use",
+      "405": "Registering is not available on this server"
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import type { ApiResponse } from './Base';
 import Base from './Base';
+import i18n from '@/i18n';
 import type { AxiosRequestConfig } from 'axios';
 import type { Role } from '@/api/User';
 
@@ -40,10 +41,10 @@ export default class Settings extends Base {
         result.data = response.data;
         break;
       case 401:
-        result.error = 'Please log in again';
+        result.error = i18n.tc('api.401');
         break;
       case 422:
-        result.error = 'The data provided is not valid';
+        result.error = i18n.tc('api.422');
         break;
       default:
         result.error = response.data?.detail ?? response.statusText;

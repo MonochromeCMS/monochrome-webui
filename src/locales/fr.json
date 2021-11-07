@@ -8,4 +8,32 @@
   "warningBoldMessage": "Cette action ne peut être annulée!",
   "cancel": "Annuler",
   "delete": "Supprimer"
+  "api": {
+    "422": "Les données fournies ne sont pas valides",
+    "401": "Veuillez vous reconnecter",
+    "404": "Resource non trouvée",
+    "auth": {
+      "401": "Les identifiants ne correspondent pas"
+    },
+    "chapter": {
+      "404": "Chapitre non trouvé"
+    },
+    "manga": {
+      "404": "Manga non trouvé",
+      "cover_400": "La couverture n'est pas valide"
+    },
+    "upload": {
+      "parent_400": "Le chapitre n'appartient pas au manga",
+      "file_400": "Un des fichiers fournis n'est pas valide",
+      "no_page_400": "La page n'appartient pas à cette session",
+      "pages_400": "Certaines pages n'appartient pas à cette session",
+      "404": "Session non trouvée"
+    },
+    "user": {
+      "404": "Utilisateur non trouvé",
+      "avatar_400": "Le fichier n'est pas valide",
+      "username_email_400": "Nom d'utilisateur/email déjà utilisé",
+      "405": "L'inscription n'est pas disponible sur ce serveur"
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import type { ApiResponse } from './Base';
 import Base from './Base';
+import i18n from '@/i18n';
 import type { AxiosRequestConfig } from 'axios';
 import type { ChapterResponse, ChapterSchema } from '@/api/Chapter';
 
@@ -38,16 +39,16 @@ export default class Upload extends Base {
         result.data = response.data;
         break;
       case 400:
-        result.error = "Can't edit Upload chapter";
+        result.error = i18n.tc('api.upload.parent_400');
         break;
       case 401:
-        result.error = 'Please log in again';
+        result.error = i18n.tc('api.401');
         break;
       case 404:
-        result.error = response.data?.detail;
+        result.error = i18n.tc('api.404');
         break;
       case 422:
-        result.error = 'The data provided is not valid';
+        result.error = i18n.tc('api.422');
         break;
       default:
         result.error = response.data?.detail ?? response.statusText;
@@ -65,13 +66,13 @@ export default class Upload extends Base {
         result.data = response.data;
         break;
       case 401:
-        result.error = 'Please log in again';
+        result.error = i18n.tc('api.401');
         break;
       case 404:
-        result.error = 'Upload session not found';
+        result.error = i18n.tc('api.upload.404');
         break;
       case 422:
-        result.error = 'The data provided is not valid';
+        result.error = i18n.tc('api.422');
         break;
       default:
         result.error = response.data?.detail ?? response.statusText;
@@ -110,16 +111,16 @@ export default class Upload extends Base {
         result.data = response.data;
         break;
       case 400:
-        result.error = "One of the files provided isn't valid";
+        result.error = i18n.tc('api.upload.file_400');
         break;
       case 401:
-        result.error = 'Please log in again';
+        result.error = i18n.tc('api.401');
         break;
       case 404:
-        result.error = 'Upload session not found';
+        result.error = i18n.tc('api.upload.404');
         break;
       case 422:
-        result.error = 'The data provided is not valid';
+        result.error = i18n.tc('api.422');
         break;
       default:
         result.error = response.data?.detail ?? response.statusText;
@@ -137,13 +138,13 @@ export default class Upload extends Base {
         result.data = response.data;
         break;
       case 401:
-        result.error = 'Please log in again';
+        result.error = i18n.tc('api.401');
         break;
       case 404:
-        result.error = 'Upload session not found';
+        result.error = i18n.tc('api.upload.404');
         break;
       case 422:
-        result.error = 'The data provided is not valid';
+        result.error = i18n.tc('api.422');
         break;
       default:
         result.error = response.data?.detail ?? response.statusText;
@@ -173,14 +174,16 @@ export default class Upload extends Base {
         result.data = response.data;
         break;
       case 400:
+        result.error = i18n.tc('api.upload.pages_400');
+        break;
       case 404:
-        result.error = response.data?.detail;
+        result.error = i18n.tc('api.404');
         break;
       case 401:
-        result.error = 'Please log in again';
+        result.error = i18n.tc('api.401');
         break;
       case 422:
-        result.error = 'The data provided is not valid';
+        result.error = i18n.tc('api.422');
         break;
       default:
         result.error = response.data?.detail ?? response.statusText;
@@ -199,16 +202,16 @@ export default class Upload extends Base {
         result.data = 'OK';
         break;
       case 400:
-        result.error = "That file doesn't exist in the current session";
+        result.error = i18n.tc('api.upload.no_page_400');
         break;
       case 401:
-        result.error = 'Please log in again';
+        result.error = i18n.tc('api.401');
         break;
       case 404:
-        result.error = 'Upload session not found';
+        result.error = i18n.tc('api.upload.404');
         break;
       case 422:
-        result.error = 'The data provided is not valid';
+        result.error = i18n.tc('api.422');
         break;
       default:
         result.error = response.data?.detail ?? response.statusText;
@@ -227,10 +230,10 @@ export default class Upload extends Base {
         result.data = 'OK';
         break;
       case 401:
-        result.error = 'Please log in again';
+        result.error = i18n.tc('api.401');
         break;
       case 404:
-        result.error = 'Upload session not found';
+        result.error = i18n.tc('api.upload.404');
         break;
       default:
         result.error = response.data?.detail ?? response.statusText;
