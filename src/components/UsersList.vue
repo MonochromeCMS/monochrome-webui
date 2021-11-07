@@ -34,7 +34,7 @@
           v-for="(item, i) in users"
           :key="i"
         >
-          <td class="first-capital">{{ item.role }}</td>
+          <td class="first-capital">{{ $t(`roles.${item.role}`) }}</td>
           <td>
             <div class="d-flex align-center">
               <v-img

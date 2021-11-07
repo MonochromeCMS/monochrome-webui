@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" lg="10" class="mx-auto">
         <v-card rounded="lg" color="backgroundAlt" elevation="0" class="pa-4">
-          <v-card-title class="justify-center lemon-milk"> UPLOAD CHAPTER </v-card-title>
+          <v-card-title class="justify-center lemon-milk">{{ $t('uploadChapter') }}</v-card-title>
           <manga-row :loading="!manga" :manga="manga" :cover="cover" class="background rounded" />
           <v-card-text>
             <upload-form v-if="manga" :chapter="null" :mangaId="mangaId" />
@@ -57,7 +57,7 @@ export default class ChapterUpload extends Vue {
       this.manga = response.data;
     } else {
       const notification = {
-        context: 'Get manga',
+        context: this.$t('getChapter'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -74,3 +74,13 @@ export default class ChapterUpload extends Vue {
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+getChapter: 'Get chapter'
+uploadChapter: 'Upload chapter'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+getChapter: 'Chargement du chapitre'
+uploadChapter: 'Ajout du chapitre'
+</i18n>

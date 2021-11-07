@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" lg="10" class="mx-auto">
         <v-card rounded="lg" color="backgroundAlt" elevation="0" class="pa-4">
-          <v-card-title class="justify-center lemon-milk">EDIT CHAPTER</v-card-title>
+          <v-card-title class="justify-center lemon-milk">{{ $t('editChapter') }}</v-card-title>
           <manga-row :loading="!manga" :manga="manga" :cover="cover" class="background rounded" />
           <v-card-text>
             <upload-form v-if="chapter && manga" :mangaId="manga.id" :chapter="chapter" />
@@ -64,7 +64,7 @@ export default class About extends Vue {
       this.manga = response.data.manga;
     } else {
       const notification = {
-        context: 'Get chapter',
+        context: this.$t('getChapter'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -76,7 +76,7 @@ export default class About extends Vue {
   async onChapterUpdate(chapter: ChapterResponse) {
     if (!Chapter.canEdit(chapter, this.userId, this.userRole)) {
       const notification = {
-        context: 'Edit chapter',
+        context: this.$t('editChapter'),
         message: "You aren't allowed to edit this chapter",
         color: 'error',
       };
@@ -94,3 +94,13 @@ export default class About extends Vue {
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+getChapter: 'Get chapter'
+editChapter: 'Edit chapter'
+</i18n>
+
+<i18n locale="en" lang="yaml">
+getChapter: 'Chargement du chapitre'
+editChapter: 'Modification du chapitre'
+</i18n>

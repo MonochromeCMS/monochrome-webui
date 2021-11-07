@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" md="10" lg="8" class="mx-auto">
         <v-card rounded="lg" color="backgroundAlt" elevation="0" class="pa-4">
-          <v-card-title class="justify-center lemon-milk"> HANDLE USERS </v-card-title>
+          <v-card-title class="justify-center lemon-milk">{{ $t('handleUsers') }}</v-card-title>
           <v-card-text>
             <user-filter v-model="filters" @update="getUsers" />
             <users-list :loading="loading" :users="users" :limit="limit" @update="getUsers">
@@ -116,7 +116,7 @@ export default class Users extends Vue {
       this.users = response.data.results;
     } else {
       const notification = {
-        context: 'Get users',
+        context: this.$t('getUsers'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -138,3 +138,13 @@ export default class Users extends Vue {
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+getUsers: 'Get users'
+handleUsers: 'Handle users'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+getUsers: 'Chargement des utilisateurs'
+handleUsers: 'Gestion des utilisateurs'
+</i18n>

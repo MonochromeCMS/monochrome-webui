@@ -72,20 +72,22 @@ export default class NavBar extends Vue {
 
   tabs = null;
 
-  links = [
-    {
-      text: this.$t('home'),
-      to: '/',
-    },
-    {
-      text: this.$t('manga'),
-      to: '/manga',
-    },
-    {
-      text: this.$t('about'),
-      to: '/about',
-    },
-  ];
+  get links(): any {
+    return [
+      {
+        text: this.$t('home'),
+        to: '/',
+      },
+      {
+        text: this.$t('manga'),
+        to: '/manga',
+      },
+      {
+        text: this.$t('about'),
+        to: '/about',
+      },
+    ];
+  }
 
   get reader(): boolean {
     return this.$route.name === 'ChapterReader';
@@ -132,7 +134,7 @@ manga: 'Manga'
 about: 'About'
 </i18n>
 
-<i18n locale="en" lang="yaml">
+<i18n locale="fr" lang="yaml">
 login: 'Se connecter'
 home: 'Accueil'
 manga: 'Manga'

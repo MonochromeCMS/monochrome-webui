@@ -8,7 +8,7 @@
           <v-divider v-if="canCreate" />
           <v-card-actions>
             <v-btn v-if="canCreate" class="my-2 mx-auto" to="/manga/new" color="background">
-              Add a manga
+              {{ $t('addManga') }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -35,3 +35,11 @@ export default class Manga extends Vue {
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+addManga: 'Add a manga'
+</i18n>
+
+<i18n locale="en" lang="yaml">
+addManga: 'Ajouter un manga'
+</i18n>

@@ -34,8 +34,8 @@ export default class About extends Vue {
 
   notification(): void {
     const notification = {
-      context: 'Register',
-      message: 'Account created successfully',
+      context: this.$t('register'),
+      message: this.$t('registerSuccess'),
       color: 'success',
     };
     this.$store.dispatch('pushNotification', notification);
@@ -50,3 +50,13 @@ export default class About extends Vue {
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+register: 'Register'
+registerSuccess: 'Account created successfully'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+register: 'Inscription'
+registerSuccess: 'Compte créé avec succès'
+</i18n>

@@ -12,7 +12,7 @@
                   color="background"
                   class="ma-2"
                 >
-                  Start reading
+                  {{ $t('startReading') }}
                 </v-btn>
                 <v-btn
                   v-if="canUpload"
@@ -20,7 +20,7 @@
                   color="green darken-2"
                   class="ma-2"
                 >
-                  Add chapter
+                  {{ $t('addChapter') }}
                 </v-btn>
                 <v-btn
                   v-if="canEdit(manga)"
@@ -28,29 +28,31 @@
                   color="info"
                   class="ma-2"
                 >
-                  Edit manga
+                  {{ $t('editManga') }}
                 </v-btn>
                 <v-dialog v-if="canEdit(manga)" v-model="deleteDialog" max-width="30rem">
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn color="error" v-bind="attrs" v-on="on" class="ma-2">
-                      Delete manga
+                      {{ $t('deleteManga') }}
                     </v-btn>
                   </template>
 
                   <v-card>
-                    <v-card-title class="text-h5 background mb-2"> Warning </v-card-title>
+                    <v-card-title class="text-h5 background mb-2">{{ $t('warning') }}</v-card-title>
 
                     <v-card-text class="body-1">
-                      <span class="font-weight-bold">This action can't be undone!</span>
-                      Are you sure you want to delete this manga?
+                      <span class="font-weight-bold">{{ $t('warningBoldMessage') }}</span>
+                      {{ $t('warningMessage') }}
                     </v-card-text>
 
                     <v-divider></v-divider>
 
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn color="gray" text @click="deleteDialog = false"> Cancel </v-btn>
-                      <v-btn color="error" @click="deleteManga"> Delete </v-btn>
+                      <v-btn color="gray" text @click="deleteDialog = false">{{
+                        $t('cancel')
+                      }}</v-btn>
+                      <v-btn color="error" @click="deleteManga">{{ $t('delete') }}</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
@@ -163,3 +165,19 @@ export default class MangaDetail extends Vue {
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+startReading: 'Start reading'
+addChapter: 'Add a chapter'
+editManga: 'Edit manga'
+deleteManga: 'Delete manga'
+warningMessage: 'Are you sure you want to delete this manga?'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+startReading: 'Commencer à lire'
+addChapter: 'Ajouter un chapitre'
+editManga: 'Modifier le manga'
+deleteManga: 'Supprimer le manga'
+warningMessage: 'Êtes-vous sûr de vouloir supprimer ce manga?'
+</i18n>

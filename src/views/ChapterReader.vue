@@ -107,7 +107,7 @@ export default class ChapterReader extends Vue {
       await this.getChapters(response.data.mangaId);
     } else {
       const notification = {
-        context: 'Get chapter',
+        context: this.$t('getChapter'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -122,7 +122,7 @@ export default class ChapterReader extends Vue {
       this.chapters = response.data;
     } else {
       const notification = {
-        context: 'Get manga chapters',
+        context: this.$t('getChapters'),
         message: response.error ?? '',
         color: 'error',
       };
@@ -135,3 +135,13 @@ export default class ChapterReader extends Vue {
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+getChapter: 'Get chapter'
+getChapters: 'Get manga chapters'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+getChapter: 'Chargement du chapitre'
+getChapters: 'Chargement des chapitres du manga'
+</i18n>
