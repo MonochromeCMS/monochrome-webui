@@ -40,6 +40,6 @@ export default class Manga extends Vue {
 addManga: 'Add a manga'
 </i18n>
 
-<i18n locale="en" lang="yaml">
+<i18n locale="fr" lang="yaml">
 addManga: 'Ajouter un manga'
 </i18n>

@@ -3,7 +3,15 @@
 
     header /opensearch.xml Content-Type "application/opensearchdescription+xml"
 
-    root * /srv
-    file_server
-    try_files {path} /
+	handle_path /media/* {
+		root * /srv/media
+		file_server
+		header Cache-Control "max-age=1728000"
+	}
+
+	handle_path /* {
+		root * /srv
+		file_server
+		try_files {path} /
+	}
 }

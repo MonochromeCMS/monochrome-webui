@@ -65,7 +65,7 @@ deleteChapter: 'Delete chapter'
 warningMessage: 'Are you sure you want to delete this chapter?'
 </i18n>
 
-<i18n locale="en" lang="yaml">
+<i18n locale="fr" lang="yaml">
 deleteChapter: 'Supprimer le chapitre'
 warningMessage: 'Êtes-vous sûr de vouloir supprimer ce chapitre ?'
 </i18n>

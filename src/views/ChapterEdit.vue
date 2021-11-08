@@ -100,7 +100,7 @@ getChapter: 'Get chapter'
 editChapter: 'Edit chapter'
 </i18n>
 
-<i18n locale="en" lang="yaml">
+<i18n locale="fr" lang="yaml">
 getChapter: 'Chargement du chapitre'
 editChapter: 'Modification du chapitre'
 </i18n>
