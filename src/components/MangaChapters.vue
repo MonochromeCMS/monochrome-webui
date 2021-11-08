@@ -21,7 +21,12 @@
     </v-row>
     <v-row v-else class="flex-column align-center">
       <v-col cols="12" class="text-h3 text-center" tag="h2">{{ $t('chapters') }}</v-col>
-      <v-col cols="12" v-for="(item, index) in chaptersPage" :key="index" class="chapter-row pa-1">
+      <v-col
+        cols="12"
+        v-for="(item, index) in chaptersPage"
+        :key="item.id"
+        class="chapter-row pa-1"
+      >
         <router-link :to="`/chapters/${item.id}`" class="text-decoration-none chapter-link pa-3">
           <v-row class="justify-space-around">
             <v-col cols="6" sm="3" md="2">

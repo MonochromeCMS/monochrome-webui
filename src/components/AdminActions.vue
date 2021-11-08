@@ -5,8 +5,8 @@
     </v-subheader>
     <v-list-item-group v-model="selectedItem" color="primary">
       <v-list-item
-        v-for="(item, i) in items"
-        :key="i"
+        v-for="item in items"
+        :key="item.text"
         :to="item.to"
         :href="item.href"
         :target="item.target"

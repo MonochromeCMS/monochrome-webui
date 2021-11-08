@@ -3,7 +3,7 @@
     <h2 class="text-h4 mt-0 mb-3">{{ $t('pages') }}</h2>
     <draggable class="drag-pages" v-model="pages">
       <template v-for="(item, index) in pages">
-        <v-col cols="6" sm="4" md="3" xl="2" :key="index">
+        <v-col cols="6" sm="4" md="3" xl="2" :key="item.id">
           <v-card color="background" class="page-card">
             <v-img :src="blob(item.id)" :aspect-ratio="4 / 5" position="relative">
               <v-btn

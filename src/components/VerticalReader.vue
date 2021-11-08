@@ -3,7 +3,7 @@
     <v-btn block text width="15rem" @click="previousChapter" class="mb-3">{{
       $t('previousChapter')
     }}</v-btn>
-    <v-col :class="webtoon ? 'webtoon' : ''" cols="12" v-for="index in length" :key="index">
+    <v-col :class="webtoon ? 'webtoon' : ''" cols="12" v-for="index in length" :key="page(index)">
       <v-img contain :class="fit" :width="width" :src="page(index)" :lazy-src="defaultImage">
         <template v-slot:placeholder>
           <v-row class="fill-height ma-0" align="center" justify="center">

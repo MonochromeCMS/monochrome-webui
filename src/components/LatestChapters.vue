@@ -43,8 +43,8 @@
         sm="6"
         :lg="isConnected ? 12 : 6"
         xl="6"
-        v-for="(chapter, index) in chapters"
-        :key="index"
+        v-for="chapter in chapters"
+        :key="chapter.id"
         class="px-2 my-2"
       >
         <v-card color="background" class="px-4" :to="`/chapters/${chapter.id}`">

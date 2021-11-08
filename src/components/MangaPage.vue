@@ -20,7 +20,7 @@
       <v-col v-if="manga.length === 0" class="text-center text-body-1">
         {{ search ? $t('noMangaFound') : $t('noManga') }}
       </v-col>
-      <v-col v-else cols="12" sm="6" md="4" lg="3" v-for="(item, index) in manga" :key="index">
+      <v-col v-else cols="12" sm="6" md="4" lg="3" v-for="item in manga" :key="item.id">
         <v-card color="background" :to="to(item)" height="100%" class="d-flex flex-column">
           <v-img aspect-ratio="1" :src="cover(item)" />
           <v-card-title v-text="item.title" />

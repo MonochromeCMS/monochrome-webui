@@ -5,8 +5,8 @@
         <tr class="user-row">
           <th
             class="text-center text--primary text-h5"
-            v-for="(val, i) in headers"
-            :key="i"
+            v-for="val in headers"
+            :key="val.title"
             :class="val.class"
           >
             {{ val.title }}
@@ -31,8 +31,8 @@
         </tr>
         <tr
           class="user-row text-center text-body-1 text--primary"
-          v-for="(item, i) in users"
-          :key="i"
+          v-for="item in users"
+          :key="item.id"
         >
           <td class="first-capital">{{ $t(`roles.${item.role}`) }}</td>
           <td>
