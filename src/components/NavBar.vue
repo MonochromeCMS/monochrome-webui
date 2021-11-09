@@ -12,16 +12,23 @@
       <v-tab v-for="link in links" :key="link.text" :to="link.to">
         {{ link.text }}
       </v-tab>
-      <locales-tab />
-      <v-tab v-if="!isConnected" to="/login" class="login-tab">{{ $t('login') }}</v-tab>
+    </v-tabs>
+
+    <v-list class="hidden-sm-and-down action-list">
+      <locales-item />
+      <v-list-item v-if="!isConnected" to="/login" active-class="fake-tab">{{
+        $t('login')
+      }}</v-list-item>
       <v-menu v-else offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-tab v-on="on" v-bind="attrs" class="login-tab"> {{ displayUserRole }} </v-tab>
+          <v-list-item v-on="on" v-bind="attrs" class="login-tab">{{
+            displayUserRole
+          }}</v-list-item>
         </template>
 
         <admin-actions :left="true" />
       </v-menu>
-    </v-tabs>
+    </v-list>
 
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
@@ -37,20 +44,21 @@
           <v-icon>{{ icons.mdiMenu }}</v-icon>
         </v-btn>
       </template>
-      <v-tabs vertical>
-        <v-tab v-for="link in links" :key="link.text" :to="link.to">
+      <v-list-item-group class="background lemon-milk" vertical>
+        <v-list-item class="justify-end" v-for="link in links" :key="link.text" :to="link.to">
           {{ link.text }}
-        </v-tab>
-        <locales-tab />
-        <v-tab v-if="!isConnected" to="/login"> Login </v-tab>
+        </v-list-item>
+        <locales-item />
+        <v-list-item v-if="!isConnected" to="/login">{{ $t('login') }}</v-list-item>
         <v-menu v-else offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-tab v-on="on" v-bind="attrs" class="login-tab"> {{ displayUserRole }} </v-tab>
+            <v-list-item v-on="on" v-bind="attrs" class="login-tab">
+              {{ displayUserRole }}
+            </v-list-item>
           </template>
-
           <admin-actions :left="true" />
         </v-menu>
-      </v-tabs>
+      </v-list-item-group>
     </v-menu>
   </v-app-bar>
 </template>
@@ -60,10 +68,10 @@ import { Vue, Component } from 'vue-property-decorator';
 import AdminActions from '@/components/AdminActions.vue';
 import { mdiMenu } from '@mdi/js';
 import type { Role } from '@/api/User';
-import LocalesTab from '@/components/LocalesTab.vue';
+import LocalesItem from '@/components/LocalesItem.vue';
 
 @Component({
-  components: { LocalesTab, AdminActions },
+  components: { LocalesItem, AdminActions },
 })
 export default class NavBar extends Vue {
   icons = {
@@ -121,9 +129,22 @@ export default class NavBar extends Vue {
   font-size: 2em;
   text-decoration: none;
 }
-
-.login-tab {
-  margin-right: 0 !important;
+.action-list {
+  display: flex;
+  padding: 0 0 0 8px;
+  height: inherit;
+  margin: -4px -16px -4px 0;
+  font-weight: 500;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.fake-tab {
+  &::before {
+    border-bottom: white 2px solid;
+    background-color: transparent;
+    opacity: 1 !important;
+    transition: opacity 500ms ease-in;
+  }
 }
 </style>
 

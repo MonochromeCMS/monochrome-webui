@@ -1,9 +1,9 @@
 <template>
-  <v-menu offset-y>
+  <v-menu v-if="locales.length > 1" offset-y>
     <template v-slot:activator="{ on, attrs }">
-      <v-tab v-if="locales.length > 1" v-on="on" v-bind="attrs" class="lang-tab text-uppercase">
+      <v-list-item v-on="on" v-bind="attrs" class="lang-tab justify-end">
         {{ currentLocale }}
-      </v-tab>
+      </v-list-item>
     </template>
     <v-list>
       <v-list-item
@@ -23,7 +23,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component
-export default class LocalesTab extends Vue {
+export default class LocalesItem extends Vue {
   locales = ['en', 'fr'];
 
   get currentLocale(): string {
