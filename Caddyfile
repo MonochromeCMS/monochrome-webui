@@ -1,17 +1,11 @@
-{$VUE_APP_PROTOCOL}://{$VUE_APP_DOMAIN_NAME} {
+{$PROTOCOL}://{$DOMAIN_NAME} {
     encode zstd gzip
 
     header /opensearch.xml Content-Type "application/opensearchdescription+xml"
+    header Cache-Control "max-age=1728000"
+    header Access-Control-Allow-Origin "*"
 
-	handle_path /media/* {
-		root * /srv/media
-		file_server
-		header Cache-Control "max-age=1728000"
-	}
-
-	handle_path /* {
-		root * /srv
-		file_server
-		try_files {path} /
-	}
+    root * /srv
+    file_server
+    try_files {path} /
 }

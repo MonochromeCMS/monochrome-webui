@@ -140,10 +140,15 @@ export default class NavBar extends Vue {
 }
 .fake-tab {
   &::before {
-    border-bottom: white 2px solid;
     background-color: transparent;
     opacity: 1 !important;
     transition: opacity 500ms ease-in;
+  }
+  &.theme--light::before {
+    border-bottom: black 2px solid;
+  }
+  &.theme--dark::before {
+    border-bottom: white 2px solid;
   }
 }
 </style>

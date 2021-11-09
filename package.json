@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "tsc": "vue-tsc --noEmit",
-    "build": "vue-tsc --noEmit && vue-cli-service build",
+    "build": "vue-tsc --noEmit && vue-cli-service build --modern",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""

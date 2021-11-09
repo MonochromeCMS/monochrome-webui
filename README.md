@@ -45,18 +45,20 @@ make dev=1 build start
 ### Environment variables
 ```javascript
 // Domain this UI will be served on
-VUE_APP_DOMAIN_NAME = "localhost"
+DOMAIN_NAME = "localhost"
 // Protocol this UI will be served with
-VUE_APP_PROTOCOL = "http"
+PROTOCOL = "http"
+// Prefix for all the server files, if needed (ex. server on https://.../monochrome => /monochrome
+PUBLIC_URL = "/"
 // Base URL to access the images
 VUE_APP_MEDIA_PATH = "http://localhost/media"
 // Base URL to access the API
 VUE_APP_API_PATH = "http://localhost/api"
 
 // Title of the application
-VUE_APP_TITLE = "Monochrome"
+TITLE = "Monochrome"
 // Short description of the application
-VUE_APP_DESCRIPTION
+DESCRIPTION
 // Secret used to encrypt the local storage
 VUE_APP_SECRET
 ```

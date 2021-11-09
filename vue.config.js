@@ -1,9 +1,10 @@
 const path = require('path');
 const XMLPlugin = require('xml-webpack-plugin');
 
-const protocol = process.env.VUE_APP_PROTOCOL || 'http';
-const domainName = process.env.VUE_APP_DOMAIN_NAME || 'localhost';
-const title = process.env.VUE_APP_TITLE || 'Monochrome';
+const protocol = process.env.PROTOCOL || 'http';
+const domainName = process.env.DOMAIN_NAME || 'localhost';
+const publicPath = process.env.PUBLIC_URL || '/';
+const title = process.env.TITLE || 'Monochrome';
 const url = `${protocol}://${domainName}/`;
 
 const XMLFiles = [
@@ -20,11 +21,12 @@ const XMLFiles = [
 const metaArgs = {
   title,
   url,
-  description: process.env.VUE_APP_DESCRIPTION || 'A website for reading manga',
+  description: process.env.DESCRIPTION || 'A website for reading manga',
 };
 
 /** @type {import('@vue/cli-service').ProjectOptions} */
 module.exports = {
+  publicPath,
   transpileDependencies: ['vuetify'],
   devServer: {
     port: 80,
