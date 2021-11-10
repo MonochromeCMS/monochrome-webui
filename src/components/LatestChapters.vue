@@ -132,9 +132,9 @@ export default class LatestChapters extends Vue {
       this.total = response.data.total;
     } else {
       const notification = {
+        color: 'error',
         context: this.$tc('latestChapters'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }
@@ -145,12 +145,12 @@ export default class LatestChapters extends Vue {
   ago(val: number): string {
     val = 0 | ((Date.now() - val) / 1000);
     const length: Record<string, number> = {
-      second: 60,
-      minute: 60,
-      hour: 24,
       day: 7,
-      week: 4.35,
+      hour: 24,
+      minute: 60,
       month: 12,
+      second: 60,
+      week: 4.35,
       year: 10000,
     };
 

@@ -69,10 +69,10 @@ export default class MangaPage extends Vue {
   total = 0;
 
   statusColor = {
-    ongoing: 'green',
+    cancelled: 'red',
     completed: 'green darken-2',
     hiatus: 'orange',
-    cancelled: 'red',
+    ongoing: 'green',
   };
 
   search: any = '';
@@ -101,9 +101,9 @@ export default class MangaPage extends Vue {
       this.total = response.data.total;
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('mangaPagination'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

@@ -9,36 +9,23 @@ const url = `${protocol}://${domainName}/`;
 
 const XMLFiles = [
   {
-    template: path.join(__dirname, './src/opensearch.ejs'),
-    filename: 'opensearch.xml',
     data: {
-      url,
       title,
+      url,
     },
+    filename: 'opensearch.xml',
+    template: path.join(__dirname, './src/opensearch.ejs'),
   },
 ];
 
 const metaArgs = {
+  description: process.env.DESCRIPTION || 'A website for reading manga',
   title,
   url,
-  description: process.env.DESCRIPTION || 'A website for reading manga',
 };
 
 /** @type {import('@vue/cli-service').ProjectOptions} */
 module.exports = {
-  publicPath,
-  transpileDependencies: ['vuetify'],
-  devServer: {
-    port: 80,
-  },
-  pwa: {
-    name: title,
-    themeColor: '#212121',
-    workboxOptions: {
-      cleanupOutdatedCaches: true,
-      skipWaiting: true,
-    },
-  },
   chainWebpack: (config) => {
     config.plugin('html').tap((args) => {
       args[0] = { ...args[0], ...metaArgs };
@@ -53,13 +40,26 @@ module.exports = {
       }),
     ],
   },
+  devServer: {
+    port: 80,
+  },
   pluginOptions: {
     i18n: {
-      locale: 'fr',
-      fallbackLocale: 'en',
-      localeDir: 'locales',
-      enableInSFC: true,
       enableBridge: false,
+      enableInSFC: true,
+      fallbackLocale: 'en',
+      locale: 'fr',
+      localeDir: 'locales',
     },
   },
+  publicPath,
+  pwa: {
+    name: title,
+    themeColor: '#212121',
+    workboxOptions: {
+      cleanupOutdatedCaches: true,
+      skipWaiting: true,
+    },
+  },
+  transpileDependencies: ['vuetify'],
 };

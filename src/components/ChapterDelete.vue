@@ -47,9 +47,9 @@ export default class ChapterDelete extends Vue {
       this.dialog = false;
     } else {
       const notification = {
+        color: 'error',
         context: this.$tc('deleteChapter'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

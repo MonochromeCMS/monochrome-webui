@@ -2,11 +2,11 @@ import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
 
 const errorResponse: AxiosResponse = {
+  config: {},
   data: null,
+  headers: null,
   status: 0,
   statusText: 'UnknownError',
-  headers: null,
-  config: {},
 };
 
 export interface Pagination<T> {

@@ -72,7 +72,7 @@ import AdminActions from '@/components/AdminActions.vue';
 import LocalesItem from '@/components/LocalesItem.vue';
 
 @Component({
-  components: { LocalesItem, AdminActions },
+  components: { AdminActions, LocalesItem },
 })
 export default class NavBar extends Vue {
   icons = {

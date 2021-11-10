@@ -43,10 +43,10 @@ export default class UserFilter extends Vue {
   };
 
   roleItems = [
-    { value: null, text: '---' },
-    { value: 'admin', text: this.upper(this.$tc('roles.admin')) },
-    { value: 'uploader', text: this.upper(this.$tc('roles.uploader')) },
-    { value: 'user', text: this.upper(this.$tc('roles.user')) },
+    { text: '---', value: null },
+    { text: this.upper(this.$tc('roles.admin')), value: 'admin' },
+    { text: this.upper(this.$tc('roles.uploader')), value: 'uploader' },
+    { text: this.upper(this.$tc('roles.user')), value: 'user' },
   ];
 
   updateFilter(field: string, value: any): void {

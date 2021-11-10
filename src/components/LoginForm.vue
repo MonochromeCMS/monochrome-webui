@@ -46,8 +46,8 @@ extend('required', {
 
 @Component({
   components: {
-    ValidationProvider,
     ValidationObserver,
+    ValidationProvider,
   },
 })
 export default class LoginForm extends Vue {
@@ -68,8 +68,8 @@ export default class LoginForm extends Vue {
 
   get params(): any {
     return {
-      username: this.username,
       password: this.password,
+      username: this.username,
     };
   }
 
@@ -92,9 +92,9 @@ export default class LoginForm extends Vue {
       this.clear();
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('login'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

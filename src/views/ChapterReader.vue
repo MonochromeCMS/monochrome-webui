@@ -44,7 +44,7 @@ import ReaderMenu from '@/components/ReaderMenu.vue';
 import VerticalReader from '@/components/VerticalReader.vue';
 
 @Component({
-  components: { ReaderMenu, VerticalReader, PagedReader },
+  components: { PagedReader, ReaderMenu, VerticalReader },
 })
 export default class ChapterReader extends Vue {
   chapter: DetailedChapterResponse | null = null;
@@ -77,8 +77,8 @@ export default class ChapterReader extends Vue {
 
   get chapterItems(): any[] {
     return this.chapters.map((el) => ({
-      value: el.id,
       text: this.chapterName(el),
+      value: el.id,
     }));
   }
 
@@ -104,13 +104,13 @@ export default class ChapterReader extends Vue {
 
     if (response.data) {
       this.chapter = response.data;
-      this.chapters = [{ value: this.chapterId, text: this.chapterName(response.data) }];
+      this.chapters = [{ text: this.chapterName(response.data), value: this.chapterId }];
       await this.getChapters(response.data.mangaId);
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('getChapter'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }
@@ -123,9 +123,9 @@ export default class ChapterReader extends Vue {
       this.chapters = response.data;
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('getChapters'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

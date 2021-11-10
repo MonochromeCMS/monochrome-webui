@@ -60,8 +60,8 @@ export default class LatestManga extends Vue {
       .map((el) => [
         {
           avatar: Media.cover(el.id, el.version),
-          title: el.title,
           subtitle: el.description,
+          title: el.title,
           to: `/manga/${el.id}`,
         },
         { divider: true, inset: true },
@@ -80,9 +80,9 @@ export default class LatestManga extends Vue {
       this.total = response.data.total;
     } else {
       const notification = {
+        color: 'error',
         context: this.$tc('latestManga'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

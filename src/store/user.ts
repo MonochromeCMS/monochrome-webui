@@ -23,18 +23,15 @@ export interface UserLogin {
 }
 
 const state = (): UserState => ({
-  token: '',
-  username: undefined,
-  role: undefined,
   email: undefined,
   id: undefined,
+  role: undefined,
+  token: '',
+  username: undefined,
   version: undefined,
 });
 
 const mutations = {
-  setToken(state: UserState, payload: TokenResponse): void {
-    state.token = payload.access_token;
-  },
   logout(state: UserState): void {
     state.token = '';
     state.username = undefined;
@@ -42,6 +39,9 @@ const mutations = {
     state.email = undefined;
     state.id = undefined;
     state.version = undefined;
+  },
+  setToken(state: UserState, payload: TokenResponse): void {
+    state.token = payload.access_token;
   },
   updateUser(state: UserState, payload: UserResponse): void {
     state.username = payload.username;
@@ -53,19 +53,6 @@ const mutations = {
 };
 
 const getters = {
-  userId(state: UserState): string | null {
-    return state.id ?? null;
-  },
-  userRole(state: UserState): string | null {
-    return state.role ?? null;
-  },
-  displayUserRole(state: UserState): string | null {
-    return state.role ? i18n.tc(`roles.${state.role}`) : null;
-  },
-  isConnected(state: UserState): boolean {
-    const result = state.token && state.id;
-    return !!result;
-  },
   authConfig(state: UserState): AxiosRequestConfig {
     return {
       headers: {
@@ -75,21 +62,22 @@ const getters = {
       withCredentials: true,
     };
   },
+  displayUserRole(state: UserState): string | null {
+    return state.role ? i18n.tc(`roles.${state.role}`) : null;
+  },
+  isConnected(state: UserState): boolean {
+    const result = state.token && state.id;
+    return !!result;
+  },
+  userId(state: UserState): string | null {
+    return state.id ?? null;
+  },
+  userRole(state: UserState): string | null {
+    return state.role ?? null;
+  },
 };
 
 const actions = {
-  async login(
-    { commit, dispatch }: ActionContext<UserState, any>,
-    { username, password }: UserLogin,
-  ): Promise<ApiResponse<TokenResponse>> {
-    const response = await Auth.login(username, password);
-
-    if (response.data) {
-      commit('setToken', response.data);
-      await dispatch('getUserData');
-    }
-    return response;
-  },
   async getUserData({
     getters,
     commit,
@@ -103,11 +91,23 @@ const actions = {
     }
     return response;
   },
+  async login(
+    { commit, dispatch }: ActionContext<UserState, any>,
+    { username, password }: UserLogin,
+  ): Promise<ApiResponse<TokenResponse>> {
+    const response = await Auth.login(username, password);
+
+    if (response.data) {
+      commit('setToken', response.data);
+      await dispatch('getUserData');
+    }
+    return response;
+  },
 };
 
 export default {
-  state,
   actions,
   getters,
   mutations,
+  state,
 };

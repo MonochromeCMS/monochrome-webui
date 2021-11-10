@@ -73,8 +73,8 @@ setInteractionMode('eager');
 
 @Component({
   components: {
-    ValidationProvider,
     ValidationObserver,
+    ValidationProvider,
   },
 })
 export default class SettingsForm extends Vue {
@@ -86,9 +86,9 @@ export default class SettingsForm extends Vue {
 
   get params(): any {
     return {
+      about: this.about || null,
       title1: this.title1 || null,
       title2: this.title2 || null,
-      about: this.about || null,
     };
   }
 
@@ -118,16 +118,16 @@ export default class SettingsForm extends Vue {
     if (response.data) {
       this.$store.commit('setSettings', response.data);
       const notification = {
+        color: 'success',
         context: this.$t('editSettings'),
         message: this.$t('editSuccess'),
-        color: 'success',
       };
       await this.$store.dispatch('pushNotification', notification);
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('editSettings'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

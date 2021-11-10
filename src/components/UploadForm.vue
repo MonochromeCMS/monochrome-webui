@@ -115,7 +115,7 @@ extend('regex', {
 });
 
 @Component({
-  components: { PageInput, ValidationProvider, ValidationObserver },
+  components: { PageInput, ValidationObserver, ValidationProvider },
 })
 export default class UploadForm extends Vue {
   $refs!: {
@@ -152,9 +152,9 @@ export default class UploadForm extends Vue {
     return {
       name: this.name,
       number: this.number ?? 0,
+      scanGroup: this.scanGroup,
       volume: this.volume ?? undefined,
       webtoon: this.webtoon,
-      scanGroup: this.scanGroup,
     };
   }
 
@@ -179,9 +179,9 @@ export default class UploadForm extends Vue {
       this.session = response.data;
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('createSession'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }
@@ -203,9 +203,9 @@ export default class UploadForm extends Vue {
       await this.$router.push(`/chapters/${response.data.id}`);
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('commitSession'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }
@@ -223,9 +223,9 @@ export default class UploadForm extends Vue {
       await this.$router.push(`/manga/${this.mangaId}/${response.data.id}`);
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('editChapter'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }
@@ -242,9 +242,9 @@ export default class UploadForm extends Vue {
       this.groupAutocomplete = response.data;
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('groupAutocomplete'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

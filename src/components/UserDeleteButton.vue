@@ -74,9 +74,9 @@ export default class UserDeleteButton extends Vue {
       }
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('deleteUser'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

@@ -6,79 +6,79 @@ Vue.use(VueRouter);
 
 const routes: RouteConfig[] = [
   {
-    path: '/manga',
-    name: 'Manga',
     component: () => import(/* webpackChunkName: "manga" */ '../views/Manga.vue'),
+    name: 'Manga',
+    path: '/manga',
   },
   {
-    path: '/manga/new',
-    name: 'MangaCreate',
     component: () => import(/* webpackChunkName: "manga_create" */ '../views/MangaCreate.vue'),
+    name: 'MangaCreate',
+    path: '/manga/new',
   },
   {
-    path: '/manga/:manga',
-    name: 'MangaDetail',
     component: () => import(/* webpackChunkName: "manga_detail" */ '../views/MangaDetail.vue'),
+    name: 'MangaDetail',
+    path: '/manga/:manga',
   },
   {
-    path: '/manga/:manga/edit',
-    name: 'MangaEdit',
     component: () => import(/* webpackChunkName: "manga_edit" */ '../views/MangaEdit.vue'),
+    name: 'MangaEdit',
+    path: '/manga/:manga/edit',
   },
   {
-    path: '/manga/:manga/upload',
-    name: 'ChapterUpload',
     component: () => import(/* webpackChunkName: "chapter_upload" */ '../views/ChapterUpload.vue'),
+    name: 'ChapterUpload',
+    path: '/manga/:manga/upload',
   },
   {
-    path: '/chapters/:chapter',
-    name: 'ChapterReader',
     component: () => import(/* webpackChunkName: "chapter_edit" */ '../views/ChapterReader.vue'),
+    name: 'ChapterReader',
+    path: '/chapters/:chapter',
   },
   {
-    path: '/chapters/:chapter/edit',
-    name: 'ChapterEdit',
     component: () => import(/* webpackChunkName: "chapter_edit" */ '../views/ChapterEdit.vue'),
+    name: 'ChapterEdit',
+    path: '/chapters/:chapter/edit',
   },
   {
-    path: '/users/me',
-    name: 'OwnUser',
     component: () => import(/* webpackChunkName: "users" */ '../views/OwnUser.vue'),
+    name: 'OwnUser',
+    path: '/users/me',
   },
   {
-    path: '/users',
-    name: 'Users',
     component: () => import(/* webpackChunkName: "users" */ '../views/Users.vue'),
+    name: 'Users',
+    path: '/users',
   },
   {
-    path: '/settings',
-    name: 'Settings',
     component: () => import(/* webpackChunkName: "settings" */ '../views/Settings.vue'),
+    name: 'Settings',
+    path: '/settings',
   },
   {
-    path: '/login',
-    name: 'Login',
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
+    name: 'Login',
+    path: '/login',
   },
   {
-    path: '/register',
-    name: 'Register',
     component: () => import(/* webpackChunkName: "login" */ '../views/Register.vue'),
+    name: 'Register',
+    path: '/register',
   },
   {
-    path: '/logout',
-    name: 'Logout',
     component: () => import(/* webpackChunkName: "logout" */ '../views/Logout.vue'),
+    name: 'Logout',
+    path: '/logout',
   },
   {
-    path: '/about',
-    name: 'About',
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    name: 'About',
+    path: '/about',
   },
   {
-    path: '/',
-    name: 'Home',
     component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+    name: 'Home',
+    path: '/',
   },
   {
     path: '*',
@@ -87,8 +87,8 @@ const routes: RouteConfig[] = [
 ];
 
 const router = new VueRouter({
-  mode: 'history',
   base: process.env.BASE_URL,
+  mode: 'history',
   routes,
 });
 

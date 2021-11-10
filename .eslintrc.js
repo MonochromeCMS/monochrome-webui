@@ -4,7 +4,7 @@ module.exports = {
     browser: true,
     node: true,
   },
-  plugins: ['simple-import-sort'],
+  plugins: ['simple-import-sort', 'sort-keys-fix'],
   extends: [
     'plugin:vue/recommended',
     'eslint:recommended',
@@ -24,7 +24,8 @@ module.exports = {
     'max-lines': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
     'max-lines-per-function': ['error', { max: 80, skipBlankLines: true, skipComments: true }],
     'max-depth': ['error', 4],
-    'simple-import-sort/imports': 'error',
+    'simple-import-sort/imports': 'warn',
+    'sort-keys-fix/sort-keys-fix': 'warn',
     // /. clean code
     // vue compiler macros
     'no-undef': 'off',

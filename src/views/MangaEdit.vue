@@ -41,9 +41,9 @@ export default class MangaEdit extends Vue {
       this.manga = response.data;
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('getManga'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

@@ -12,9 +12,9 @@ import store from './store';
 Vue.config.productionTip = false;
 
 new Vue({
+  i18n,
+  render: (h) => h(App),
   router,
   store,
   vuetify,
-  i18n,
-  render: (h) => h(App),
 }).$mount('#app');

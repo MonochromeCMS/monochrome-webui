@@ -5,9 +5,9 @@ import type { SettingsSchema } from '@/api/Settings';
 import Settings from '@/api/Settings';
 
 const state = (): SettingsSchema => ({
+  about: undefined,
   title1: undefined,
   title2: undefined,
-  about: undefined,
 });
 
 const mutations = {
@@ -39,8 +39,8 @@ const actions = {
 };
 
 export default {
-  state,
   actions,
   getters,
   mutations,
+  state,
 };

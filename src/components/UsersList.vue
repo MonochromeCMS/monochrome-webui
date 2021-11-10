@@ -88,8 +88,8 @@ export default class UsersList extends Vue {
       title: this.$t('username'),
     },
     {
-      title: this.$t('email'),
       class: 'hidden-sm-and-down',
+      title: this.$t('email'),
     },
     {
       title: this.$t('actions'),

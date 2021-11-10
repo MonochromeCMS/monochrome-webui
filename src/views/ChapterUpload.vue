@@ -58,9 +58,9 @@ export default class ChapterUpload extends Vue {
       this.manga = response.data;
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('getChapter'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

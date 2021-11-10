@@ -65,9 +65,9 @@ export default class About extends Vue {
       this.manga = response.data.manga;
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('getChapter'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }
@@ -77,9 +77,9 @@ export default class About extends Vue {
   async onChapterUpdate(chapter: ChapterResponse) {
     if (!Chapter.canEdit(chapter, this.userId, this.userRole)) {
       const notification = {
+        color: 'error',
         context: this.$t('editChapter'),
         message: "You aren't allowed to edit this chapter",
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
       await this.$router.replace('/');

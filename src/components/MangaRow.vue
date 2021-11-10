@@ -61,10 +61,10 @@ export default class MangaRow extends Vue {
   @Prop(Boolean) readonly loading!: boolean;
 
   statusColor = {
-    ongoing: 'green',
+    cancelled: 'red',
     completed: 'green darken-2',
     hiatus: 'orange',
-    cancelled: 'red',
+    ongoing: 'green',
   };
 
   upper(status: string): string {

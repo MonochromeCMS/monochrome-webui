@@ -31,7 +31,7 @@ export default class Upload extends Base {
   public static readonly router: string = '/upload';
 
   public static async begin(mangaId: string, chapterId: string | null, auth: AxiosRequestConfig) {
-    const data = { mangaId, chapterId };
+    const data = { chapterId, mangaId };
     const response = await Upload._post('/begin', data, auth);
 
     const result: ApiResponse<UploadSessionResponse> = Upload._apiResponse(response.status);

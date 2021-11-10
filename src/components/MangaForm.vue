@@ -120,8 +120,8 @@ extend('digits', {
 @Component({
   components: {
     MangaRow,
-    ValidationProvider,
     ValidationObserver,
+    ValidationProvider,
   },
 })
 export default class MangaForm extends Vue {
@@ -146,20 +146,20 @@ export default class MangaForm extends Vue {
   cover: File | null = null;
 
   statusItems = [
-    { value: 'ongoing', text: this.$t('ongoing') },
-    { value: 'hiatus', text: this.$t('hiatus') },
-    { value: 'completed', text: this.$t('completed') },
-    { value: 'cancelled', text: this.$t('cancelled') },
+    { text: this.$t('ongoing'), value: 'ongoing' },
+    { text: this.$t('hiatus'), value: 'hiatus' },
+    { text: this.$t('completed'), value: 'completed' },
+    { text: this.$t('cancelled'), value: 'cancelled' },
   ];
 
   get params(): MangaSchema {
     return {
-      title: this.title,
-      description: this.description,
-      author: this.author,
       artist: this.artist,
-      year: this.year ?? undefined,
+      author: this.author,
+      description: this.description,
       status: this.status ?? 'ongoing',
+      title: this.title,
+      year: this.year ?? undefined,
     };
   }
 
@@ -202,9 +202,9 @@ export default class MangaForm extends Vue {
       await this.setCover(response.data.id, this.cover);
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('createManga'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }
@@ -224,9 +224,9 @@ export default class MangaForm extends Vue {
       }
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('editManga'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }
@@ -246,9 +246,9 @@ export default class MangaForm extends Vue {
       await this.$router.push(`/manga/${mangaId}`);
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('setCover'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

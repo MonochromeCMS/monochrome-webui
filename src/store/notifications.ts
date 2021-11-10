@@ -18,8 +18,8 @@ interface NotificationsState {
 }
 
 const colors = {
-  success: 'success black--text',
   error: 'error white--text',
+  success: 'success black--text',
   warning: 'warning black--text',
 };
 
@@ -39,15 +39,15 @@ const getters = {
 };
 
 const mutations = {
+  addNotification(state: NotificationsState, payload: NotificationInput): void {
+    const notification = { ...payload, color: colors[payload.color] };
+    state.notifications = state.notifications.concat([notification]);
+  },
   closeNotification(state: NotificationsState): void {
     if (state.notifications.length > 0) {
       state.notifications = state.notifications.slice(0, -1);
       state.notificationsAmount = state.notifications.length;
     }
-  },
-  addNotification(state: NotificationsState, payload: NotificationInput): void {
-    const notification = { ...payload, color: colors[payload.color] };
-    state.notifications = state.notifications.concat([notification]);
   },
   updateAmount(state: NotificationsState, payload: number) {
     state.notificationsAmount = payload;
@@ -55,13 +55,6 @@ const mutations = {
 };
 
 const actions = {
-  async pushNotification(
-    { commit, state, dispatch }: ActionContext<NotificationsState, any>,
-    payload: NotificationInput,
-  ): Promise<void> {
-    commit('addNotification', payload);
-    await dispatch('deferAmount');
-  },
   async deferAmount({ commit, state }: ActionContext<NotificationsState, any>): Promise<void> {
     const delay = new Promise((resolve) => {
       setTimeout(() => resolve('done!'), 300);
@@ -71,11 +64,18 @@ const actions = {
     await delay;
     commit('updateAmount', state.notifications.length);
   },
+  async pushNotification(
+    { commit, state, dispatch }: ActionContext<NotificationsState, any>,
+    payload: NotificationInput,
+  ): Promise<void> {
+    commit('addNotification', payload);
+    await dispatch('deferAmount');
+  },
 };
 
 export default {
-  state,
+  actions,
   getters,
   mutations,
-  actions,
+  state,
 };

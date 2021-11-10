@@ -18,9 +18,9 @@ import ThemeToggler from '@/components/ThemeToggler.vue';
 
 @Component({
   components: {
-    ThemeToggler,
     NavBar,
     Notifications,
+    ThemeToggler,
   },
 })
 export default class App extends Vue {

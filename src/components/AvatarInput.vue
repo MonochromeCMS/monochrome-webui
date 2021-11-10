@@ -63,9 +63,9 @@ export default class AvatarInput extends Vue {
       this.update();
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('avatarUpload'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

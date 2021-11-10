@@ -130,9 +130,9 @@ export default class MangaDetail extends Vue {
       this.manga = response.data;
     } else {
       const notification = {
+        color: 'error',
         context: 'Get manga',
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }
@@ -148,9 +148,9 @@ export default class MangaDetail extends Vue {
       await this.$router.push('/manga');
     } else {
       const notification = {
+        color: 'error',
         context: 'Delete manga',
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

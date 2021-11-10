@@ -130,9 +130,9 @@ export default class PageInput extends Vue {
       this.pages.push(...response.data);
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('fileUpload'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }
@@ -152,9 +152,9 @@ export default class PageInput extends Vue {
       this.pages = this.pages.slice(0, index).concat(this.pages.slice(index + 1));
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('deletePage'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }
@@ -174,9 +174,9 @@ export default class PageInput extends Vue {
       this.pages = [];
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('deleteAllPages'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

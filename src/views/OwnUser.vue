@@ -22,7 +22,7 @@ import UserForm from '@/components/UserForm.vue';
 import UsersList from '@/components/UsersList.vue';
 
 @Component({
-  components: { UsersList, UserForm },
+  components: { UserForm, UsersList },
 })
 export default class About extends Vue {
   get user(): UserResponse {

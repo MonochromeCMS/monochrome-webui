@@ -60,7 +60,7 @@ import UserForm from '@/components/UserForm.vue';
 import UsersList from '@/components/UsersList.vue';
 
 @Component({
-  components: { UserFilter, UsersList, UserForm },
+  components: { UserFilter, UserForm, UsersList },
 })
 export default class Users extends Vue {
   icons = {
@@ -116,9 +116,9 @@ export default class Users extends Vue {
       this.users = response.data.results;
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('getUsers'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }

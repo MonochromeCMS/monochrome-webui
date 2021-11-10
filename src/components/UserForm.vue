@@ -107,8 +107,8 @@ extend('required', {
 @Component({
   components: {
     AvatarInput,
-    ValidationProvider,
     ValidationObserver,
+    ValidationProvider,
   },
 })
 export default class UserForm extends Vue {
@@ -120,7 +120,7 @@ export default class UserForm extends Vue {
 
   @Prop({ default: false, type: Boolean }) readonly register!: any;
 
-  @Prop({ type: String, default: 'background' }) readonly color!: string;
+  @Prop({ default: 'background', type: String }) readonly color!: string;
 
   @Prop({ default: false, type: Boolean }) readonly ownUser!: boolean;
 
@@ -142,9 +142,9 @@ export default class UserForm extends Vue {
   role = null;
 
   roleItems = [
-    { value: 'admin', text: this.upper(this.$tc('roles.admin')) },
-    { value: 'uploader', text: this.upper(this.$tc('roles.uploader')) },
-    { value: 'user', text: this.upper(this.$tc('roles.user')) },
+    { text: this.upper(this.$tc('roles.admin')), value: 'admin' },
+    { text: this.upper(this.$tc('roles.uploader')), value: 'uploader' },
+    { text: this.upper(this.$tc('roles.user')), value: 'user' },
   ];
 
   mounted(): void {
@@ -188,10 +188,10 @@ export default class UserForm extends Vue {
 
   get params(): any {
     return {
-      username: this.username,
-      password: this.password,
       email: this.email || undefined,
+      password: this.password,
       role: this.role || undefined,
+      username: this.username,
     };
   }
 
@@ -236,9 +236,9 @@ export default class UserForm extends Vue {
       }
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('editUser'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }
@@ -259,9 +259,9 @@ export default class UserForm extends Vue {
       this.close();
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('addUser'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }
@@ -282,9 +282,9 @@ export default class UserForm extends Vue {
       this.close();
     } else {
       const notification = {
+        color: 'error',
         context: this.$t('registerUser'),
         message: response.error ?? '',
-        color: 'error',
       };
       await this.$store.dispatch('pushNotification', notification);
     }
