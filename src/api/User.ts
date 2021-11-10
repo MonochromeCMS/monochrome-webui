@@ -1,7 +1,9 @@
-import Base from './Base';
-import i18n from '@/i18n';
-import type { ApiResponse, Pagination } from './Base';
 import type { AxiosRequestConfig } from 'axios';
+
+import i18n from '@/i18n';
+
+import type { ApiResponse, Pagination } from './Base';
+import Base from './Base';
 
 export type Role = 'admin' | 'uploader' | 'user';
 

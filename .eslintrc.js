@@ -1,8 +1,10 @@
 module.exports = {
   root: true,
   env: {
+    browser: true,
     node: true,
   },
+  plugins: ['simple-import-sort'],
   extends: [
     'plugin:vue/recommended',
     'eslint:recommended',
@@ -12,6 +14,7 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 2020,
+    tsconfigRootDir: __dirname,
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -21,6 +24,7 @@ module.exports = {
     'max-lines': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
     'max-lines-per-function': ['error', { max: 80, skipBlankLines: true, skipComments: true }],
     'max-depth': ['error', 4],
+    'simple-import-sort/imports': 'error',
     // /. clean code
     // vue compiler macros
     'no-undef': 'off',
@@ -71,6 +75,9 @@ module.exports = {
     // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/strict-boolean-expressions.md
     '@typescript-eslint/strict-boolean-expressions': ['off'],
     // /. typescript
+  },
+  settings: {
+    'import/resolver': 'typescript',
   },
   overrides: [
     {

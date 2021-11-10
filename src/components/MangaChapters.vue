@@ -74,13 +74,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch, VModel } from 'vue-property-decorator';
-import ChapterDelete from '@/components/ChapterDelete.vue';
-import Manga from '@/api/Manga';
-import Chapter from '@/api/Chapter';
 import { mdiDotsVertical } from '@mdi/js';
+import { Component, Prop, VModel, Vue, Watch } from 'vue-property-decorator';
+
 import type { ChapterResponse } from '@/api/Chapter';
+import Chapter from '@/api/Chapter';
+import Manga from '@/api/Manga';
 import type { Role } from '@/api/User';
+import ChapterDelete from '@/components/ChapterDelete.vue';
 
 @Component({
   components: { ChapterDelete },

@@ -85,7 +85,6 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
 import {
   mdiArrowExpandHorizontal,
   mdiArrowExpandVertical,
@@ -94,6 +93,7 @@ import {
   mdiClose,
   mdiMenu,
 } from '@mdi/js';
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class ReaderMenu extends Vue {

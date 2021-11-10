@@ -47,11 +47,12 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator';
-import SearchBar from '@/components/SearchBar.vue';
+import { Component, Vue, Watch } from 'vue-property-decorator';
+
+import type { MangaResponse } from '@/api/Manga';
 import Manga from '@/api/Manga';
 import Media from '@/api/Media';
-import type { MangaResponse } from '@/api/Manga';
+import SearchBar from '@/components/SearchBar.vue';
 
 @Component({
   components: { SearchBar },

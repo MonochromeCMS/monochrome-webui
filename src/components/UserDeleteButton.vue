@@ -33,10 +33,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
-import User from '@/api/User';
 import { mdiDelete } from '@mdi/js';
 import type { AxiosRequestConfig } from 'axios';
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+
+import User from '@/api/User';
 
 @Component
 export default class UserDeleteButton extends Vue {

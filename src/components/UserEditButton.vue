@@ -10,9 +10,10 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
-import UserForm from './UserForm.vue';
 import { mdiPencil } from '@mdi/js';
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+
+import UserForm from './UserForm.vue';
 
 @Component({
   components: { UserForm },

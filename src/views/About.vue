@@ -62,8 +62,9 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
 import marked from 'marked';
+import { Component, Vue } from 'vue-property-decorator';
+
 import type { SettingsSchema } from '@/api/Settings';
 
 @Component

@@ -85,10 +85,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator';
-import Media from '@/api/Media';
-import Chapter from '@/api/Chapter';
+import { Component, Vue, Watch } from 'vue-property-decorator';
+
 import type { DetailedChapterResponse } from '@/api/Chapter';
+import Chapter from '@/api/Chapter';
+import Media from '@/api/Media';
 
 @Component
 export default class LatestChapters extends Vue {

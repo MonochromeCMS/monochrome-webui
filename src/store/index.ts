@@ -1,7 +1,7 @@
+import SecureLS from 'secure-ls';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
-import SecureLS from 'secure-ls';
 
 const ls = new SecureLS({
   encodingType: 'rabbit',
@@ -17,9 +17,9 @@ try {
 }
 
 import notifications from './notifications';
-import user from './user';
 import reader from './reader';
 import settings from './settings';
+import user from './user';
 
 Vue.use(Vuex);
 

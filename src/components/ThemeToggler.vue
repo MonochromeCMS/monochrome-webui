@@ -12,8 +12,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
 import { mdiLightbulb } from '@mdi/js';
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class ThemeToggler extends Vue {

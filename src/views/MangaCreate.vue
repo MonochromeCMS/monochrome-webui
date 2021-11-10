@@ -14,10 +14,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import MangaForm from '@/components/MangaForm.vue';
+import { Component, Vue } from 'vue-property-decorator';
+
 import Manga from '@/api/Manga';
 import type { Role } from '@/api/User';
+import MangaForm from '@/components/MangaForm.vue';
 
 @Component({
   components: { MangaForm },

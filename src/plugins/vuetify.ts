@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib/framework';
-import i18n from '../i18n';
-
 import colors from 'vuetify/lib/util/colors';
+
+import i18n from '../i18n';
 
 Vue.use(Vuetify);
 

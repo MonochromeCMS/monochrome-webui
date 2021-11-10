@@ -49,14 +49,15 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, VModel, Watch } from 'vue-property-decorator';
-import draggable from 'vuedraggable';
-import naturalCompare from 'natural-compare-lite';
 import { mdiClose, mdiPlus } from '@mdi/js';
-import Upload from '@/api/Upload';
+import type { AxiosRequestConfig } from 'axios';
+import naturalCompare from 'natural-compare-lite';
+import { Component, Prop, VModel, Vue, Watch } from 'vue-property-decorator';
+import draggable from 'vuedraggable';
+
 import Media from '@/api/Media';
 import type { UploadedBlobResponse } from '@/api/Upload';
-import type { AxiosRequestConfig } from 'axios';
+import Upload from '@/api/Upload';
 
 @Component({
   components: { draggable },

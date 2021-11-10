@@ -77,13 +77,14 @@
 </template>
 
 <script lang="ts">
-import { required, email, max } from 'vee-validate/dist/rules';
-import { extend, ValidationProvider, setInteractionMode, ValidationObserver } from 'vee-validate';
-import { Vue, Component, Emit, Prop } from 'vue-property-decorator';
-import User from '@/api/User';
 import { mdiEye, mdiEyeOff } from '@mdi/js';
 import type { AxiosRequestConfig } from 'axios';
+import { extend, setInteractionMode, ValidationObserver, ValidationProvider } from 'vee-validate';
+import { email, max, required } from 'vee-validate/dist/rules';
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+
 import type { UserSchema } from '@/api/User';
+import User from '@/api/User';
 import AvatarInput from '@/components/AvatarInput.vue';
 
 setInteractionMode('eager');

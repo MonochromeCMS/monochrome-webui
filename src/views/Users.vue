@@ -49,15 +49,15 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator';
-import UsersList from '@/components/UsersList.vue';
-import UserForm from '@/components/UserForm.vue';
-import User from '@/api/User';
 import { mdiPlus } from '@mdi/js';
-import type { UserResponse } from '@/api/User';
 import type { AxiosRequestConfig } from 'axios';
-import type { Role } from '@/api/User';
+import { Component, Vue, Watch } from 'vue-property-decorator';
+
+import type { Role, UserResponse } from '@/api/User';
+import User from '@/api/User';
 import UserFilter from '@/components/UserFilter.vue';
+import UserForm from '@/components/UserForm.vue';
+import UsersList from '@/components/UsersList.vue';
 
 @Component({
   components: { UserFilter, UsersList, UserForm },

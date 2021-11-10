@@ -32,10 +32,10 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import { required } from 'vee-validate/dist/rules';
-import { extend, ValidationProvider, setInteractionMode, ValidationObserver } from 'vee-validate';
 import { mdiEye, mdiEyeOff } from '@mdi/js';
+import { extend, setInteractionMode, ValidationObserver, ValidationProvider } from 'vee-validate';
+import { required } from 'vee-validate/dist/rules';
+import { Component, Vue } from 'vue-property-decorator';
 
 setInteractionMode('eager');
 

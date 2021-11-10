@@ -37,10 +37,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
+
+import type { MangaResponse } from '@/api/Manga';
 import Manga from '@/api/Manga';
 import Media from '@/api/Media';
-import type { MangaResponse } from '@/api/Manga';
 
 @Component
 export default class LatestManga extends Vue {

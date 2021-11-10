@@ -34,13 +34,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import PagedReader from '@/components/PagedReader.vue';
-import VerticalReader from '@/components/VerticalReader.vue';
-import ReaderMenu from '@/components/ReaderMenu.vue';
+import { Component, Vue } from 'vue-property-decorator';
+
 import type { DetailedChapterResponse } from '@/api/Chapter';
 import Chapter from '@/api/Chapter';
 import Manga from '@/api/Manga';
+import PagedReader from '@/components/PagedReader.vue';
+import ReaderMenu from '@/components/ReaderMenu.vue';
+import VerticalReader from '@/components/VerticalReader.vue';
 
 @Component({
   components: { ReaderMenu, VerticalReader, PagedReader },

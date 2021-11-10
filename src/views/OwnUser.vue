@@ -15,10 +15,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import UsersList from '@/components/UsersList.vue';
-import UserForm from '@/components/UserForm.vue';
+import { Component, Vue } from 'vue-property-decorator';
+
 import type { UserResponse } from '@/api/User';
+import UserForm from '@/components/UserForm.vue';
+import UsersList from '@/components/UsersList.vue';
 
 @Component({
   components: { UsersList, UserForm },

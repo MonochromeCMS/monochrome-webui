@@ -48,7 +48,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
 import type { MangaSchema } from '@/api/Manga';
 
 @Component

@@ -64,10 +64,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import AdminActions from '@/components/AdminActions.vue';
 import { mdiMenu } from '@mdi/js';
+import { Component, Vue } from 'vue-property-decorator';
+
 import type { Role } from '@/api/User';
+import AdminActions from '@/components/AdminActions.vue';
 import LocalesItem from '@/components/LocalesItem.vue';
 
 @Component({

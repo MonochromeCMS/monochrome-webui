@@ -96,14 +96,15 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
-import { required, digits } from 'vee-validate/dist/rules';
-import { extend, ValidationProvider, setInteractionMode, ValidationObserver } from 'vee-validate';
-import MangaRow from '@/components/MangaRow.vue';
+import type { AxiosRequestConfig } from 'axios';
+import { extend, setInteractionMode, ValidationObserver, ValidationProvider } from 'vee-validate';
+import { digits, required } from 'vee-validate/dist/rules';
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
+import type { MangaResponse, MangaSchema, Status } from '@/api/Manga';
 import Manga from '@/api/Manga';
 import Media from '@/api/Media';
-import type { AxiosRequestConfig } from 'axios';
-import type { MangaResponse, MangaSchema, Status } from '@/api/Manga';
+import MangaRow from '@/components/MangaRow.vue';
 
 setInteractionMode('eager');
 

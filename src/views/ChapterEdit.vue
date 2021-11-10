@@ -15,14 +15,15 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
+
+import type { ChapterResponse, DetailedChapterResponse } from '@/api/Chapter';
+import Chapter from '@/api/Chapter';
+import type { MangaResponse } from '@/api/Manga';
+import Media from '@/api/Media';
+import type { Role } from '@/api/User';
 import MangaRow from '@/components/MangaRow.vue';
 import UploadForm from '@/components/UploadForm.vue';
-import Chapter from '@/api/Chapter';
-import Media from '@/api/Media';
-import type { DetailedChapterResponse, ChapterResponse } from '@/api/Chapter';
-import type { MangaResponse } from '@/api/Manga';
-import type { Role } from '@/api/User';
 
 @Component({
   components: { MangaRow, UploadForm },

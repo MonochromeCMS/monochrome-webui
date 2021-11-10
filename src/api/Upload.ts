@@ -1,8 +1,10 @@
+import type { AxiosRequestConfig } from 'axios';
+
+import type { ChapterResponse, ChapterSchema } from '@/api/Chapter';
+import i18n from '@/i18n';
+
 import type { ApiResponse } from './Base';
 import Base from './Base';
-import i18n from '@/i18n';
-import type { AxiosRequestConfig } from 'axios';
-import type { ChapterResponse, ChapterSchema } from '@/api/Chapter';
 
 export interface UploadSessionSchema {
   mangaId: string;

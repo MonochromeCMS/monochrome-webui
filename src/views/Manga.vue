@@ -17,10 +17,11 @@
   </v-container>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import MangaPage from '@/components/MangaPage.vue';
+import { Component, Vue } from 'vue-property-decorator';
+
 import MangaAPI from '@/api/Manga';
 import type { Role } from '@/api/User';
+import MangaPage from '@/components/MangaPage.vue';
 
 @Component({
   components: { MangaPage },

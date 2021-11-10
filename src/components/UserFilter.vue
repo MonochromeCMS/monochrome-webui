@@ -29,8 +29,9 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, VModel, Emit } from 'vue-property-decorator';
 import { mdiMagnify } from '@mdi/js';
+import { Component, Emit, VModel, Vue } from 'vue-property-decorator';
+
 import type { UserFilters } from '@/api/User';
 
 @Component

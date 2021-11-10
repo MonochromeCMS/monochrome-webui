@@ -62,10 +62,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
-import UserEditButton from '@/components/UserEditButton.vue';
-import UserDeleteButton from '@/components/UserDeleteButton.vue';
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+
 import Media from '@/api/Media';
+import UserDeleteButton from '@/components/UserDeleteButton.vue';
+import UserEditButton from '@/components/UserEditButton.vue';
 
 @Component({
   components: { UserDeleteButton, UserEditButton },

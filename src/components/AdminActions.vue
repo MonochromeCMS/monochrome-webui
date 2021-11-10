@@ -25,12 +25,13 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
 import Base from '@/api/Base';
+import Manga from '@/api/Manga';
+import Settings from '@/api/Settings';
 import type { Role } from '@/api/User';
 import User from '@/api/User';
-import Settings from '@/api/Settings';
-import Manga from '@/api/Manga';
 
 interface Item {
   text: string;

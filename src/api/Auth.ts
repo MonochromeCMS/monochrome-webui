@@ -1,6 +1,7 @@
+import i18n from '@/i18n';
+
 import type { ApiResponse } from './Base';
 import Base from './Base';
-import i18n from '@/i18n';
 
 export interface TokenResponse {
   access_token: string;

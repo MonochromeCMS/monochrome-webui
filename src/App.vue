@@ -10,7 +10,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
+
 import NavBar from '@/components/NavBar.vue';
 import Notifications from '@/components/Notifications.vue';
 import ThemeToggler from '@/components/ThemeToggler.vue';

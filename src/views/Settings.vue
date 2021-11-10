@@ -16,10 +16,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import SettingsForm from '@/components/SettingsForm.vue';
+import { Component, Vue } from 'vue-property-decorator';
+
 import SettingsAPI from '@/api/Settings';
 import type { Role } from '@/api/User';
+import SettingsForm from '@/components/SettingsForm.vue';
 
 @Component({
   components: { SettingsForm },

@@ -1,5 +1,5 @@
-import axios from 'axios';
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios from 'axios';
 
 const errorResponse: AxiosResponse = {
   data: null,

@@ -85,16 +85,17 @@
 </template>
 
 <script lang="ts">
-import { required, numeric, regex } from 'vee-validate/dist/rules';
-import { extend, ValidationProvider, setInteractionMode, ValidationObserver } from 'vee-validate';
-import { Vue, Component, Prop } from 'vue-property-decorator';
 import type { AxiosRequestConfig } from 'axios';
-import PageInput from '@/components/PageInput.vue';
-import type { UploadSessionResponse } from '@/api/Upload';
-import Upload from '@/api/Upload';
+import { extend, setInteractionMode, ValidationObserver, ValidationProvider } from 'vee-validate';
+import { numeric, regex, required } from 'vee-validate/dist/rules';
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
+import Autocomplete from '@/api/Autocomplete';
 import type { ChapterSchema } from '@/api/Chapter';
 import Chapter from '@/api/Chapter';
-import Autocomplete from '@/api/Autocomplete';
+import type { UploadSessionResponse } from '@/api/Upload';
+import Upload from '@/api/Upload';
+import PageInput from '@/components/PageInput.vue';
 
 setInteractionMode('eager');
 

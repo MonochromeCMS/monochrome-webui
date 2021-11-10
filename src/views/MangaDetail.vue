@@ -67,15 +67,16 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import MangaRow from '@/components/MangaRow.vue';
-import MangaChapters from '@/components/MangaChapters.vue';
+import type { AxiosRequestConfig } from 'axios';
+import { Component, Vue } from 'vue-property-decorator';
+
+import Chapter from '@/api/Chapter';
+import type { MangaResponse } from '@/api/Manga';
 import Manga from '@/api/Manga';
 import Media from '@/api/Media';
-import type { AxiosRequestConfig } from 'axios';
-import type { MangaResponse } from '@/api/Manga';
 import type { Role } from '@/api/User';
-import Chapter from '@/api/Chapter';
+import MangaChapters from '@/components/MangaChapters.vue';
+import MangaRow from '@/components/MangaRow.vue';
 
 @Component({
   components: { MangaChapters, MangaRow },

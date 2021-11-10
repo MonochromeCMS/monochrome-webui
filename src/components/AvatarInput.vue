@@ -14,11 +14,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 import { mdiPencil } from '@mdi/js';
+import type { AxiosRequestConfig } from 'axios';
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+
 import Media from '@/api/Media';
 import User from '@/api/User';
-import type { AxiosRequestConfig } from 'axios';
 
 @Component
 export default class AvatarInput extends Vue {

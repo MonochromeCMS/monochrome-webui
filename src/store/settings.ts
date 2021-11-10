@@ -1,6 +1,7 @@
 import type { ActionContext } from 'vuex';
-import type { SettingsSchema } from '@/api/Settings';
+
 import type { ApiResponse } from '@/api/Base';
+import type { SettingsSchema } from '@/api/Settings';
 import Settings from '@/api/Settings';
 
 const state = (): SettingsSchema => ({

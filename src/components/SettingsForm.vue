@@ -61,12 +61,13 @@
 </template>
 
 <script lang="ts">
-import { ValidationProvider, setInteractionMode, ValidationObserver } from 'vee-validate';
-import { Vue, Component, Watch } from 'vue-property-decorator';
+import type { AxiosRequestConfig } from 'axios';
 import marked from 'marked';
+import { setInteractionMode, ValidationObserver, ValidationProvider } from 'vee-validate';
+import { Component, Vue, Watch } from 'vue-property-decorator';
+
 import type { SettingsSchema } from '@/api/Settings';
 import Settings from '@/api/Settings';
-import type { AxiosRequestConfig } from 'axios';
 
 setInteractionMode('eager');
 

@@ -1,9 +1,11 @@
-import type { ApiResponse, Pagination } from './Base';
-import Base from './Base';
-import i18n from '@/i18n';
 import type { AxiosRequestConfig } from 'axios';
+
 import type { MangaResponse } from '@/api/Manga';
 import type { Role } from '@/api/User';
+import i18n from '@/i18n';
+
+import type { ApiResponse, Pagination } from './Base';
+import Base from './Base';
 
 export interface ChapterSchema {
   name: string;

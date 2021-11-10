@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import type { LocaleMessages } from 'vue-i18n';
 import VueI18n from 'vue-i18n';
-
 import en from 'vuetify/src/locale/en';
 import fr from 'vuetify/src/locale/fr';
 

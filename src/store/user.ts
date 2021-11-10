@@ -1,12 +1,11 @@
-import type { ActionContext } from 'vuex';
 import type { AxiosRequestConfig } from 'axios';
+import type { ActionContext } from 'vuex';
 
-import Auth from '@/api/Auth';
 import type { TokenResponse } from '@/api/Auth';
-import User from '@/api/User';
-import type { UserResponse, Role } from '@/api/User';
+import Auth from '@/api/Auth';
 import type { ApiResponse } from '@/api/Base';
-
+import type { Role, UserResponse } from '@/api/User';
+import User from '@/api/User';
 import i18n from '@/i18n';
 
 interface UserState {

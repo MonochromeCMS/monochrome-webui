@@ -24,8 +24,9 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
 import { mdiClose } from '@mdi/js';
+import { Component, Vue } from 'vue-property-decorator';
+
 import type { Notification } from '@/store/notifications';
 
 @Component
