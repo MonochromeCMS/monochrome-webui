@@ -6,7 +6,7 @@
   >
     {{ notification ? `${notification.context}: ${notification.message}` : $t('noNotifications') }}
 
-    <template v-slot:action="{ attrs }">
+    <template #action="{ attrs }">
       <v-badge
         color="black"
         :content="notificationsAmount"

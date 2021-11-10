@@ -1,7 +1,7 @@
 <template>
   <v-menu v-if="locales.length > 1" offset-y>
-    <template v-slot:activator="{ on, attrs }">
-      <v-list-item v-on="on" v-bind="attrs" class="lang-tab justify-end">
+    <template #activator="{ on, attrs }">
+      <v-list-item v-bind="attrs" class="lang-tab justify-end" v-on="on">
         {{ currentLocale }}
       </v-list-item>
     </template>

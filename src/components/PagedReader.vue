@@ -19,7 +19,7 @@
       </v-tab>
     </v-tabs>
 
-    <v-carousel height="auto" hide-delimiters v-model="currentPage" :continuous="false">
+    <v-carousel v-model="currentPage" height="auto" hide-delimiters :continuous="false">
       <v-carousel-item :key="0">
         <v-row>
           <v-col
@@ -53,7 +53,7 @@
             :src="urls[2 * index - 2]"
             :alt="`Page ${2 * index - 1}`"
           >
-            <template v-slot:placeholder>
+            <template #placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center">
                 <v-progress-circular indeterminate />
               </v-row>
@@ -66,7 +66,7 @@
             :src="urls[2 * index - 1]"
             :alt="`Page ${2 * index}`"
           >
-            <template v-slot:placeholder>
+            <template #placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center">
                 <v-progress-circular indeterminate />
               </v-row>
@@ -74,7 +74,7 @@
           </v-img>
         </div>
         <v-img v-else :class="fit" contain :src="urls[index - 1]" :alt="`Page ${index}`">
-          <template v-slot:placeholder>
+          <template #placeholder>
             <v-row class="fill-height ma-0" align="center" justify="center">
               <v-progress-circular indeterminate />
             </v-row>

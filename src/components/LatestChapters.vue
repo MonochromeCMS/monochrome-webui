@@ -3,12 +3,12 @@
     <v-card-title class="justify-center lemon-milk">{{ $tc('latestChapters') }}</v-card-title>
     <v-row v-if="loading" class="mx-0 mb-0">
       <v-col
+        v-for="index in limit"
+        :key="index"
         cols="12"
         sm="6"
         :lg="isConnected ? 12 : 6"
         xl="6"
-        v-for="index in limit"
-        :key="index"
         class="px-2 my-2"
       >
         <v-card color="background" class="px-4">
@@ -35,16 +35,16 @@
       </v-col>
     </v-row>
     <v-row v-else class="mx-0 mb-0">
-      <v-col cols="12" class="text-center text-body-1" v-if="chapters.length === 0">
+      <v-col v-if="chapters.length === 0" cols="12" class="text-center text-body-1">
         {{ $tc('noChapters') }}
       </v-col>
       <v-col
+        v-for="chapter in chapters"
+        :key="chapter.id"
         cols="12"
         sm="6"
         :lg="isConnected ? 12 : 6"
         xl="6"
-        v-for="chapter in chapters"
-        :key="chapter.id"
         class="px-2 my-2"
       >
         <v-card color="background" class="px-4" :to="`/chapters/${chapter.id}`">
@@ -74,9 +74,9 @@
     <v-row>
       <v-pagination
         v-if="pageAmount > 1"
+        v-model="page"
         class="mx-auto pb-4"
         color="background text--primary"
-        v-model="page"
         :length="pageAmount"
       >
       </v-pagination>

@@ -9,7 +9,7 @@
     <v-btn :loading="loading" large class="edit-button" icon @click="avatarClick">
       <v-icon large>{{ icons.mdiPencil }}</v-icon>
     </v-btn>
-    <input ref="fileInput" type="file" @input="updateFile" style="display: none" />
+    <input ref="fileInput" type="file" style="display: none" @input="updateFile" />
   </v-col>
 </template>
 

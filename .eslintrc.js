@@ -4,7 +4,7 @@ module.exports = {
     node: true,
   },
   extends: [
-    'plugin:vue/essential',
+    'plugin:vue/recommended',
     'eslint:recommended',
     '@vue/typescript/recommended',
     '@vue/prettier',
@@ -28,6 +28,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off',
     // /. vue compiler macros
     // vue base
+    'vue/no-v-html': 'off',
     'vue/eqeqeq': 'error',
     'vue/component-definition-name-casing': ['warn', 'kebab-case'],
     'vue/match-component-file-name': 'warn',

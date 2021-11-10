@@ -5,10 +5,10 @@
     </router-link>
     <router-link v-else to="/" class="logo lemon-milk">
       <span v-if="settings.title1" v-text="settings.title1" />
-      <span v-if="settings.title2" v-text="settings.title2" class="text--secondary" />
+      <span v-if="settings.title2" class="text--secondary" v-text="settings.title2" />
     </router-link>
 
-    <v-tabs centered class="hidden-sm-and-down" optional v-model="tabs">
+    <v-tabs v-model="tabs" centered class="hidden-sm-and-down" optional>
       <v-tab v-for="link in links" :key="link.text" :to="link.to">
         {{ link.text }}
       </v-tab>
@@ -20,8 +20,8 @@
         $t('login')
       }}</v-list-item>
       <v-menu v-else offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-list-item v-on="on" v-bind="attrs" class="login-tab">{{
+        <template #activator="{ on, attrs }">
+          <v-list-item v-bind="attrs" class="login-tab" v-on="on">{{
             displayUserRole
           }}</v-list-item>
         </template>
@@ -31,28 +31,28 @@
     </v-list>
 
     <v-menu offset-y>
-      <template v-slot:activator="{ on, attrs }">
+      <template #activator="{ on, attrs }">
         <v-btn
           icon
           tile
           color="primary"
           class="hidden-md-and-up ml-auto"
-          v-on="on"
           v-bind="attrs"
           aria-label="Navigation menu"
+          v-on="on"
         >
           <v-icon>{{ icons.mdiMenu }}</v-icon>
         </v-btn>
       </template>
       <v-list-item-group class="background lemon-milk" vertical>
-        <v-list-item class="justify-end" v-for="link in links" :key="link.text" :to="link.to">
+        <v-list-item v-for="link in links" :key="link.text" class="justify-end" :to="link.to">
           {{ link.text }}
         </v-list-item>
         <locales-item />
         <v-list-item v-if="!isConnected" to="/login">{{ $t('login') }}</v-list-item>
         <v-menu v-else offset-y>
-          <template v-slot:activator="{ on, attrs }">
-            <v-list-item v-on="on" v-bind="attrs" class="login-tab">
+          <template #activator="{ on, attrs }">
+            <v-list-item v-bind="attrs" class="login-tab" v-on="on">
               {{ displayUserRole }}
             </v-list-item>
           </template>

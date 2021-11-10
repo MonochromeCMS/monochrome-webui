@@ -17,7 +17,7 @@
       </v-col>
       <v-col cols="12" md="9" class="d-flex flex-column justify-center">
         <v-tooltip top open-delay="600">
-          <template v-slot:activator="{ on, attrs }">
+          <template #activator="{ on, attrs }">
             <h1 class="text-h2 pb-2 ellipsis" v-bind="attrs" v-on="on">
               {{ manga.title }}
             </h1>

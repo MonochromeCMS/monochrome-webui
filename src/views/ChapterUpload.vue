@@ -6,7 +6,7 @@
           <v-card-title class="justify-center lemon-milk">{{ $t('uploadChapter') }}</v-card-title>
           <manga-row :loading="!manga" :manga="manga" :cover="cover" class="background rounded" />
           <v-card-text>
-            <upload-form v-if="manga" :chapter="null" :mangaId="mangaId" />
+            <upload-form v-if="manga" :chapter="null" :manga-id="mangaId" />
           </v-card-text>
         </v-card>
       </v-col>

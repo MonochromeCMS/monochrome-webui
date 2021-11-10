@@ -7,10 +7,10 @@
           <v-card-text>
             <user-filter v-model="filters" @update="getUsers" />
             <users-list :loading="loading" :users="users" :limit="limit" @update="getUsers">
-              <tr class="user-row" v-if="users.length < limit && !loading">
+              <tr v-if="users.length < limit && !loading" class="user-row">
                 <td colspan="4">
                   <v-dialog v-model="addDialog" max-width="30rem">
-                    <template v-slot:activator="{ on, attrs }">
+                    <template #activator="{ on, attrs }">
                       <v-btn
                         tile
                         icon
@@ -33,11 +33,11 @@
                 </td>
               </tr>
             </users-list>
-            <v-row cols="12" v-if="pageAmount > 1">
+            <v-row v-if="pageAmount > 1" cols="12">
               <v-pagination
+                v-model="page"
                 class="mx-auto pb-4"
                 color="background text--primary"
-                v-model="page"
                 :length="pageAmount"
               ></v-pagination>
             </v-row>

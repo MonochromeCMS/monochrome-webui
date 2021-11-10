@@ -4,8 +4,8 @@
     outlined
     color="primary"
     class="theme-toggle"
-    @click="toggleTheme"
     aria-label="Theme toggler"
+    @click="toggleTheme"
   >
     <v-icon large> {{ icons.mdiLightbulb }} </v-icon>
   </v-btn>

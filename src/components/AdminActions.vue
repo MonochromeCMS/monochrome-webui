@@ -12,7 +12,7 @@
         :target="item.target"
       >
         <v-tooltip :right="!left" :left="left" open-delay="600">
-          <template v-slot:activator="{ on, attrs }">
+          <template #activator="{ on, attrs }">
             <v-list-item-content v-bind="attrs" v-on="on">
               <v-list-item-title v-text="item.text"></v-list-item-title>
             </v-list-item-content>

@@ -1,12 +1,12 @@
 <template>
   <v-simple-table class="mb-4">
-    <template v-slot:default>
+    <template #default>
       <thead>
         <tr class="user-row">
           <th
-            class="text-center text--primary text-h5"
             v-for="val in headers"
             :key="val.title"
+            class="text-center text--primary text-h5"
             :class="val.class"
           >
             {{ val.title }}
@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="l in loading ? limit : 0" class="user-row" :key="l">
+        <tr v-for="l in loading ? limit : 0" :key="l" class="user-row">
           <td v-for="i in headers.length - 2" :key="i">
             <v-skeleton-loader type="heading" class="d-flex justify-center" />
           </td>
@@ -30,9 +30,9 @@
           </td>
         </tr>
         <tr
-          class="user-row text-center text-body-1 text--primary"
           v-for="item in users"
           :key="item.id"
+          class="user-row text-center text-body-1 text--primary"
         >
           <td class="first-capital">{{ $t(`roles.${item.role}`) }}</td>
           <td>
@@ -51,8 +51,8 @@
           </td>
           <td class="hidden-sm-and-down ellipsis email">{{ item.email }}</td>
           <td class="d-flex justify-center align-center">
-            <user-edit-button :user="item" :ownUser="userId === item.id" @update="update" />
-            <user-delete-button :user="item" :ownUser="userId === item.id" @update="update" />
+            <user-edit-button :user="item" :own-user="userId === item.id" @update="update" />
+            <user-delete-button :user="item" :own-user="userId === item.id" @update="update" />
           </td>
         </tr>
         <slot />

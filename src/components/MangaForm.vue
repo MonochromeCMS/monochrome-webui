@@ -60,8 +60,8 @@
       <!-- STATUS FIELD -->
       <validation-provider v-slot="{ errors }" :name="$t('status')" rules="required">
         <v-select
-          :items="statusItems"
           v-model="status"
+          :items="statusItems"
           :error-messages="errors"
           :label="$t('status')"
           outlined

@@ -1,13 +1,13 @@
 <template>
   <v-dialog v-model="dialog" max-width="30rem">
-    <template v-slot:activator="{ on, attrs }">
+    <template #activator="{ on, attrs }">
       <v-btn
         class="mx-2"
         width="3rem"
         color="error"
         v-bind="attrs"
-        v-on="on"
         aria-label="Delete user"
+        v-on="on"
       >
         <v-icon>{{ icons.mdiDelete }}</v-icon>
       </v-btn>
@@ -24,7 +24,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="gray" text @click="dialog = false">{{ $t('cancel') }}</v-btn>
-        <v-btn color="error" @click="deleteUser(user.id)" :loading="loading">{{
+        <v-btn color="error" :loading="loading" @click="deleteUser(user.id)">{{
           $t('delete')
         }}</v-btn>
       </v-card-actions>

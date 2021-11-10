@@ -6,7 +6,7 @@
       </v-col>
     </v-row>
     <v-row v-if="loading">
-      <v-col cols="12" sm="6" md="4" lg="3" v-for="i in limit" :key="i">
+      <v-col v-for="i in limit" :key="i" cols="12" sm="6" md="4" lg="3">
         <v-card color="background" height="100%" class="d-flex flex-column">
           <v-responsive aspect-ratio="1">
             <v-skeleton-loader type="image" class="skeleton-image fill-height" />
@@ -20,12 +20,12 @@
       <v-col v-if="manga.length === 0" class="text-center text-body-1">
         {{ search ? $t('noMangaFound') : $t('noManga') }}
       </v-col>
-      <v-col v-else cols="12" sm="6" md="4" lg="3" v-for="item in manga" :key="item.id">
+      <v-col v-for="item in manga" v-else :key="item.id" cols="12" sm="6" md="4" lg="3">
         <v-card color="background" :to="to(item)" height="100%" class="d-flex flex-column">
           <v-img aspect-ratio="1" :src="cover(item)" />
           <v-card-title v-text="item.title" />
           <v-card-subtitle v-text="item.author" />
-          <v-card-text v-text="item.description" class="card-description" />
+          <v-card-text class="card-description" v-text="item.description" />
           <v-divider></v-divider>
           <v-chip
             class="status-chip"
@@ -37,9 +37,9 @@
     </v-row>
     <v-row v-if="pageAmount > 1">
       <v-pagination
+        v-model="page"
         class="mx-auto pb-4"
         color="background text--primary"
-        v-model="page"
         :length="pageAmount"
       ></v-pagination>
     </v-row>

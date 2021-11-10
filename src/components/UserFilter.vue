@@ -3,12 +3,12 @@
     <v-col cols="12" sm="4">
       <v-text-field
         :value="filters.username"
-        @input="updateFilter('username', $event)"
         clearable
         dense
         :label="$t('username')"
         hide-details
         :prepend-icon="icons.mdiMagnify"
+        @input="updateFilter('username', $event)"
         @click:prepend="useFilters()"
       />
     </v-col>

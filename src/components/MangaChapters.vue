@@ -22,9 +22,9 @@
     <v-row v-else class="flex-column align-center">
       <v-col cols="12" class="text-h3 text-center" tag="h2">{{ $t('chapters') }}</v-col>
       <v-col
-        cols="12"
         v-for="(item, index) in chaptersPage"
         :key="item.id"
+        cols="12"
         class="chapter-row pa-1"
       >
         <router-link :to="`/chapters/${item.id}`" class="text-decoration-none chapter-link pa-3">
@@ -47,8 +47,8 @@
           </v-row>
         </router-link>
         <v-menu v-if="canEdit(item)" offset-y close-on-content-click>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn tile icon v-on="on" v-bind="attrs" class="mr-1" aria-label="More options">
+          <template #activator="{ on, attrs }">
+            <v-btn tile icon v-bind="attrs" class="mr-1" aria-label="More options" v-on="on">
               <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
             </v-btn>
           </template>
@@ -58,14 +58,14 @@
           <chapter-delete :id="item.id" @input="popChapter(index)" />
         </v-menu>
       </v-col>
-      <v-col cols="12" class="text-body-1 text-center" v-if="chapters.length === 0">
+      <v-col v-if="chapters.length === 0" cols="12" class="text-body-1 text-center">
         {{ $t('noChapters') }}
       </v-col>
-      <v-col cols="12" v-if="pageAmount > 1">
+      <v-col v-if="pageAmount > 1" cols="12">
         <v-pagination
+          v-model="page"
           class="mx-auto"
           color="background text--primary"
-          v-model="page"
           :length="pageAmount"
         ></v-pagination>
       </v-col>

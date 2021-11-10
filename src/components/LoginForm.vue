@@ -16,10 +16,10 @@
           :error-messages="errors"
           :label="$t('password')"
           :append-icon="showPass ? icons.mdiEye : icons.mdiEyeOff"
-          @click:append="showPass = !showPass"
           required
           outlined
           :type="showPass ? 'text' : 'password'"
+          @click:append="showPass = !showPass"
         />
       </validation-provider>
       <div class="text-center">

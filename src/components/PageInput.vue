@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <h2 class="text-h4 mt-0 mb-3">{{ $t('pages') }}</h2>
-    <draggable class="drag-pages" v-model="pages">
+    <draggable v-model="pages" class="drag-pages">
       <template v-for="(item, index) in pages">
-        <v-col cols="6" sm="4" md="3" xl="2" :key="item.id">
+        <v-col :key="item.id" cols="6" sm="4" md="3" xl="2">
           <v-card color="background" class="page-card">
             <v-img :src="blob(item.id)" :aspect-ratio="4 / 5" position="relative">
               <v-btn
@@ -20,7 +20,7 @@
         </v-col>
       </template>
       <v-col cols="6" sm="4" md="3" xl="2">
-        <v-card color="background" @click="uploadClick" :disabled="loading">
+        <v-card color="background" :disabled="loading" @click="uploadClick">
           <v-responsive :aspect-ratio="4 / 5">
             <div class="d-flex fill-height">
               <v-progress-circular
@@ -37,7 +37,7 @@
     </draggable>
     <v-btn text @click="quickSort">{{ $t('quickSort') }}</v-btn>
     <v-btn text color="error" @click="deletePages">{{ $t('deleteAll') }}</v-btn>
-    <input ref="fileInput" type="file" @input="updateFile" multiple style="display: none" />
+    <input ref="fileInput" type="file" multiple style="display: none" @input="updateFile" />
     <div>
       <ul>
         <li>{{ $t('uploadNotes1') }}</li>

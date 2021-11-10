@@ -1,7 +1,7 @@
 <template>
-  <v-dialog max-width="30rem" v-model="menu">
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn fab outlined v-on="on" v-bind="attrs" class="reader-button" color="primary">
+  <v-dialog v-model="menu" max-width="30rem">
+    <template #activator="{ on, attrs }">
+      <v-btn fab outlined v-bind="attrs" class="reader-button" color="primary" v-on="on">
         <v-icon>{{ icons.mdiMenu }}</v-icon>
       </v-btn>
     </template>
@@ -24,13 +24,13 @@
         />
         <v-divider class="mt-3" />
         <v-subheader>{{ $t('readerSettings') }}</v-subheader>
-        <v-select :label="$t('readerMode')" hide-details v-model="readerMode" :items="modeItems" />
+        <v-select v-model="readerMode" :label="$t('readerMode')" hide-details :items="modeItems" />
         <!-- Width setting -->
         <v-slider
-          class="ma-4 mb-1"
           v-if="readerMode === 'Webtoon'"
-          hide-details
           v-model="width"
+          class="ma-4 mb-1"
+          hide-details
           step="5"
           min="5"
           thumb-color="text--primary background"
@@ -38,7 +38,7 @@
           :label="$t('width')"
           thumb-label
         >
-          <template v-slot:thumb-label="{ value }"> {{ value }}% </template>
+          <template #thumb-label="{ value }"> {{ value }}% </template>
         </v-slider>
         <!-- Fit setting -->
         <v-row v-else align="center" class="ma-1">
@@ -56,7 +56,7 @@
           </v-col>
         </v-row>
         <!-- Direction setting -->
-        <v-row align="center" class="ma-1" v-if="['Single', 'Double'].includes(readerMode)">
+        <v-row v-if="['Single', 'Double'].includes(readerMode)" align="center" class="ma-1">
           <v-col class="text-body-1">{{ $t('pageDirection') }}</v-col>
           <v-col class="text-right pa-2">
             <v-btn-toggle v-model="direction" mandatory>
@@ -70,7 +70,7 @@
           </v-col>
         </v-row>
         <!-- Double parity setting -->
-        <v-row align="center" class="ma-1" v-if="readerMode === 'Double'">
+        <v-row v-if="readerMode === 'Double'" align="center" class="ma-1">
           <v-col class="text-body-1">{{ $t('doublePageParity') }}</v-col>
           <v-col class="text-right pa-2">
             <v-btn-toggle v-model="doubleParity" mandatory>

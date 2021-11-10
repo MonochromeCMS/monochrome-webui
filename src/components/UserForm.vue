@@ -3,7 +3,7 @@
     <v-form @submit.prevent="submit">
       <v-card :color="color">
         <v-card-title> {{ title }} </v-card-title>
-        <v-alert type="warning" v-if="ownUser" dense class="ma-3">
+        <v-alert v-if="ownUser" type="warning" dense class="ma-3">
           {{ $t('ownUserWarning') }}
         </v-alert>
         <v-card-text>
@@ -37,10 +37,10 @@
                   :error-messages="errors"
                   :label="$t('password')"
                   :append-icon="showPass ? icons.mdiEye : icons.mdiEyeOff"
-                  @click:append="showPass = !showPass"
                   required
                   outlined
                   :type="showPass ? 'text' : 'password'"
+                  @click:append="showPass = !showPass"
                 ></v-text-field>
               </validation-provider>
             </v-col>
@@ -52,8 +52,8 @@
             rules="required"
           >
             <v-select
-              :items="roleItems"
               v-model="role"
+              :items="roleItems"
               :error-messages="errors"
               :label="$t('role')"
               outlined

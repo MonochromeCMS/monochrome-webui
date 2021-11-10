@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="reader">
     <v-row v-if="chapter">
-      <v-col cols="12" v-if="['Vertical', 'Webtoon'].includes(readerMode)">
+      <v-col v-if="['Vertical', 'Webtoon'].includes(readerMode)" cols="12">
         <vertical-reader
           :manga="chapter.manga.id"
           :chapter="chapter.id"
@@ -12,7 +12,7 @@
           @previous="goToChapter(previousChapter)"
         />
       </v-col>
-      <v-col cols="12" v-else>
+      <v-col v-else cols="12">
         <paged-reader
           :manga="chapter.manga.id"
           :chapter="chapter.id"

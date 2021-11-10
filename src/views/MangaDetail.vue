@@ -31,8 +31,8 @@
                   {{ $t('editManga') }}
                 </v-btn>
                 <v-dialog v-if="canEdit(manga)" v-model="deleteDialog" max-width="30rem">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="error" v-bind="attrs" v-on="on" class="ma-2">
+                  <template #activator="{ on, attrs }">
+                    <v-btn color="error" v-bind="attrs" class="ma-2" v-on="on">
                       {{ $t('deleteManga') }}
                     </v-btn>
                   </template>
@@ -58,7 +58,7 @@
                 </v-dialog>
               </div>
             </manga-row>
-            <manga-chapters :manga-id="mangaId" v-model="firstChapter" />
+            <manga-chapters v-model="firstChapter" :manga-id="mangaId" />
           </v-container>
         </v-sheet>
       </v-col>

@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" max-width="30rem">
-    <template v-slot:activator="{ on, attrs }">
+    <template #activator="{ on, attrs }">
       <v-btn color="error" block v-bind="attrs" v-on="on"> {{ $t('deleteChapter') }} </v-btn>
     </template>
 

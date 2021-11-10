@@ -73,7 +73,7 @@
         {{ $t('editPages') }}
       </v-btn>
 
-      <page-input v-if="session" :session="session" v-model="pageOrder" />
+      <page-input v-if="session" v-model="pageOrder" :session="session" />
 
       <div class="text-center mt-4">
         <v-btn :loading="loading" type="submit" block color="background" class="text--primary">
