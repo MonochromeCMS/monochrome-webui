@@ -3,7 +3,8 @@ const XMLPlugin = require('xml-webpack-plugin');
 
 const protocol = process.env.PROTOCOL || 'http';
 const domainName = process.env.DOMAIN_NAME || 'localhost';
-const publicPath = process.env.PUBLIC_URL || '/';
+let publicPath = process.env.PUBLIC_URL || '/';
+publicPath = publicPath.endsWith('/') ? publicPath : publicPath + '/';
 const title = process.env.TITLE || 'Monochrome';
 const url = `${protocol}://${domainName}/`;
 
@@ -39,6 +40,13 @@ module.exports = {
         files: XMLFiles,
       }),
     ],
+  },
+  css: {
+    loaderOptions: {
+      scss: {
+        additionalData: `$publicPath: "${publicPath}";`,
+      },
+    },
   },
   devServer: {
     port: 80,
