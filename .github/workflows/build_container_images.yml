@@ -45,13 +45,14 @@ jobs:
       - name: Get release metadata
         id: get_release_metadata
         run: |
-          temp_tag=${{ steps.get_release.outputs.tag_name }}
+          release_tag=${{ steps.get_release.outputs.tag_name }}
           tag_regex='(v[0-9]+\.[0-9]+.[0-9]+).*'
-          release_tag=$([[ $temp_tag =~ $tag_regex ]] && echo "${BASH_REMATCH[1]}")
+          app_tag=$([[ $release_tag =~ $tag_regex ]] && echo "${BASH_REMATCH[1]}")
           release_version=$(echo $release_tag | cut -c2-)
           image_name=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
           echo "::set-output name=release_version::$release_version"
           echo "::set-output name=release_tag::$release_tag"
+          echo "::set-output name=app_tag::$app_tag"
           echo "::set-output name=image_name::$image_name"
           release_commit=$(git rev-list --count HEAD)
           echo "::set-output name=release_commit::$release_commit"
@@ -97,9 +98,11 @@ jobs:
             IMAGE_VERSION=${{ steps.get_release_metadata.outputs.release_version }}
             GIT_COMMIT=${{ steps.get_release_metadata.outputs.release_commit }}
             RELEASE_TAG=${{ steps.get_release_metadata.outputs.release_tag }}
+            APP_TAG=${{ steps.get_release_metadata.outputs.app_tag }}
           tags: |
             ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:nginx
-            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:${{ steps.get_release_metadata.outputs.release_tag }}-nginx
+            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:nginx-${{ steps.get_release_metadata.outputs.release_tag }}
+            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:nginx-${{ steps.get_release_metadata.outputs.app_tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -118,8 +121,10 @@ jobs:
             IMAGE_VERSION=${{ steps.get_release_metadata.outputs.release_version }}
             GIT_COMMIT=${{ steps.get_release_metadata.outputs.release_commit }}
             RELEASE_TAG=${{ steps.get_release_metadata.outputs.release_tag }}
+            APP_TAG=${{ steps.get_release_metadata.outputs.app_tag }}
           tags: |
             ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:caddy
-            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:${{ steps.get_release_metadata.outputs.release_tag }}-caddy
+            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:caddy-${{ steps.get_release_metadata.outputs.release_tag }}
+            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:caddy-${{ steps.get_release_metadata.outputs.app_tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
