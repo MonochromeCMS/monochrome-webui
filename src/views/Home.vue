@@ -26,7 +26,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 import AdminActions from '@/components/AdminActions.vue';
-import LatestChapters from '@/components/LatestChapters.vue';
+import LatestChapters from '@/components/latestChapters/LatestChapters.vue';
 import LatestManga from '@/components/LatestManga.vue';
 
 @Component({
