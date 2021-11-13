@@ -145,14 +145,15 @@ export default class MangaChapters extends Vue {
   }
 
   ago(val: number): string {
+    /* eslint-disable sort-keys-fix/sort-keys-fix */
     val = 0 | ((Date.now() - val) / 1000);
     const length: Record<string, number> = {
-      day: 7,
-      hour: 24,
-      minute: 60,
-      month: 12,
       second: 60,
+      minute: 60,
+      hour: 24,
+      day: 7,
       week: 4.35,
+      month: 12,
       year: 10000,
     };
 
