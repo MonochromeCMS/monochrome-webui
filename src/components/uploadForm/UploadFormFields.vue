@@ -115,7 +115,7 @@ export default class UploadFormFields extends Vue {
 
   volume?: number | null = null;
 
-  number?: number = undefined;
+  number?: number | null = null;
 
   webtoon = false;
 

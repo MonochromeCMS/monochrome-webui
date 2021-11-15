@@ -61,6 +61,11 @@ TITLE = "Monochrome"
 DESCRIPTION
 // Secret used to encrypt the local storage
 VUE_APP_SECRET
+
+// Comma separated list of languages available for the users (those below are the ones available for now)
+VUE_APP_I18N_LOCALES=fr,en
+// Default language
+VUE_APP_I18N_LOCALE=en
 ```
 
 ## Media

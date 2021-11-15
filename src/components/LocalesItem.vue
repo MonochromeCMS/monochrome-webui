@@ -25,7 +25,7 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class LocalesItem extends Vue {
-  locales = ['en', 'fr'];
+  locales = (process.env.VUE_APP_I18N_LOCALES || 'en,fr').split(',');
 
   get currentLocale(): string {
     return this.$root.$i18n.locale;
