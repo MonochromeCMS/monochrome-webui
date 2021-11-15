@@ -73,7 +73,7 @@ export default class Manga extends Base {
         break;
       case 401:
         result.error = i18n.tc('api.401');
-        break;
+        return await this._handle_401(response.config, result);
       case 422:
         result.error = i18n.tc('api.422');
         break;
@@ -115,7 +115,7 @@ export default class Manga extends Base {
         break;
       case 401:
         result.error = i18n.tc('api.401');
-        break;
+        return await this._handle_401(response.config, result);
       case 404:
         result.error = i18n.tc('api.manga.404');
         break;
@@ -139,7 +139,7 @@ export default class Manga extends Base {
         break;
       case 401:
         result.error = i18n.tc('api.401');
-        break;
+        return await this._handle_401(response.config, result);
       case 404:
         result.error = i18n.tc('api.manga.404');
         break;
@@ -192,7 +192,7 @@ export default class Manga extends Base {
         break;
       case 401:
         result.error = i18n.tc('api.401');
-        break;
+        return await this._handle_401(response.config, result);
       case 404:
         result.error = i18n.tc('api.manga.404');
         break;

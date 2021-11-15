@@ -95,7 +95,7 @@ import {
 } from '@mdi/js';
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 
-import type { ChapterResponse, DetailedChapterResponse } from '@/api/Chapter';
+import type { DetailedChapterResponse } from '@/api/Chapter';
 import type { ChapterItem } from '@/views/ChapterReader.vue';
 
 @Component

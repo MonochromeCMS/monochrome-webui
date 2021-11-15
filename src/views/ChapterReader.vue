@@ -109,7 +109,7 @@ export default class ChapterReader extends Vue {
 
     if (response.data) {
       this.chapter = response.data;
-      this.chapters = [{ text: this.chapterName(response.data), value: this.chapterId }];
+      this.chapters = [this.chapter];
       await this.getChapters(response.data.mangaId);
     } else {
       const notification = {

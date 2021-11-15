@@ -10,6 +10,7 @@ import i18n from '@/i18n';
 
 interface UserState {
   token: string;
+  refresh: string;
   username?: string;
   email?: string;
   id?: string;
@@ -25,6 +26,7 @@ export interface UserLogin {
 const state = (): UserState => ({
   email: undefined,
   id: undefined,
+  refresh: '',
   role: undefined,
   token: '',
   username: undefined,
@@ -42,6 +44,7 @@ const mutations = {
   },
   setToken(state: UserState, payload: TokenResponse): void {
     state.token = payload.access_token;
+    state.refresh = payload.refresh_token;
   },
   updateUser(state: UserState, payload: UserResponse): void {
     state.username = payload.username;
@@ -100,6 +103,26 @@ const actions = {
     if (response.data) {
       commit('setToken', response.data);
       await dispatch('getUserData');
+    }
+    return response;
+  },
+  async refresh({
+    commit,
+    state,
+  }: ActionContext<UserState, any>): Promise<ApiResponse<TokenResponse>> {
+    if (!state.refresh) {
+      return {
+        data: null,
+        error: 'No refresh token',
+        status: 401,
+      };
+    }
+
+    const response = await Auth.refresh(state.refresh);
+
+    if (response.data) {
+      commit('setToken', response.data);
+      return response;
     }
     return response;
   },

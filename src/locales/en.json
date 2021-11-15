@@ -31,7 +31,8 @@
     "401": "Please log in again",
     "404": "Resource not found",
     "auth": {
-      "401": "Credentials don't match"
+      "401": "Credentials don't match",
+      "refresh_401": "Invalid refresh token"
     },
     "chapter": {
       "404": "Chapter not found"

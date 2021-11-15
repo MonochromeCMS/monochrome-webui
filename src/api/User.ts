@@ -63,7 +63,7 @@ export default class User extends Base {
         break;
       case 401:
         result.error = i18n.tc('api.401');
-        break;
+        return await this._handle_401(response.config, result);
       case 422:
         result.error = i18n.tc('api.422');
         break;
@@ -84,7 +84,7 @@ export default class User extends Base {
         break;
       case 401:
         result.error = i18n.tc('api.401');
-        break;
+        return await this._handle_401(response.config, result);
       default:
         result.error = response.data?.detail ?? response.statusText;
     }
@@ -102,7 +102,7 @@ export default class User extends Base {
         break;
       case 401:
         result.error = i18n.tc('api.401');
-        break;
+        return await this._handle_401(response.config, result);
       case 404:
         result.error = i18n.tc('api.user.404');
         break;
@@ -129,7 +129,7 @@ export default class User extends Base {
         break;
       case 401:
         result.error = i18n.tc('api.401');
-        break;
+        return await this._handle_401(response.config, result);
       case 404:
         result.error = i18n.tc('api.user.404');
         break;
@@ -153,7 +153,7 @@ export default class User extends Base {
         break;
       case 401:
         result.error = i18n.tc('api.401');
-        break;
+        return await this._handle_401(response.config, result);
       case 404:
         result.error = i18n.tc('api.user.404');
         break;
@@ -180,7 +180,7 @@ export default class User extends Base {
         break;
       case 401:
         result.error = i18n.tc('api.401');
-        break;
+        return await this._handle_401(response.config, result);
       case 422:
         result.error = i18n.tc('api.422');
         break;
@@ -231,7 +231,7 @@ export default class User extends Base {
         break;
       case 401:
         result.error = i18n.tc('api.401');
-        break;
+        return await this._handle_401(response.config, result);
       case 404:
         result.error = i18n.tc('api.user.404');
         break;
