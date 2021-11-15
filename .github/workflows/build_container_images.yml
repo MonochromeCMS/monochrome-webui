@@ -75,14 +75,16 @@ jobs:
         id: node-build
         run: yarn build
         env:
-          VUE_APP_DOMAIN_NAME: ${{ secrets.domain_name }}
-          VUE_APP_TITLE: ${{ secrets.app_title }}
+          DOMAIN_NAME: ${{ secrets.domain_name }}
+          TITLE: ${{ secrets.app_title }}
           VUE_APP_MEDIA_PATH: ${{ secrets.media_path }}
           VUE_APP_API_PATH: ${{ secrets.api_path }}
-          VUE_APP_DESCRIPTION: ${{ secrets.app_description }}
+          DESCRIPTION: ${{ secrets.app_description }}
           VUE_APP_SECRET: ${{ secrets.session_secret }}
-          VUE_APP_PROTOCOL: ${{ secrets.protocol }}
-
+          PROTOCOL: ${{ secrets.protocol }}
+          PUBLIC_URL: ${{ secrets.public_url }}
+          VUE_APP_I18N_LOCALES: ${{ secrets.i18n_locales }}
+          VUE_APP_I18N_LOCALE: ${{ secrets.i18n_locale }}
       - name: Build and push nginx release
         id: docker_build_release_nginx
         uses: docker/build-push-action@v2
@@ -101,8 +103,8 @@ jobs:
             APP_TAG=${{ steps.get_release_metadata.outputs.app_tag }}
           tags: |
             ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:nginx
-            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:nginx-${{ steps.get_release_metadata.outputs.release_tag }}
-            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:nginx-${{ steps.get_release_metadata.outputs.app_tag }}
+            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:${{ steps.get_release_metadata.outputs.release_tag }}-nginx
+            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:${{ steps.get_release_metadata.outputs.app_tag }}-nginx
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -124,7 +126,7 @@ jobs:
             APP_TAG=${{ steps.get_release_metadata.outputs.app_tag }}
           tags: |
             ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:caddy
-            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:caddy-${{ steps.get_release_metadata.outputs.release_tag }}
-            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:caddy-${{ steps.get_release_metadata.outputs.app_tag }}
+            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:${{ steps.get_release_metadata.outputs.release_tag }}-caddy
+            ghcr.io/${{ steps.get_release_metadata.outputs.image_name }}:${{ steps.get_release_metadata.outputs.app_tag }}-caddy
           cache-from: type=gha
           cache-to: type=gha,mode=max
