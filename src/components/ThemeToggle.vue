@@ -4,10 +4,10 @@
     outlined
     color="primary"
     class="theme-toggle"
-    aria-label="Theme toggler"
+    aria-label="Theme toggle"
     @click="toggleTheme"
   >
-    <v-icon large> {{ icons.mdiLightbulb }} </v-icon>
+    <v-icon large>{{ icons.mdiLightbulb }}</v-icon>
   </v-btn>
 </template>
 
@@ -16,7 +16,7 @@ import { mdiLightbulb } from '@mdi/js';
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component
-export default class ThemeToggler extends Vue {
+export default class ThemeToggle extends Vue {
   icons = {
     mdiLightbulb,
   };

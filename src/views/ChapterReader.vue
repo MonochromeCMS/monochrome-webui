@@ -3,8 +3,8 @@
     <v-row v-if="chapter">
       <v-col v-if="['Vertical', 'Webtoon'].includes(readerMode)" cols="12">
         <vertical-reader
-          :manga="chapter.manga.id"
-          :chapter="chapter.id"
+          :manga-id="chapter.manga.id"
+          :chapter-id="chapter.id"
           :version="chapter.version"
           :length="chapter.length"
           :webtoon="readerMode === 'Webtoon'"
@@ -14,8 +14,8 @@
       </v-col>
       <v-col v-else cols="12">
         <paged-reader
-          :manga="chapter.manga.id"
-          :chapter="chapter.id"
+          :manga-id="chapter.manga.id"
+          :chapter-id="chapter.id"
           :version="chapter.version"
           :length="chapter.length"
           :double="readerMode === 'Double'"
@@ -36,12 +36,17 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-import type { DetailedChapterResponse } from '@/api/Chapter';
+import type { ChapterResponse, DetailedChapterResponse } from '@/api/Chapter';
 import Chapter from '@/api/Chapter';
 import Manga from '@/api/Manga';
-import PagedReader from '@/components/PagedReader.vue';
+import PagedReader from '@/components/pagedReader/PagedReader.vue';
 import ReaderMenu from '@/components/ReaderMenu.vue';
 import VerticalReader from '@/components/VerticalReader.vue';
+
+export interface ChapterItem {
+  text: string;
+  value: string;
+}
 
 @Component({
   components: { PagedReader, ReaderMenu, VerticalReader },
@@ -49,7 +54,7 @@ import VerticalReader from '@/components/VerticalReader.vue';
 export default class ChapterReader extends Vue {
   chapter: DetailedChapterResponse | null = null;
 
-  chapters: any[] = [];
+  chapters: ChapterResponse[] = [];
 
   get chapterId(): string {
     return this.$route.params.chapter;
@@ -75,7 +80,7 @@ export default class ChapterReader extends Vue {
     }
   }
 
-  get chapterItems(): any[] {
+  get chapterItems(): ChapterItem[] {
     return this.chapters.map((el) => ({
       text: this.chapterName(el),
       value: el.id,
@@ -93,7 +98,7 @@ export default class ChapterReader extends Vue {
     }
   }
 
-  chapterName(chapter: any): string {
+  chapterName(chapter: ChapterResponse): string {
     const volume = chapter.volume ? `Vol ${chapter.volume} ` : '';
     const name = chapter.name ? ` - ${chapter.name}` : '';
     return volume + `Ch ${chapter.number}` + name;

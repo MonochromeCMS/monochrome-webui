@@ -1,5 +1,6 @@
 import './registerServiceWorker';
 import './app.scss';
+import './vee-validate';
 
 import Vue from 'vue';
 

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" md="10" lg="8" class="mx-auto">
+      <v-col cols="12" md="11" lg="10" class="mx-auto">
         <v-card rounded="lg" color="backgroundAlt" elevation="0" class="pa-4">
           <v-card-title class="justify-center lemon-milk">{{ $t('handleUsers') }}</v-card-title>
           <v-card-text>
@@ -39,7 +39,7 @@
                 class="mx-auto pb-4"
                 color="background text--primary"
                 :length="pageAmount"
-              ></v-pagination>
+              />
             </v-row>
           </v-card-text>
         </v-card>
@@ -55,9 +55,9 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 
 import type { Role, UserResponse } from '@/api/User';
 import User from '@/api/User';
-import UserFilter from '@/components/UserFilter.vue';
-import UserForm from '@/components/UserForm.vue';
-import UsersList from '@/components/UsersList.vue';
+import UserForm from '@/components/userForm/UserForm.vue';
+import UserFilter from '@/components/userList/UserFilter.vue';
+import UsersList from '@/components/userList/UsersList.vue';
 
 @Component({
   components: { UserFilter, UserForm, UsersList },

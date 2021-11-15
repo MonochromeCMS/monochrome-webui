@@ -1,20 +1,8 @@
 <template>
   <v-container>
-    <v-row v-if="loading || !manga" align="center">
-      <v-col cols="12" md="3">
-        <v-skeleton-loader type="image" />
-      </v-col>
-      <v-col cols="12" md="9" class="d-flex flex-column justify-center">
-        <v-skeleton-loader type="heading" class="mb" />
-        <v-skeleton-loader type="chip, chip, chip" class="d-flex flex-wrap skeleton-tag" />
-        <v-skeleton-loader type="text@3" class="mr-5" />
-        <v-skeleton-loader type="button" />
-      </v-col>
-    </v-row>
+    <manga-row-loading v-if="loading || !manga" />
     <v-row v-else align="center">
-      <v-col cols="12" md="3">
-        <v-img :src="cover" contain />
-      </v-col>
+      <v-col cols="12" md="3"><v-img :src="cover" contain /></v-col>
       <v-col cols="12" md="9" class="d-flex flex-column justify-center">
         <v-tooltip top open-delay="600">
           <template #activator="{ on, attrs }">
@@ -29,7 +17,7 @@
             class="chip-tag"
             :color="statusColor[manga.status] || 'gray'"
             v-text="upper(manga.status)"
-          ></v-chip>
+          />
           <v-chip class="chip-tag" color="background">
             <span>{{ $t('author') }}</span> {{ manga.author }}
           </v-chip>
@@ -40,8 +28,8 @@
             <span>{{ $t('release') }}</span> {{ manga.year }}
           </v-chip>
         </v-chip-group>
-        <div class="manga-desc">{{ manga.description }}</div>
-        <slot></slot>
+        <div class="manga-desc" v-text="manga.description" />
+        <slot />
       </v-col>
     </v-row>
   </v-container>
@@ -52,7 +40,11 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 
 import type { MangaSchema } from '@/api/Manga';
 
-@Component
+import MangaRowLoading from './MangaRowLoading.vue';
+
+@Component({
+  components: { MangaRowLoading },
+})
 export default class MangaRow extends Vue {
   @Prop() readonly manga!: MangaSchema;
 
@@ -86,8 +78,7 @@ export default class MangaRow extends Vue {
   line-height: 1.25rem;
   white-space: initial;
 }
-.chip-tag,
-.skeleton-tag .v-skeleton-loader__chip {
+.chip-tag {
   margin: 0.3rem;
   span {
     font-weight: 700;

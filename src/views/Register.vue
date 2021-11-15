@@ -18,8 +18,8 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 import type { UserResponse } from '@/api/User';
-import UserForm from '@/components/UserForm.vue';
-import UsersList from '@/components/UsersList.vue';
+import UserForm from '@/components/userForm/UserForm.vue';
+import UsersList from '@/components/userList/UsersList.vue';
 
 @Component({
   components: { UserForm, UsersList },

@@ -19,14 +19,14 @@
         {{ $t('warningMessage') }}
       </v-card-text>
 
-      <v-divider></v-divider>
+      <v-divider />
 
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-btn color="gray" text @click="dialog = false">{{ $t('cancel') }}</v-btn>
-        <v-btn color="error" :loading="loading" @click="deleteUser(user.id)">{{
-          $t('delete')
-        }}</v-btn>
+        <v-btn color="error" :loading="loading" @click="deleteUser(user.id)">
+          {{ $t('delete') }}
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -37,11 +37,12 @@ import { mdiDelete } from '@mdi/js';
 import type { AxiosRequestConfig } from 'axios';
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 
+import type { UserResponse } from '@/api/User';
 import User from '@/api/User';
 
 @Component
 export default class UserDeleteButton extends Vue {
-  @Prop() readonly user!: any;
+  @Prop() readonly user!: UserResponse;
 
   @Prop(Boolean) readonly ownUser!: boolean;
 

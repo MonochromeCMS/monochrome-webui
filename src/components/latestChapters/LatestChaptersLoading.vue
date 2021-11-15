@@ -44,5 +44,3 @@ export default class LatestChaptersLoading extends Vue {
   @Prop(Number) readonly columns!: number;
 }
 </script>
-
-<style scoped></style>

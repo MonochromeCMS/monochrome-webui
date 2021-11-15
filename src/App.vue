@@ -14,7 +14,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 
 import NavBar from '@/components/NavBar.vue';
 import Notifications from '@/components/Notifications.vue';
-import ThemeToggler from '@/components/ThemeToggler.vue';
+import ThemeToggler from '@/components/ThemeToggle.vue';
 
 @Component({
   components: {

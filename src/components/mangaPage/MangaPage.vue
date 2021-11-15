@@ -1,38 +1,15 @@
 <template>
   <v-container>
     <v-row>
-      <v-col>
-        <search-bar v-model="search" />
-      </v-col>
+      <v-col><search-bar v-model="search" /></v-col>
     </v-row>
-    <v-row v-if="loading">
-      <v-col v-for="i in limit" :key="i" cols="12" sm="6" md="4" lg="3">
-        <v-card color="background" height="100%" class="d-flex flex-column">
-          <v-responsive aspect-ratio="1">
-            <v-skeleton-loader type="image" class="skeleton-image fill-height" />
-          </v-responsive>
-          <v-skeleton-loader type="article, divider" />
-          <v-skeleton-loader type="chip" class="skeleton-chip" />
-        </v-card>
-      </v-col>
-    </v-row>
+    <manga-page-loading v-if="loading" :amount="limit" />
     <v-row v-else>
       <v-col v-if="manga.length === 0" class="text-center text-body-1">
         {{ search ? $t('noMangaFound') : $t('noManga') }}
       </v-col>
       <v-col v-for="item in manga" v-else :key="item.id" cols="12" sm="6" md="4" lg="3">
-        <v-card color="background" :to="to(item)" height="100%" class="d-flex flex-column">
-          <v-img aspect-ratio="1" :src="cover(item)" />
-          <v-card-title v-text="item.title" />
-          <v-card-subtitle v-text="item.author" />
-          <v-card-text class="card-description" v-text="item.description" />
-          <v-divider></v-divider>
-          <v-chip
-            class="status-chip"
-            :color="statusColor[item.status] || 'gray'"
-            v-text="$t(`status.${item.status}`)"
-          ></v-chip>
-        </v-card>
+        <manga-card :manga="item" />
       </v-col>
     </v-row>
     <v-row v-if="pageAmount > 1">
@@ -41,7 +18,7 @@
         class="mx-auto pb-4"
         color="background text--primary"
         :length="pageAmount"
-      ></v-pagination>
+      />
     </v-row>
   </v-container>
 </template>
@@ -51,11 +28,13 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 
 import type { MangaResponse } from '@/api/Manga';
 import Manga from '@/api/Manga';
-import Media from '@/api/Media';
-import SearchBar from '@/components/SearchBar.vue';
+
+import MangaCard from './MangaCard.vue';
+import MangaPageLoading from './MangaPageLoading.vue';
+import SearchBar from './SearchBar.vue';
 
 @Component({
-  components: { SearchBar },
+  components: { MangaCard, MangaPageLoading, SearchBar },
 })
 export default class MangaPage extends Vue {
   loading = true;
@@ -68,14 +47,7 @@ export default class MangaPage extends Vue {
 
   total = 0;
 
-  statusColor = {
-    cancelled: 'red',
-    completed: 'green darken-2',
-    hiatus: 'orange',
-    ongoing: 'green',
-  };
-
-  search: any = '';
+  search: any = null;
 
   get offset(): number {
     return (this.page - 1) * this.limit;
@@ -83,14 +55,6 @@ export default class MangaPage extends Vue {
 
   get pageAmount(): number {
     return Math.ceil(this.total / this.limit);
-  }
-
-  cover(manga: MangaResponse): string {
-    return Media.cover(manga.id, manga.version);
-  }
-
-  to(manga: MangaResponse): string {
-    return `/manga/${manga.id}`;
   }
 
   async getManga(): Promise<void> {
@@ -134,25 +98,6 @@ export default class MangaPage extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-.status-chip,
-.skeleton-chip .v-skeleton-loader__chip {
-  margin: 0.5rem 0.5rem 0.5rem auto;
-}
-.card-description {
-  overflow: hidden;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  display: -webkit-box;
-  padding-bottom: 0 !important;
-  margin-bottom: 1rem;
-}
-
-.skeleton-image .v-skeleton-loader__image {
-  height: 100%;
-}
-</style>
 
 <i18n locale="en" lang="yaml">
 noMangaFound: 'No manga could be found.'

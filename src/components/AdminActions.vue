@@ -14,10 +14,10 @@
         <v-tooltip :right="!left" :left="left" open-delay="600">
           <template #activator="{ on, attrs }">
             <v-list-item-content v-bind="attrs" v-on="on">
-              <v-list-item-title v-text="item.text"></v-list-item-title>
+              <v-list-item-title v-text="item.text" />
             </v-list-item-content>
           </template>
-          <span v-text="item.text"></span>
+          <span v-text="item.text" />
         </v-tooltip>
       </v-list-item>
     </v-list-item-group>
@@ -118,7 +118,7 @@ userActions: "Actions d'{role}"
 createManga: 'Ajouter un manga'
 handleUsers: 'Gérer les utilisateurs'
 myUser: 'Mon utilisateur'
-customizeWebsite: 'Personaliser le site'
+customizeWebsite: 'Personnaliser le site'
 logout: 'Se déconnecter'
 apiDocs: 'Documentation API'
 </i18n>

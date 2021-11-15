@@ -1326,6 +1326,11 @@
     "@typescript-eslint/types" "4.33.0"
     eslint-visitor-keys "^2.0.0"
 
+"@vee-validate/i18n@^4.5.3":
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/@vee-validate/i18n/-/i18n-4.5.3.tgz#8fc3ed3e28eb6841e9427b387f5aa0356e0a6337"
+  integrity sha512-uzgIwWyzKfxQ4d19qoAZBgy7vNV1OyLdYorAcz7yIaUWyJ/L72IMJ0nqTLqTfa+Fgi6FVEIfIEAtMuCzyhIPzA==
+
 "@volar/code-gen@^0.27.24":
   version "0.27.24"
   resolved "https://registry.yarnpkg.com/@volar/code-gen/-/code-gen-0.27.24.tgz#ccdbe858951c1ee4e0c3979232d52412dc46756a"

@@ -3,9 +3,9 @@
     <v-row>
       <v-col cols="12" sm="10" md="8" lg="6" class="mx-auto">
         <v-card rounded="lg" color="backgroundAlt" elevation="0" class="pa-4">
-          <v-card-title class="justify-center lemon-milk">{{
-            $t('customizeWebsite')
-          }}</v-card-title>
+          <v-card-title class="justify-center lemon-milk">
+            {{ $t('customizeWebsite') }}
+          </v-card-title>
           <v-card-text>
             <settings-form />
           </v-card-text>
@@ -20,7 +20,7 @@ import { Component, Vue } from 'vue-property-decorator';
 
 import SettingsAPI from '@/api/Settings';
 import type { Role } from '@/api/User';
-import SettingsForm from '@/components/SettingsForm.vue';
+import SettingsForm from '@/components/settingsForm/SettingsForm.vue';
 
 @Component({
   components: { SettingsForm },

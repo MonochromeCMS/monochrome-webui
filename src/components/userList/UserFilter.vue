@@ -32,7 +32,7 @@
 import { mdiMagnify } from '@mdi/js';
 import { Component, Emit, VModel, Vue } from 'vue-property-decorator';
 
-import type { UserFilters } from '@/api/User';
+import type { Role, UserFilters } from '@/api/User';
 
 @Component
 export default class UserFilter extends Vue {
@@ -49,7 +49,7 @@ export default class UserFilter extends Vue {
     { text: this.upper(this.$tc('roles.user')), value: 'user' },
   ];
 
-  updateFilter(field: string, value: any): void {
+  updateFilter(field: string, value: string | Role): void {
     const filters: Record<string, any> = { ...this.filters };
     filters[field] = value;
     this.filters = filters;

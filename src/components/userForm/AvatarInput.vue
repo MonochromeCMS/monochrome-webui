@@ -6,7 +6,14 @@
       aspect-ratio="1:1"
       class="rounded-circle ma-1"
     />
-    <v-btn :loading="loading" large class="edit-button" icon @click="avatarClick">
+    <v-btn
+      :loading="loading"
+      :disabled="disabled"
+      large
+      class="edit-button"
+      icon
+      @click="avatarClick"
+    >
       <v-icon large>{{ icons.mdiPencil }}</v-icon>
     </v-btn>
     <input ref="fileInput" type="file" style="display: none" @input="updateFile" />
@@ -16,18 +23,19 @@
 <script lang="ts">
 import { mdiPencil } from '@mdi/js';
 import type { AxiosRequestConfig } from 'axios';
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+import { Component, Emit, Prop, Ref, Vue } from 'vue-property-decorator';
 
 import Media from '@/api/Media';
+import type { UserResponse } from '@/api/User';
 import User from '@/api/User';
 
 @Component
 export default class AvatarInput extends Vue {
-  $refs!: {
-    fileInput: HTMLInputElement;
-  };
+  @Ref() fileInput!: HTMLInputElement;
 
-  @Prop() readonly user!: any;
+  @Prop({ default: false, type: Boolean }) readonly disabled!: boolean;
+
+  @Prop() readonly user!: UserResponse;
 
   icons = {
     mdiPencil,
@@ -42,7 +50,7 @@ export default class AvatarInput extends Vue {
   }
 
   avatarClick(): void {
-    this.$refs.fileInput.click();
+    this.fileInput.click();
   }
 
   async updateFile(ev: any): Promise<void> {
@@ -86,6 +94,17 @@ export default class AvatarInput extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.relative {
+  position: relative;
+}
+.edit-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+</style>
 
 <i18n locale="en" lang="yaml">
 avatarUpload: 'Avatar upload'

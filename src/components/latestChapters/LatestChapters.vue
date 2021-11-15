@@ -1,10 +1,10 @@
 <template>
   <v-container>
-    <v-card-title class="justify-center lemon-milk">{{ $tc('latestChapters') }}</v-card-title>
+    <v-card-title class="justify-center lemon-milk">{{ $t('latestChapters') }}</v-card-title>
     <latest-chapters-loading v-if="loading" :amount="limit" :columns="isConnected ? 1 : 2" />
     <v-row v-else class="mx-0 mb-0">
       <v-col v-if="chapters.length === 0" cols="12" class="text-center text-body-1">
-        {{ $tc('noChapters') }}
+        {{ $t('noChapters') }}
       </v-col>
       <v-col
         v-for="chapter in chapters"
@@ -26,8 +26,7 @@
         class="mx-auto pb-4"
         color="background text--primary"
         :length="pageAmount"
-      >
-      </v-pagination>
+      />
     </v-row>
   </v-container>
 </template>
@@ -37,9 +36,9 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 
 import type { DetailedChapterResponse } from '@/api/Chapter';
 import Chapter from '@/api/Chapter';
-import Media from '@/api/Media';
-import ChapterCard from '@/components/latestChapters/ChapterCard.vue';
-import LatestChaptersLoading from '@/components/latestChapters/LatestChaptersLoading.vue';
+
+import ChapterCard from './ChapterCard.vue';
+import LatestChaptersLoading from './LatestChaptersLoading.vue';
 
 @Component({
   components: { ChapterCard, LatestChaptersLoading },
@@ -81,7 +80,7 @@ export default class LatestChapters extends Vue {
     } else {
       const notification = {
         color: 'error',
-        context: this.$tc('latestChapters'),
+        context: this.$t('latestChapters'),
         message: response.error ?? '',
       };
       await this.$store.dispatch('pushNotification', notification);
@@ -95,18 +94,6 @@ export default class LatestChapters extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-.v-chip.chip-tag {
-  margin-top: 0.2rem;
-  max-width: max-content;
-}
-.ellipsis {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-</style>
 
 <i18n locale="en" lang="yaml">
 latestChapters: 'Latest chapters'

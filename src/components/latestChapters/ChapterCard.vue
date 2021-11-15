@@ -35,23 +35,22 @@ export default class ChapterCard extends Vue {
   }
 
   ago(val: number): string {
-    /* eslint-disable sort-keys-fix/sort-keys-fix */
     val = 0 | ((Date.now() - val) / 1000);
-    const length: Record<string, number> = {
-      second: 60,
-      minute: 60,
-      hour: 24,
-      day: 7,
-      week: 4.35,
-      month: 12,
-      year: 10000,
-    };
 
-    for (const unit of Object.keys(length)) {
-      const result = val % length[unit];
-      if (!(val = 0 | (val / length[unit]))) {
-        console.log(unit, result);
-        return this.$tc(`timeUnits.${unit}`, result);
+    const length = new Map([
+      ['second', 60],
+      ['minute', 60],
+      ['hour', 24],
+      ['day', 7],
+      ['week', 4.35],
+      ['month', 12],
+      ['year', 10000],
+    ]);
+
+    for (const [k, l] of length) {
+      const result = val % l;
+      if (!(val = 0 | (val / l))) {
+        return this.$tc(`timeUnits.${k}`, result);
       }
     }
     return 'ERROR';

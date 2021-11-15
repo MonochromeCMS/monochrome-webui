@@ -18,7 +18,7 @@ import { Component, Vue } from 'vue-property-decorator';
 
 import type { MangaResponse } from '@/api/Manga';
 import Manga from '@/api/Manga';
-import MangaForm from '@/components/MangaForm.vue';
+import MangaForm from '@/components/mangaForm/MangaForm.vue';
 
 @Component({
   components: { MangaForm },

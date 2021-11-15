@@ -30,7 +30,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import type { Notification } from '@/store/notifications';
 
 @Component
-export default class ThemeToggler extends Vue {
+export default class Notifications extends Vue {
   icons = {
     mdiClose,
   };

@@ -23,9 +23,9 @@
         />
       </validation-provider>
       <div class="text-center">
-        <v-btn type="submit" block color="background" class="text--primary">{{
-          $t('signIn')
-        }}</v-btn>
+        <v-btn type="submit" block color="background" class="text--primary">
+          {{ $t('signIn') }}
+        </v-btn>
       </div>
     </v-form>
   </validation-observer>
@@ -33,16 +33,10 @@
 
 <script lang="ts">
 import { mdiEye, mdiEyeOff } from '@mdi/js';
-import { extend, setInteractionMode, ValidationObserver, ValidationProvider } from 'vee-validate';
-import { required } from 'vee-validate/dist/rules';
-import { Component, Vue } from 'vue-property-decorator';
+import { ValidationObserver, ValidationProvider } from 'vee-validate';
+import { Component, Ref, Vue } from 'vue-property-decorator';
 
-setInteractionMode('eager');
-
-extend('required', {
-  ...required,
-  message: '{_field_} can not be empty',
-});
+import type { UserLogin } from '@/store/user';
 
 @Component({
   components: {
@@ -51,9 +45,7 @@ extend('required', {
   },
 })
 export default class LoginForm extends Vue {
-  $refs!: {
-    observer: InstanceType<typeof ValidationObserver>;
-  };
+  @Ref() readonly observer!: InstanceType<typeof ValidationObserver>;
 
   icons = {
     mdiEye,
@@ -66,7 +58,7 @@ export default class LoginForm extends Vue {
 
   showPass = false;
 
-  get params(): any {
+  get params(): UserLogin {
     return {
       password: this.password,
       username: this.username,
@@ -74,22 +66,23 @@ export default class LoginForm extends Vue {
   }
 
   async submit(): Promise<void> {
-    const valid = await this.$refs.observer.validate();
+    const valid = await this.observer.validate();
     if (valid) {
       await this.login(this.params);
     }
   }
 
-  clear(): void {
+  reset(): void {
     this.username = '';
     this.password = '';
+    this.observer.reset();
   }
 
-  async login(params: any): Promise<void> {
+  async login(params: UserLogin): Promise<void> {
     const response = await this.$store.dispatch('login', params);
 
     if (response.data) {
-      this.clear();
+      this.reset();
     } else {
       const notification = {
         color: 'error',

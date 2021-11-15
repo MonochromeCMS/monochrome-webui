@@ -11,6 +11,7 @@
     "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
   },
   "dependencies": {
+    "@vee-validate/i18n": "^4.5.3",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "marked": "^3.0.4",

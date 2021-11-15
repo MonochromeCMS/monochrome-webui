@@ -1,21 +1,21 @@
 <template>
   <v-dialog v-model="dialog" max-width="30rem">
     <template #activator="{ on, attrs }">
-      <v-btn color="error" block v-bind="attrs" v-on="on"> {{ $t('deleteChapter') }} </v-btn>
+      <v-btn color="error" block v-bind="attrs" v-on="on">{{ $t('deleteChapter') }}</v-btn>
     </template>
 
     <v-card>
-      <v-card-title class="text-h5 background mb-2"> {{ $t('warning') }} </v-card-title>
+      <v-card-title class="text-h5 background mb-2">{{ $t('warning') }}</v-card-title>
 
       <v-card-text class="body-1">
         <span class="font-weight-bold">{{ $t('warningBoldMessage') }}</span>
         {{ $t('warningMessage') }}
       </v-card-text>
 
-      <v-divider></v-divider>
+      <v-divider />
 
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-btn color="gray" text @click="dialog = false">{{ $t('cancel') }}</v-btn>
         <v-btn color="error" @click="deleteChapter">{{ $t('delete') }}</v-btn>
       </v-card-actions>

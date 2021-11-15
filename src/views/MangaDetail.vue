@@ -45,13 +45,13 @@
                       {{ $t('warningMessage') }}
                     </v-card-text>
 
-                    <v-divider></v-divider>
+                    <v-divider />
 
                     <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="gray" text @click="deleteDialog = false">{{
-                        $t('cancel')
-                      }}</v-btn>
+                      <v-spacer />
+                      <v-btn color="gray" text @click="deleteDialog = false">
+                        {{ $t('cancel') }}
+                      </v-btn>
                       <v-btn color="error" @click="deleteManga">{{ $t('delete') }}</v-btn>
                     </v-card-actions>
                   </v-card>
@@ -76,7 +76,7 @@ import Manga from '@/api/Manga';
 import Media from '@/api/Media';
 import type { Role } from '@/api/User';
 import MangaChapters from '@/components/mangaChapters/MangaChapters.vue';
-import MangaRow from '@/components/MangaRow.vue';
+import MangaRow from '@/components/mangaRow/MangaRow.vue';
 
 @Component({
   components: { MangaChapters, MangaRow },

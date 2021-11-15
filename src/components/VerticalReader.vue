@@ -1,8 +1,8 @@
 <template>
   <v-row class="ma-0">
-    <v-btn block text width="15rem" class="mb-3" @click="previousChapter">{{
-      $t('previousChapter')
-    }}</v-btn>
+    <v-btn block text width="15rem" class="mb-3" @click="previousChapter">
+      {{ $t('previousChapter') }}
+    </v-btn>
     <v-col v-for="index in length" :key="page(index)" :class="webtoon ? 'webtoon' : ''" cols="12">
       <v-img contain :class="fit" :width="width" :src="page(index)" :lazy-src="defaultImage">
         <template #placeholder>
@@ -12,9 +12,9 @@
         </template>
       </v-img>
     </v-col>
-    <v-btn block text width="15rem" class="mt-3" @click="nextChapter">{{
-      $t('nextChapter')
-    }}</v-btn>
+    <v-btn block text width="15rem" class="mt-3" @click="nextChapter">
+      {{ $t('nextChapter') }}
+    </v-btn>
   </v-row>
 </template>
 
@@ -25,9 +25,9 @@ import Media from '@/api/Media';
 
 @Component
 export default class VerticalReader extends Vue {
-  @Prop(String) readonly manga!: string;
+  @Prop(String) readonly mangaId!: string;
 
-  @Prop(String) readonly chapter!: string;
+  @Prop(String) readonly chapterId!: string;
 
   @Prop(Number) readonly version!: number;
 
@@ -57,7 +57,7 @@ export default class VerticalReader extends Vue {
   }
 
   page(index: number): string {
-    return Media.page(this.manga, this.chapter, index, this.version);
+    return Media.page(this.mangaId, this.chapterId, index, this.version);
   }
 }
 </script>

@@ -20,7 +20,7 @@
           class="mx-auto"
           color="background text--primary"
           :length="pageAmount"
-        ></v-pagination>
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -34,8 +34,9 @@ import type { ChapterResponse } from '@/api/Chapter';
 import Chapter from '@/api/Chapter';
 import Manga from '@/api/Manga';
 import type { Role } from '@/api/User';
-import ChapterRow from '@/components/mangaChapters/ChapterRow.vue';
-import MangaChaptersLoading from '@/components/mangaChapters/MangaChaptersLoading.vue';
+
+import ChapterRow from './ChapterRow.vue';
+import MangaChaptersLoading from './MangaChaptersLoading.vue';
 
 @Component({
   components: { ChapterRow, MangaChaptersLoading },
@@ -61,7 +62,7 @@ export default class MangaChapters extends Vue {
     return Math.ceil(this.chapters.length / this.limit);
   }
 
-  get chaptersPage(): any[] {
+  get chaptersPage(): ChapterResponse[] {
     const start = this.limit * (this.page - 1);
     return this.chapters.slice(start, start + this.limit);
   }
@@ -115,10 +116,6 @@ export default class MangaChapters extends Vue {
 .chapter-row {
   display: flex;
   align-items: center;
-  .chapter-link {
-    width: 100%;
-    height: 100%;
-  }
 }
 .theme--dark {
   .chapter-row {

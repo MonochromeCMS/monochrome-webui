@@ -8,11 +8,11 @@
       <v-col class="pt-0">
         <v-list three-line color="backgroundAlt">
           <template v-for="(item, index) in manga">
-            <v-divider v-if="item.divider" :key="index" :inset="item.inset"></v-divider>
+            <v-divider v-if="item.divider" :key="index" :inset="item.inset" />
 
             <v-list-item v-else :key="item.title" :to="item.to">
               <v-list-item-avatar size="3rem">
-                <v-img :src="item.avatar"></v-img>
+                <v-img :src="item.avatar" />
               </v-list-item-avatar>
 
               <v-list-item-content>

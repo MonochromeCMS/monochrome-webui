@@ -4,40 +4,23 @@
     <draggable v-model="pages" class="drag-pages">
       <template v-for="(item, index) in pages">
         <v-col :key="item.id" cols="6" sm="4" md="3" xl="2">
-          <v-card color="background" class="page-card">
-            <v-img :src="blob(item.id)" :aspect-ratio="4 / 5" position="relative">
-              <v-btn
-                icon
-                :disabled="deleting"
-                class="background text--primary page-close"
-                @click="deletePage(index, item.id)"
-              >
-                <v-icon>{{ icons.mdiClose }}</v-icon>
-              </v-btn>
-              <v-chip class="page-name">{{ item.name }}</v-chip>
-            </v-img>
-          </v-card>
+          <page-input-card
+            :page="item"
+            :disabled="deleting || disabled"
+            @delete="deletePage(index, item.id)"
+          />
         </v-col>
       </template>
       <v-col cols="6" sm="4" md="3" xl="2">
-        <v-card color="background" :disabled="loading" @click="uploadClick">
-          <v-responsive :aspect-ratio="4 / 5">
-            <div class="d-flex fill-height">
-              <v-progress-circular
-                v-if="loading"
-                :indeterminate="progress === 100"
-                :value="progress"
-                class="ma-auto d-block"
-              />
-              <v-icon v-else x-large class="ma-auto d-block">{{ icons.mdiPlus }}</v-icon>
-            </div>
-          </v-responsive>
-        </v-card>
+        <page-input-add-card
+          :loading="loading || disabled"
+          :progress="progress"
+          @fileUpload="updateFile"
+        />
       </v-col>
     </draggable>
     <v-btn text @click="quickSort">{{ $t('quickSort') }}</v-btn>
     <v-btn text color="error" @click="deletePages">{{ $t('deleteAll') }}</v-btn>
-    <input ref="fileInput" type="file" multiple style="display: none" @input="updateFile" />
     <div>
       <ul>
         <li>{{ $t('uploadNotes1') }}</li>
@@ -49,32 +32,26 @@
 </template>
 
 <script lang="ts">
-import { mdiClose, mdiPlus } from '@mdi/js';
 import type { AxiosRequestConfig } from 'axios';
 import naturalCompare from 'natural-compare-lite';
 import { Component, Prop, VModel, Vue, Watch } from 'vue-property-decorator';
 import draggable from 'vuedraggable';
 
-import Media from '@/api/Media';
-import type { UploadedBlobResponse } from '@/api/Upload';
+import type { UploadedBlobResponse, UploadSessionResponse } from '@/api/Upload';
 import Upload from '@/api/Upload';
 
+import PageInputAddCard from './PageInputAddCard.vue';
+import PageInputCard from './PageInputCard.vue';
+
 @Component({
-  components: { draggable },
+  components: { PageInputAddCard, PageInputCard, draggable },
 })
 export default class PageInput extends Vue {
-  $refs!: {
-    fileInput: HTMLInputElement;
-  };
+  @Prop() readonly session!: UploadSessionResponse;
 
-  @Prop() readonly session!: any;
+  @Prop({ default: false, type: Boolean }) readonly disabled!: boolean;
 
-  @VModel() pageOrder!: any[];
-
-  icons = {
-    mdiClose,
-    mdiPlus,
-  };
+  @VModel() pageOrder!: string[];
 
   pages: UploadedBlobResponse[] = [];
 
@@ -88,21 +65,13 @@ export default class PageInput extends Vue {
     return this.$store.getters.authConfig;
   }
 
-  blob(blobId: string): string {
-    return Media.blob(blobId);
-  }
-
   mounted(): void {
     this.pages = this.session.blobs;
   }
 
   @Watch('pages')
-  onPagesChange(value: any[]): void {
+  onPagesChange(value: UploadedBlobResponse[]): void {
     this.pageOrder = value.map((el) => el.id);
-  }
-
-  uploadClick(): void {
-    this.$refs.fileInput.click();
   }
 
   handleProgress(progressEvent: any): void {
@@ -193,20 +162,7 @@ export default class PageInput extends Vue {
 }
 </script>
 
-<style scoped>
-.page-card {
-  cursor: grab;
-}
-.page-name {
-  position: absolute;
-  bottom: 0.1rem;
-  left: 0.1rem;
-}
-.page-close {
-  position: absolute;
-  right: 0.1rem;
-  top: 0.1rem;
-}
+<style lang="scss">
 .drag-pages {
   display: flex;
   flex-wrap: wrap;

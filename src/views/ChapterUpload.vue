@@ -22,8 +22,8 @@ import type { MangaResponse } from '@/api/Manga';
 import Manga from '@/api/Manga';
 import Media from '@/api/Media';
 import type { Role } from '@/api/User';
-import MangaRow from '@/components/MangaRow.vue';
-import UploadForm from '@/components/UploadForm.vue';
+import MangaRow from '@/components/mangaRow/MangaRow.vue';
+import UploadForm from '@/components/uploadForm/UploadForm.vue';
 
 @Component({
   components: { MangaRow, UploadForm },

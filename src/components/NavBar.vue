@@ -16,14 +16,14 @@
 
     <v-list class="hidden-sm-and-down action-list">
       <locales-item />
-      <v-list-item v-if="!isConnected" to="/login" active-class="fake-tab">{{
-        $t('login')
-      }}</v-list-item>
+      <v-list-item v-if="!isConnected" to="/login" active-class="fake-tab">
+        {{ $t('login') }}
+      </v-list-item>
       <v-menu v-else offset-y>
         <template #activator="{ on, attrs }">
-          <v-list-item v-bind="attrs" class="login-tab" v-on="on">{{
-            displayUserRole
-          }}</v-list-item>
+          <v-list-item v-bind="attrs" class="login-tab" v-on="on">
+            {{ displayUserRole }}
+          </v-list-item>
         </template>
 
         <admin-actions :left="true" />
@@ -56,6 +56,7 @@
               {{ displayUserRole }}
             </v-list-item>
           </template>
+
           <admin-actions :left="true" />
         </v-menu>
       </v-list-item-group>
@@ -65,11 +66,19 @@
 
 <script lang="ts">
 import { mdiMenu } from '@mdi/js';
+import VueI18n from 'vue-i18n';
 import { Component, Vue } from 'vue-property-decorator';
 
 import type { Role } from '@/api/User';
 import AdminActions from '@/components/AdminActions.vue';
 import LocalesItem from '@/components/LocalesItem.vue';
+import TranslateResult = VueI18n.TranslateResult;
+import type { SettingsSchema } from '@/api/Settings';
+
+interface Link {
+  text: TranslateResult;
+  to: string;
+}
 
 @Component({
   components: { AdminActions, LocalesItem },
@@ -81,7 +90,7 @@ export default class NavBar extends Vue {
 
   tabs = null;
 
-  get links(): any {
+  get links(): Link[] {
     return [
       {
         text: this.$t('home'),
@@ -114,7 +123,7 @@ export default class NavBar extends Vue {
     return this.$store.getters.displayUserRole;
   }
 
-  get settings(): any {
+  get settings(): SettingsSchema {
     return this.$store.getters.settings;
   }
 }

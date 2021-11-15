@@ -1,6 +1,10 @@
 <template>
-  <div class="chapter-link">
-    <router-link :to="`/chapters/${chapter.id}`" class="d-block text-decoration-none">
+  <div class="chapter-link d-flex align-center">
+    <router-link
+      :to="`/chapters/${chapter.id}`"
+      class="d-block text-decoration-none"
+      :style="`width: 100%`"
+    >
       <v-row class="justify-space-around ma-0">
         <v-col cols="6" sm="3" md="2">
           {{ chapter.volume ? `Vol ${chapter.volume} ` : '' }}{{ $t('chapter') }}
@@ -58,26 +62,35 @@ export default class ChapterRow extends Vue {
   }
 
   ago(val: number): string {
-    /* eslint-disable sort-keys-fix/sort-keys-fix */
     val = 0 | ((Date.now() - val) / 1000);
-    const length: Record<string, number> = {
-      second: 60,
-      minute: 60,
-      hour: 24,
-      day: 7,
-      week: 4.35,
-      month: 12,
-      year: 10000,
-    };
 
-    for (const unit of Object.keys(length)) {
-      const result = val % length[unit];
-      if (!(val = 0 | (val / length[unit]))) return this.$tc(`timeUnits.${unit}`, result);
+    const length = new Map([
+      ['second', 60],
+      ['minute', 60],
+      ['hour', 24],
+      ['day', 7],
+      ['week', 4.35],
+      ['month', 12],
+      ['year', 10000],
+    ]);
+
+    for (const [k, l] of length) {
+      const result = val % l;
+      if (!(val = 0 | (val / l))) {
+        return this.$tc(`timeUnits.${k}`, result);
+      }
     }
     return 'ERROR';
   }
 }
 </script>
+
+<style lang="scss">
+.chapter-link {
+  width: 100%;
+  height: 100%;
+}
+</style>
 
 <i18n locale="en" lang="yaml">
 chapter: 'Chapter'
