@@ -53,9 +53,6 @@ export default class SettingsForm extends Vue {
       };
       await this.$store.dispatch('pushNotification', notification);
     }
-    if (response.status === 401) {
-      this.$store.commit('logout');
-    }
   }
 }
 </script>

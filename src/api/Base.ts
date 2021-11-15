@@ -118,8 +118,7 @@ export default class Base {
   }
 
   public static _logout(): void {
-    const store = require('@/store/index').default;
-    store.commit('logout');
+    require('@/store/index').default.commit('logout');
   }
 
   public static async refresh(token: string) {

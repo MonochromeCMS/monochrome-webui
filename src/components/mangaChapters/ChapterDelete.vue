@@ -53,10 +53,6 @@ export default class ChapterDelete extends Vue {
       };
       await this.$store.dispatch('pushNotification', notification);
     }
-
-    if (response.status === 401) {
-      this.$store.commit('logout');
-    }
   }
 }
 </script>

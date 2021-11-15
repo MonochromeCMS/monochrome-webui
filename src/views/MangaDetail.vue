@@ -154,9 +154,6 @@ export default class MangaDetail extends Vue {
       };
       await this.$store.dispatch('pushNotification', notification);
     }
-    if (response.status === 401) {
-      this.$store.commit('logout');
-    }
 
     this.deleteDialog = false;
   }

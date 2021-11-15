@@ -67,9 +67,6 @@ export default class MangaForm extends Vue {
       };
       await this.$store.dispatch('pushNotification', notification);
     }
-    if (response.status === 401) {
-      this.$store.commit('logout');
-    }
   }
 
   async editManga(params: MangaSchema, id: string): Promise<void> {
@@ -90,9 +87,6 @@ export default class MangaForm extends Vue {
       };
       await this.$store.dispatch('pushNotification', notification);
     }
-    if (response.status === 401) {
-      this.$store.commit('logout');
-    }
   }
 
   async setCover(mangaId: string, cover: File): Promise<void> {
@@ -108,9 +102,6 @@ export default class MangaForm extends Vue {
         message: response.error ?? '',
       };
       await this.$store.dispatch('pushNotification', notification);
-    }
-    if (response.status === 401) {
-      this.$store.commit('logout');
     }
   }
 }

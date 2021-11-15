@@ -42,7 +42,8 @@ import { mdiDotsVertical } from '@mdi/js';
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 
 import type { ChapterResponse } from '@/api/Chapter';
-import ChapterDelete from '@/components/ChapterDelete.vue';
+
+import ChapterDelete from './ChapterDelete.vue';
 
 @Component({
   components: { ChapterDelete },

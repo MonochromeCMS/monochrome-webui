@@ -77,9 +77,6 @@ export default class UploadForm extends Vue {
       };
       await this.$store.dispatch('pushNotification', notification);
     }
-    if (response.status === 401) {
-      this.$store.commit('logout');
-    }
   }
 
   async commitSession(chapterDraft: ChapterSchema, pageOrder: string[]): Promise<void> {
@@ -102,9 +99,6 @@ export default class UploadForm extends Vue {
       };
       await this.$store.dispatch('pushNotification', notification);
     }
-    if (response.status === 401) {
-      this.$store.commit('logout');
-    }
     this.loading = false;
   }
 
@@ -122,9 +116,6 @@ export default class UploadForm extends Vue {
         message: response.error ?? '',
       };
       await this.$store.dispatch('pushNotification', notification);
-    }
-    if (response.status === 401) {
-      this.$store.commit('logout');
     }
     this.loading = false;
   }
