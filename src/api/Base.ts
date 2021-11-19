@@ -103,7 +103,7 @@ export default class Base {
 
     return this._request({
       data,
-      method: 'post',
+      method: 'put',
       url: this.prefix + this.router + url,
       ...settings,
     });
