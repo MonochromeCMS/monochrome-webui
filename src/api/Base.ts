@@ -147,7 +147,6 @@ export default class Base {
     oldResult: ApiResponse<T>,
   ): Promise<ApiResponse<T>> {
     const store = require('@/store/index').default;
-    console.log(store);
 
     const tokenResponse = await store.dispatch('refresh');
     if (!tokenResponse?.data?.access_token) {
