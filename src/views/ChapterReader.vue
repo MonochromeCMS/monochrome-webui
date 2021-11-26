@@ -24,6 +24,7 @@
         />
       </v-col>
     </v-row>
+    <comment-box :chapter-id="chapterId" />
     <reader-menu
       v-if="chapter"
       :chapter="chapter"
@@ -39,6 +40,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import type { ChapterResponse, DetailedChapterResponse } from '@/api/Chapter';
 import Chapter from '@/api/Chapter';
 import Manga from '@/api/Manga';
+import CommentBox from '@/components/commentBox/CommentBox.vue';
 import PagedReader from '@/components/pagedReader/PagedReader.vue';
 import ReaderMenu from '@/components/ReaderMenu.vue';
 import VerticalReader from '@/components/VerticalReader.vue';
@@ -49,7 +51,7 @@ export interface ChapterItem {
 }
 
 @Component({
-  components: { PagedReader, ReaderMenu, VerticalReader },
+  components: { CommentBox, PagedReader, ReaderMenu, VerticalReader },
 })
 export default class ChapterReader extends Vue {
   chapter: DetailedChapterResponse | null = null;

@@ -11,7 +11,7 @@
     "cancelled": "Cancelled"
   },
   "timeUnits": {
-    "second": "second | {n} second | {n} seconds",
+    "second": "0 seconds | {n} second | {n} seconds",
     "minute": "minute | {n} minute | {n} minutes",
     "hour": "hour | {n} hour | {n} hours",
     "day": "day | {n} day | {n} days",

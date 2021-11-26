@@ -6,6 +6,7 @@
         <validation-provider v-slot="{ errors }" :name="$t('volumeNumber')" rules="numeric">
           <v-text-field
             v-model="volume"
+            type="number"
             :error-messages="errors"
             :label="$t('volumeNumber')"
             required

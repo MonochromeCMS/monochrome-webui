@@ -42,7 +42,14 @@
     </validation-provider>
     <!-- YEAR FIELD -->
     <validation-provider v-slot="{ errors }" :name="$t('year')" :rules="{ digits: 4 }">
-      <v-text-field v-model="year" :error-messages="errors" :label="$t('year')" required outlined />
+      <v-text-field
+        v-model="year"
+        type="number"
+        :error-messages="errors"
+        :label="$t('year')"
+        required
+        outlined
+      />
     </validation-provider>
     <!-- STATUS FIELD -->
     <validation-provider v-slot="{ errors }" :name="$t('status')" rules="required">

@@ -41,7 +41,7 @@ export default class Comment extends Base {
   }
 
   public static async create(data: CommentSchema, auth: AxiosRequestConfig) {
-    const response = await this._post(`/`, data, auth);
+    const response = await this._post('', data, auth);
 
     const result: ApiResponse<CommentResponse> = this._apiResponse(response.status);
 
@@ -109,8 +109,8 @@ export default class Comment extends Base {
     return result;
   }
 
-  public static async edit(chapterId: string, data: CommentEditSchema, auth: AxiosRequestConfig) {
-    const response = await this._put(`/${chapterId}`, data, auth);
+  public static async edit(commentId: string, data: CommentEditSchema, auth: AxiosRequestConfig) {
+    const response = await this._put(`/${commentId}`, data, auth);
 
     const result: ApiResponse<CommentResponse> = this._apiResponse(response.status);
 
