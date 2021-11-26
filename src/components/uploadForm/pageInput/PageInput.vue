@@ -19,6 +19,7 @@
         />
       </v-col>
     </draggable>
+    <v-btn v-if="webtoon" :loading="loading" text @click="slice">{{ $t('slice') }}</v-btn>
     <v-btn text @click="quickSort">{{ $t('quickSort') }}</v-btn>
     <v-btn text color="error" @click="deletePages">{{ $t('deleteAll') }}</v-btn>
     <div>
@@ -50,6 +51,8 @@ export default class PageInput extends Vue {
   @Prop() readonly session!: UploadSessionResponse;
 
   @Prop({ default: false, type: Boolean }) readonly disabled!: boolean;
+
+  @Prop(Boolean) readonly webtoon!: boolean;
 
   @VModel() pageOrder!: string[];
 
@@ -85,6 +88,25 @@ export default class PageInput extends Vue {
 
     await this.uploadFiles(ev.target.files);
     ev.target.value = null;
+  }
+
+  async slice(): Promise<void> {
+    this.loading = true;
+
+    const response = await Upload.slice(this.session.id, this.pageOrder, this.authConfig);
+
+    if (response.data) {
+      this.pages = response.data;
+    } else {
+      const notification = {
+        color: 'error',
+        context: this.$t('slicing'),
+        message: response.error ?? '',
+      };
+      await this.$store.dispatch('pushNotification', notification);
+    }
+
+    this.loading = false;
   }
 
   async uploadFiles(files: File[]): Promise<void> {
@@ -162,11 +184,13 @@ export default class PageInput extends Vue {
 
 <i18n locale="en" lang="yaml">
 pages: 'Pages'
+slice: 'Slice the parts optimally'
 quickSort: 'Quick sort'
 deleteAll: 'Delete all'
 uploadNotes1: 'Supported image formats are JPEG, PNG, BMP and WebP.'
 uploadNotes2: 'Compressed files are also supported. They must not contain any folders.'
 uploadNotes3: 'You can upload multiple images at the same time.'
+slicing: 'Slicing'
 fileUpload: 'File upload'
 deletePage: 'Delete page'
 deleteAllPages: 'Delete all pages'
@@ -174,11 +198,13 @@ deleteAllPages: 'Delete all pages'
 
 <i18n locale="fr" lang="yaml">
 pages: 'Pages'
+slice: 'Découpe les parties de façon optimale'
 quickSort: 'Tri rapide'
 deleteAll: 'Tout supprimer'
 uploadNotes1: "Les formats d'image pris en charge sont JPEG, PNG, BMP et WebP."
 uploadNotes2: 'Les fichiers compressés sont aussi pris en charge. Ils ne doivent contenir aucun dossier.'
 uploadNotes3: 'Vous pouvez ajouter plusieurs fichiers en même temps.'
+slicing: 'Découpage'
 fileUpload: 'Ajout de fichier'
 deletePage: 'Supprimer la page'
 deleteAllPages: 'Supprimer toutes les pages'

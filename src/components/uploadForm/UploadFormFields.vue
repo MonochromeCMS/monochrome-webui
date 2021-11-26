@@ -72,7 +72,13 @@
       {{ $t('editPages') }}
     </v-btn>
 
-    <page-input v-if="session" v-model="pageOrder" :session="session" :disabled="disabled" />
+    <page-input
+      v-if="session"
+      v-model="pageOrder"
+      :session="session"
+      :disabled="disabled"
+      :webtoon="webtoon"
+    />
 
     <div class="text-center mt-4">
       <v-btn :loading="disabled" type="submit" block color="background" class="text--primary">
@@ -143,7 +149,7 @@ export default class UploadFormFields extends Vue {
     return { chapterDraft: this.chapterDraft, pageOrder: this.pageOrder };
   }
 
-  clear(): void {
+  public clear(): void {
     this.name = '';
     this.number = undefined;
     this.volume = null;
