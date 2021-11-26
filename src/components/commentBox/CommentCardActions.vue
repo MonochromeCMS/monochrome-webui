@@ -24,19 +24,21 @@
     <v-btn v-if="canEdit" tile icon class="hidden-sm-and-down" @click.stop="deleteDialog = true">
       <v-icon>{{ icons.mdiDelete }}</v-icon>
     </v-btn>
-    <v-btn tile icon class="hidden-sm-and-down" @click="reply">
+    <v-btn v-if="canCreate" tile icon class="hidden-sm-and-down" @click="reply">
       <v-icon>{{ icons.mdiReply }}</v-icon>
     </v-btn>
-    <v-menu offset-y>
+    <v-menu v-if="canCreate || canEdit" offset-y>
       <template #activator="{ on, attrs }">
         <v-btn tile icon v-bind="attrs" class="hidden-md-and-up" v-on="on">
           <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
         </v-btn>
       </template>
       <v-list>
-        <v-list-item @click="reply">{{ $t('reply') }}</v-list-item>
-        <v-list-item @click="edit">{{ $t('edit') }}</v-list-item>
-        <v-list-item @click.stop="deleteDialog = true">{{ $t('delete') }}</v-list-item>
+        <v-list-item v-if="canCreate" @click="reply">{{ $t('reply') }}</v-list-item>
+        <v-list-item v-if="canEdit" @click="edit">{{ $t('edit') }}</v-list-item>
+        <v-list-item v-if="canEdit" @click.stop="deleteDialog = true">{{
+          $t('delete')
+        }}</v-list-item>
       </v-list>
     </v-menu>
   </div>
@@ -49,6 +51,8 @@ import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class CommentCardActions extends Vue {
   @Prop(Boolean) readonly canEdit!: boolean;
+
+  @Prop(Boolean) readonly canCreate!: boolean;
 
   icons = { mdiDelete, mdiDotsVertical, mdiPencil, mdiReply };
 

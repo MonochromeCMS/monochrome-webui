@@ -27,6 +27,7 @@
       </div>
       <comment-card-actions
         :can-edit="canEdit"
+        :can-create="canCreate"
         @reply="reply"
         @delete="deleteComment"
         @edit="editing = true"
@@ -79,6 +80,10 @@ export default class CommentCard extends Vue {
 
   get canEdit(): boolean {
     return Comment.canEdit(this.comment, this.userId, this.userRole);
+  }
+
+  get canCreate(): boolean {
+    return Comment.canCreate(this.userRole);
   }
 
   @Emit('reply')

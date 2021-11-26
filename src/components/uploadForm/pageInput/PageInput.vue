@@ -19,7 +19,7 @@
         />
       </v-col>
     </draggable>
-    <v-btn v-if="webtoon" :loading="loading" text @click="slice">{{ $t('slice') }}</v-btn>
+    <v-btn v-if="webtoon" :disabled="loading" text @click="slice">{{ $t('slice') }}</v-btn>
     <v-btn text @click="quickSort">{{ $t('quickSort') }}</v-btn>
     <v-btn text color="error" @click="deletePages">{{ $t('deleteAll') }}</v-btn>
     <div>
