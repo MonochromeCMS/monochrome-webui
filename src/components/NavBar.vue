@@ -3,7 +3,7 @@
     <router-link v-if="!settings.title1 && !settings.title2" to="/" class="logo lemon-milk">
       Mono<span class="text--secondary">chrome</span>
     </router-link>
-    <router-link v-else to="/" class="logo lemon-milk">
+    <router-link v-else to="/" class="logo lemon-milk" :style="dynamicLogoSize">
       <span v-if="settings.title1" v-text="settings.title1" />
       <span v-if="settings.title2" class="text--secondary" v-text="settings.title2" />
     </router-link>
@@ -126,17 +126,18 @@ export default class NavBar extends Vue {
   get settings(): SettingsSchema {
     return this.$store.getters.settings;
   }
+
+  get dynamicLogoSize(): string {
+    const length = (this.settings.title1?.length ?? 0) + (this.settings.title2?.length ?? 0);
+    return `font-size: clamp(1em, calc((100vw - 48px - 18px) / ${length}), 2em);`;
+  }
 }
 </script>
 
 <style lang="scss">
 .logo {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: max-content;
-  width: calc(100vw - 3rem);
-  font-size: 2em;
+  display: block;
+  font-size: clamp(1em, calc((100vw - 48px - 18px) / 10), 2em);
   text-decoration: none;
 }
 .action-list {

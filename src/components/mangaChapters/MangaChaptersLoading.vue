@@ -28,3 +28,11 @@ export default class MangaChaptersLoading extends Vue {
   @Prop(Number) readonly amount!: number;
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+chapters: 'Chapters'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+chapters: 'Chapitres'
+</i18n>
