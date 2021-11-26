@@ -79,10 +79,10 @@ export default class Base {
     url: string,
     data: any,
     config: AxiosRequestConfig,
-    contentType = '',
+    contentType = 'application/json',
   ): Promise<AxiosResponse> {
     const settings = { headers: {}, ...config };
-    settings.headers['Content-Type'] = contentType || 'application/json';
+    settings.headers['Content-Type'] = contentType;
 
     return this._request({
       data,

@@ -36,6 +36,10 @@
     "chapter": {
       "404": "Chapitre non trouvé"
     },
+    "comment": {
+      "404": "Commentaire non trouvé",
+      "reply_400": "Commentaire à répondre non trouvé"
+    },
     "manga": {
       "404": "Manga non trouvé",
       "cover_400": "La couverture n'est pas valide"

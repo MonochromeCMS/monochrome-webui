@@ -242,4 +242,33 @@ export default class Upload extends Base {
     }
     return result;
   }
+
+  public static async slice(sessionId: string, pageOrder: string[], auth: AxiosRequestConfig) {
+    const url = `/${sessionId}/slice`;
+
+    const response = await Upload._post(url, pageOrder, auth);
+
+    const result: ApiResponse<UploadedBlobResponse[]> = Upload._apiResponse(response.status);
+
+    switch (response.status) {
+      case 201:
+        result.data = response.data;
+        break;
+      case 400:
+        result.error = i18n.tc('api.upload.pages_400');
+        break;
+      case 404:
+        result.error = i18n.tc('api.404');
+        break;
+      case 401:
+        result.error = i18n.tc('api.401');
+        return await this._handle_401(response.config, result);
+      case 422:
+        result.error = i18n.tc('api.422');
+        break;
+      default:
+        result.error = response.data?.detail ?? response.statusText;
+    }
+    return result;
+  }
 }

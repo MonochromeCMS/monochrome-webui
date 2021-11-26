@@ -1,5 +1,6 @@
 import type { AxiosRequestConfig } from 'axios';
 
+import type { ChapterCommentsResponse } from '@/api/Comment';
 import type { MangaResponse } from '@/api/Manga';
 import type { Role } from '@/api/User';
 import i18n from '@/i18n';
@@ -118,6 +119,29 @@ export default class Chapter extends Base {
       case 401:
         result.error = i18n.tc('api.401');
         return await this._handle_401(response.config, result);
+      case 404:
+        result.error = i18n.tc('api.chapter.404');
+        break;
+      case 422:
+        result.error = i18n.tc('api.422');
+        break;
+      default:
+        result.error = response.data?.detail ?? response.statusText;
+    }
+    return result;
+  }
+
+  public static async getComments(chapterId: string, limit = 10, offset = 0) {
+    const url = `/${chapterId}/comments?limit=${limit}&offset=${offset}`;
+
+    const response = await this._get(url, {});
+
+    const result: ApiResponse<ChapterCommentsResponse> = this._apiResponse(response.status);
+
+    switch (response.status) {
+      case 200:
+        result.data = response.data;
+        break;
       case 404:
         result.error = i18n.tc('api.chapter.404');
         break;
