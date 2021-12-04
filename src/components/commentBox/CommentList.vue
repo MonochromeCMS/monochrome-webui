@@ -59,9 +59,14 @@ export default class CommentList extends Vue {
     return (this.page - 1) * this.limit;
   }
 
+  @Watch('chapterId')
+  onChapterChange(): void {
+    this.refresh();
+  }
+
   @Watch('page')
-  async onPageChange(): Promise<void> {
-    await this.getComments();
+  onPageChange(): void {
+    this.getComments();
   }
 
   setReply(reply: DetailedCommentResponse): void {
@@ -144,5 +149,5 @@ noComments: 'No comments yet.'
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-noComments: "Aucun commentaires pour l'instant."
+noComments: "Aucun commentaire pour l'instant."
 </i18n>
