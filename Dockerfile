@@ -2,7 +2,7 @@ FROM node:lts-slim as dev
 WORKDIR /app
 COPY package.json ./
 COPY yarn.lock ./
-RUN yarn
+RUN yarn && yarn cache clean
 
 ARG VUE_APP_DOMAIN_NAME=localhost
 ARG VUE_APP_PROTOCOL=http
