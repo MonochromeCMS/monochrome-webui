@@ -1,8 +1,8 @@
 <template>
   <v-dialog v-model="menu" max-width="30rem">
     <template #activator="{ on, attrs }">
-      <v-btn fab outlined v-bind="attrs" class="reader-button" color="primary" v-on="on">
-        <v-icon>{{ icons.mdiMenu }}</v-icon>
+      <v-btn fab elevation="0" v-bind="attrs" class="reader-button" color="background" v-on="on">
+        <v-icon color="primary">{{ icons.mdiMenu }}</v-icon>
       </v-btn>
     </template>
     <v-card rounded="lg" color="backgroundAlt">

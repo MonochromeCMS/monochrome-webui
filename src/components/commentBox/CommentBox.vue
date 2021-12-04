@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="12" sm="10" md="8" lg="6" class="mx-auto my-3">
+    <v-col cols="12" sm="10" md="8" lg="6" class="mx-auto mb-3">
       <v-card color="backgroundAlt">
         <v-card-title class="lemon-milk">{{ $t('comments') }}</v-card-title>
         <v-divider class="mx-4" />

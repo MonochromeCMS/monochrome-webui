@@ -63,7 +63,7 @@ module.exports = {
   publicPath,
   pwa: {
     name: title,
-    themeColor: '#212121',
+    themeColor: '#eeeeee',
     workboxOptions: {
       cleanupOutdatedCaches: true,
       skipWaiting: true,

@@ -1,8 +1,10 @@
 <template>
   <v-row class="ma-0">
-    <v-btn block text width="15rem" class="mb-3" @click="previousChapter">
-      {{ $t('previousChapter') }}
-    </v-btn>
+    <v-col cols="12" class="pa-0">
+      <v-btn text :width="width" :class="fit" class="d-block mb-3" @click="previousChapter">
+        {{ $t('previousChapter') }}
+      </v-btn>
+    </v-col>
     <v-col v-for="index in length" :key="page(index)" :class="webtoon ? 'webtoon' : ''" cols="12">
       <v-img contain :class="fit" :width="width" :src="page(index)" :lazy-src="defaultImage">
         <template #placeholder>
@@ -12,9 +14,11 @@
         </template>
       </v-img>
     </v-col>
-    <v-btn block text width="15rem" class="mt-3" @click="nextChapter">
-      {{ $t('nextChapter') }}
-    </v-btn>
+    <v-col cols="12" class="pa-0">
+      <v-btn text :width="width" :class="fit" class="d-block mt-3" @click="nextChapter">
+        {{ $t('nextChapter') }}
+      </v-btn>
+    </v-col>
   </v-row>
 </template>
 

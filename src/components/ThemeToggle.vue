@@ -1,13 +1,13 @@
 <template>
   <v-btn
     fab
-    outlined
-    color="primary"
+    elevation="0"
+    color="background"
     class="theme-toggle"
     aria-label="Theme toggle"
     @click="toggleTheme"
   >
-    <v-icon large>{{ icons.mdiLightbulb }}</v-icon>
+    <v-icon color="primary" large>{{ icons.mdiLightbulb }}</v-icon>
   </v-btn>
 </template>
 
