@@ -42,7 +42,7 @@ import Chapter from '@/api/Chapter';
 import Manga from '@/api/Manga';
 import CommentBox from '@/components/commentBox/CommentBox.vue';
 import PagedReader from '@/components/pagedReader/PagedReader.vue';
-import ReaderMenu from '@/components/ReaderMenu.vue';
+import ReaderMenu from '@/components/readerMenu/ReaderMenu.vue';
 import VerticalReader from '@/components/VerticalReader.vue';
 
 export interface ChapterItem {

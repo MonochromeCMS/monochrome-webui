@@ -1,9 +1,7 @@
 <template>
   <v-dialog v-model="menu" max-width="30rem">
     <template #activator="{ on, attrs }">
-      <v-btn fab elevation="0" v-bind="attrs" class="reader-button" color="background" v-on="on">
-        <v-icon color="primary">{{ icons.mdiMenu }}</v-icon>
-      </v-btn>
+      <reader-menu-fab :on="on" :attrs="attrs" />
     </template>
     <v-card rounded="lg" color="backgroundAlt">
       <v-card-title>
@@ -91,14 +89,17 @@ import {
   mdiArrowLeft,
   mdiArrowRight,
   mdiClose,
-  mdiMenu,
 } from '@mdi/js';
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 
 import type { DetailedChapterResponse } from '@/api/Chapter';
 import type { ChapterItem } from '@/views/ChapterReader.vue';
 
-@Component
+import ReaderMenuFab from './ReaderMenuFab.vue';
+
+@Component({
+  components: { ReaderMenuFab },
+})
 export default class ReaderMenu extends Vue {
   @Prop() readonly chapter!: DetailedChapterResponse;
 
@@ -110,7 +111,6 @@ export default class ReaderMenu extends Vue {
     mdiArrowLeft,
     mdiArrowRight,
     mdiClose,
-    mdiMenu,
   };
 
   menu = false;
@@ -185,14 +185,6 @@ export default class ReaderMenu extends Vue {
   }
 }
 </script>
-
-<style>
-.reader-button {
-  position: fixed;
-  right: 1rem;
-  bottom: 1rem;
-}
-</style>
 
 <i18n locale="en" lang="yaml">
 chapter: 'Chapter'
