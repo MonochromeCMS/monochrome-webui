@@ -1,10 +1,12 @@
 <template>
   <v-tabs
     v-model="currentPage"
+    v-scroll="onScroll"
     background-color="backgroundAlt"
     show-arrows
     centered
     center-active
+    :class="scrollClass"
     class="reader-tabs"
   >
     <v-tab :key="0">
@@ -28,8 +30,35 @@ export default class PagedReaderTabs extends Vue {
 
   @Prop(Number) readonly amount!: number;
 
+  currentScroll = 0;
+
+  scrollClass = '';
+
+  currentThreshold = 8;
+
+  isScrollingUp = false;
+
   get reverse(): boolean {
     return !this.$store.getters.getDirection;
+  }
+
+  onScroll(ev: any): void {
+    const newScroll = ev.target.scrollingElement.scrollTop;
+
+    const scrollAmount = Math.abs(newScroll - this.currentScroll);
+
+    if (newScroll > this.currentScroll === this.isScrollingUp) {
+      this.currentThreshold = 8;
+      this.isScrollingUp = !this.isScrollingUp;
+    }
+
+    if (scrollAmount > this.currentThreshold) {
+      this.scrollClass = newScroll > this.currentScroll ? 'tabs-scrolling' : '';
+    } else {
+      this.currentThreshold -= scrollAmount;
+    }
+
+    this.currentScroll = newScroll;
   }
 }
 </script>
@@ -37,10 +66,17 @@ export default class PagedReaderTabs extends Vue {
 <style lang="scss">
 .reader-tabs {
   position: sticky;
-  top: 0.7rem;
+  top: 76px;
   z-index: 1;
   border-radius: 0.3rem;
   margin-bottom: 0.8rem;
+  transition-duration: 0.28s;
+  transition-property: box-shadow, transform, opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tabs-scrolling {
+  transform: translateY(-64px);
 }
 </style>
 
