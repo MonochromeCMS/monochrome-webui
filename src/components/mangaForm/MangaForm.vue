@@ -6,20 +6,15 @@
 
 <script lang="ts">
 import type { AxiosRequestConfig } from 'axios';
-import { ValidationObserver } from 'vee-validate';
+import type { ValidationObserver } from 'vee-validate';
 import { Component, Prop, Ref, Vue } from 'vue-property-decorator';
 
 import type { MangaResponse, MangaSchema } from '@/api/Manga';
 import Manga from '@/api/Manga';
 
-import MangaFields from './MangaFields.vue';
+import type MangaFields from './MangaFields.vue';
 
-@Component({
-  components: {
-    MangaFields,
-    ValidationObserver,
-  },
-})
+@Component
 export default class MangaForm extends Vue {
   @Ref() readonly observer!: InstanceType<typeof ValidationObserver>;
 

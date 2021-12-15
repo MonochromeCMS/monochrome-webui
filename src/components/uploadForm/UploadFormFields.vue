@@ -90,23 +90,18 @@
 </template>
 
 <script lang="ts">
-import { ValidationProvider } from 'vee-validate';
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 
 import Autocomplete from '@/api/Autocomplete';
 import type { ChapterResponse, ChapterSchema } from '@/api/Chapter';
 import type { UploadSessionResponse } from '@/api/Upload';
 
-import PageInput from './pageInput/PageInput.vue';
-
 export interface UploadSubmitEvent {
   chapterDraft: ChapterSchema;
   pageOrder: string[];
 }
 
-@Component({
-  components: { PageInput, ValidationProvider },
-})
+@Component
 export default class UploadFormFields extends Vue {
   @Prop(String) readonly mangaId!: string;
 

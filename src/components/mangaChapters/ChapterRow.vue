@@ -43,11 +43,7 @@ import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 
 import type { ChapterResponse } from '@/api/Chapter';
 
-import ChapterDelete from './ChapterDelete.vue';
-
-@Component({
-  components: { ChapterDelete },
-})
+@Component
 export default class ChapterRow extends Vue {
   @Prop() readonly chapter!: ChapterResponse;
 

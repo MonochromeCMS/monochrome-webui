@@ -66,23 +66,18 @@
 
 <script lang="ts">
 import { mdiMenu } from '@mdi/js';
-import VueI18n from 'vue-i18n';
+import type { TranslateResult } from 'vue-i18n';
 import { Component, Vue } from 'vue-property-decorator';
 
-import type { Role } from '@/api/User';
-import AdminActions from '@/components/AdminActions.vue';
-import LocalesItem from '@/components/LocalesItem.vue';
-import TranslateResult = VueI18n.TranslateResult;
 import type { SettingsSchema } from '@/api/Settings';
+import type { Role } from '@/api/User';
 
 interface Link {
   text: TranslateResult;
   to: string;
 }
 
-@Component({
-  components: { AdminActions, LocalesItem },
-})
+@Component
 export default class NavBar extends Vue {
   icons = {
     mdiMenu,

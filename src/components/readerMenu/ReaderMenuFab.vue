@@ -15,8 +15,11 @@
 <script lang="ts">
 import { mdiMenu } from '@mdi/js';
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Scroll } from 'vuetify/lib';
 
-@Component
+@Component({
+  directives: { scroll: Scroll },
+})
 export default class ReaderMenuFab extends Vue {
   @Prop() readonly attrs!: any;
 

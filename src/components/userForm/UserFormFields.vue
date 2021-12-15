@@ -61,20 +61,12 @@
 
 <script lang="ts">
 import { mdiEye, mdiEyeOff } from '@mdi/js';
-import { ValidationProvider } from 'vee-validate';
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 
 import type { Role, UserSchema } from '@/api/User';
 import User from '@/api/User';
 
-import AvatarInput from './AvatarInput.vue';
-
-@Component({
-  components: {
-    AvatarInput,
-    ValidationProvider,
-  },
-})
+@Component
 export default class UserForm extends Vue {
   @Prop() readonly user!: UserSchema;
 

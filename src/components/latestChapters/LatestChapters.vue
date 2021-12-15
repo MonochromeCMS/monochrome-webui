@@ -37,12 +37,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import type { DetailedChapterResponse } from '@/api/Chapter';
 import Chapter from '@/api/Chapter';
 
-import ChapterCard from './ChapterCard.vue';
-import LatestChaptersLoading from './LatestChaptersLoading.vue';
-
-@Component({
-  components: { ChapterCard, LatestChaptersLoading },
-})
+@Component
 export default class LatestChapters extends Vue {
   page = 1;
 

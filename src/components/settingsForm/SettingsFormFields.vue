@@ -50,16 +50,11 @@
 
 <script lang="ts">
 import marked from 'marked';
-import { ValidationProvider } from 'vee-validate';
 import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator';
 
 import type { SettingsSchema } from '@/api/Settings';
 
-@Component({
-  components: {
-    ValidationProvider,
-  },
-})
+@Component
 export default class SettingsFormFields extends Vue {
   @Prop(Boolean) readonly disabled!: boolean;
 

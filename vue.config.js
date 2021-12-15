@@ -1,5 +1,6 @@
 const path = require('path');
 const XMLPlugin = require('xml-webpack-plugin');
+const { VuetifyResolver } = require('unplugin-vue-components/resolvers');
 
 const protocol = process.env.PROTOCOL || 'http';
 const domainName = process.env.DOMAIN_NAME || 'localhost';
@@ -38,6 +39,19 @@ module.exports = {
     plugins: [
       new XMLPlugin({
         files: XMLFiles,
+      }),
+      require('unplugin-vue-components/webpack')({
+        dts: true,
+        resolvers: [
+          {
+            resolve: (name) => {
+              if (['ValidationProvider', 'ValidationObserver'].includes(name))
+                return { importName: name, path: 'vee-validate' };
+            },
+            type: 'component',
+          },
+          VuetifyResolver(),
+        ],
       }),
     ],
   },

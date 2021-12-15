@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <users-row-loading
+        <user-row-loading
           v-for="x in loading ? limit : 0"
           :key="x"
           :headers-amount="headers.length"
@@ -31,12 +31,7 @@ import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 
 import type { UserResponse } from '@/api/User';
 
-import UserRow from './UserRow.vue';
-import UsersRowLoading from './UserRowLoading.vue';
-
-@Component({
-  components: { UserRow, UsersRowLoading },
-})
+@Component
 export default class UsersList extends Vue {
   @Prop() readonly users!: UserResponse[];
 

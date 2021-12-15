@@ -25,12 +25,10 @@ import { Component, Prop, Ref, Vue } from 'vue-property-decorator';
 
 import type { CommentSchema, DetailedCommentResponse } from '@/api/Comment';
 import Comment from '@/api/Comment';
-import CommentInput from '@/components/commentBox/CommentInput.vue';
-import CommentList from '@/components/commentBox/CommentList.vue';
+import type CommentInput from '@/components/commentBox/CommentInput.vue';
+import type CommentList from '@/components/commentBox/CommentList.vue';
 
-@Component({
-  components: { CommentInput, CommentList },
-})
+@Component
 export default class CommentBox extends Vue {
   @Ref() readonly input!: CommentInput;
 

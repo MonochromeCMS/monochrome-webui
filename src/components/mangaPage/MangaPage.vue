@@ -29,13 +29,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import type { MangaResponse } from '@/api/Manga';
 import Manga from '@/api/Manga';
 
-import MangaCard from './MangaCard.vue';
-import MangaPageLoading from './MangaPageLoading.vue';
-import SearchBar from './SearchBar.vue';
-
-@Component({
-  components: { MangaCard, MangaPageLoading, SearchBar },
-})
+@Component
 export default class MangaPage extends Vue {
   loading = true;
 

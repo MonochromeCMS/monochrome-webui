@@ -22,12 +22,8 @@ import Chapter from '@/api/Chapter';
 import type { MangaResponse } from '@/api/Manga';
 import Media from '@/api/Media';
 import type { Role } from '@/api/User';
-import MangaRow from '@/components/mangaRow/MangaRow.vue';
-import UploadForm from '@/components/uploadForm/UploadForm.vue';
 
-@Component({
-  components: { MangaRow, UploadForm },
-})
+@Component
 export default class About extends Vue {
   manga: MangaResponse | null = null;
 

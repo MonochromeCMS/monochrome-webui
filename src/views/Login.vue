@@ -20,11 +20,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-import LoginForm from '@/components/LoginForm.vue';
-
-@Component({
-  components: { LoginForm },
-})
+@Component
 export default class Login extends Vue {
   get isConnected(): boolean {
     return this.$store.getters.isConnected;

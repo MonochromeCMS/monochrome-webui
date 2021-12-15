@@ -41,11 +41,8 @@ import draggable from 'vuedraggable';
 import type { UploadedBlobResponse, UploadSessionResponse } from '@/api/Upload';
 import Upload from '@/api/Upload';
 
-import PageInputAddCard from './PageInputAddCard.vue';
-import PageInputCard from './PageInputCard.vue';
-
 @Component({
-  components: { PageInputAddCard, PageInputCard, draggable },
+  components: { draggable },
 })
 export default class PageInput extends Vue {
   @Prop() readonly session!: UploadSessionResponse;

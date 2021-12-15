@@ -35,12 +35,7 @@ import Chapter from '@/api/Chapter';
 import Manga from '@/api/Manga';
 import type { Role } from '@/api/User';
 
-import ChapterRow from './ChapterRow.vue';
-import MangaChaptersLoading from './MangaChaptersLoading.vue';
-
-@Component({
-  components: { ChapterRow, MangaChaptersLoading },
-})
+@Component
 export default class MangaChapters extends Vue {
   @Prop() readonly mangaId!: string;
 

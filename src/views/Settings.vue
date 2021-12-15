@@ -20,11 +20,8 @@ import { Component, Vue } from 'vue-property-decorator';
 
 import SettingsAPI from '@/api/Settings';
 import type { Role } from '@/api/User';
-import SettingsForm from '@/components/settingsForm/SettingsForm.vue';
 
-@Component({
-  components: { SettingsForm },
-})
+@Component
 export default class Settings extends Vue {
   get isConnected(): boolean {
     return this.$store.getters.isConnected;

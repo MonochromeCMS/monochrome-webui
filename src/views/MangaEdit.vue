@@ -18,11 +18,8 @@ import { Component, Vue } from 'vue-property-decorator';
 
 import type { MangaResponse } from '@/api/Manga';
 import Manga from '@/api/Manga';
-import MangaForm from '@/components/mangaForm/MangaForm.vue';
 
-@Component({
-  components: { MangaForm },
-})
+@Component
 export default class MangaEdit extends Vue {
   manga: MangaResponse | null = null;
 

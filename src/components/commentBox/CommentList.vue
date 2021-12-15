@@ -30,12 +30,8 @@ import { Component, Prop, PropSync, Vue, Watch } from 'vue-property-decorator';
 
 import Chapter from '@/api/Chapter';
 import type { DetailedCommentResponse } from '@/api/Comment';
-import CommentCard from '@/components/commentBox/CommentCard.vue';
-import LoadingCommentCard from '@/components/commentBox/LoadingCommentCard.vue';
 
-@Component({
-  components: { CommentCard, LoadingCommentCard },
-})
+@Component
 export default class CommentList extends Vue {
   @Prop(String) chapterId!: string;
 

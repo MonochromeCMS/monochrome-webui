@@ -33,17 +33,12 @@
 
 <script lang="ts">
 import { mdiEye, mdiEyeOff } from '@mdi/js';
-import { ValidationObserver, ValidationProvider } from 'vee-validate';
+import type { ValidationObserver } from 'vee-validate';
 import { Component, Ref, Vue } from 'vue-property-decorator';
 
 import type { UserLogin } from '@/store/user';
 
-@Component({
-  components: {
-    ValidationObserver,
-    ValidationProvider,
-  },
-})
+@Component
 export default class LoginForm extends Vue {
   @Ref() readonly observer!: InstanceType<typeof ValidationObserver>;
 

@@ -23,8 +23,11 @@
 
 <script lang="ts">
 import { Component, Prop, VModel, Vue } from 'vue-property-decorator';
+import { Scroll } from 'vuetify/lib';
 
-@Component
+@Component({
+  directives: { scroll: Scroll },
+})
 export default class PagedReaderTabs extends Vue {
   @VModel() readonly currentPage!: number | null;
 

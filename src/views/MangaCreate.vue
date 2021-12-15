@@ -18,11 +18,8 @@ import { Component, Vue } from 'vue-property-decorator';
 
 import Manga from '@/api/Manga';
 import type { Role } from '@/api/User';
-import MangaForm from '@/components/mangaForm/MangaForm.vue';
 
-@Component({
-  components: { MangaForm },
-})
+@Component
 export default class MangaCreate extends Vue {
   get userRole(): Role {
     return this.$store.getters.userRole;

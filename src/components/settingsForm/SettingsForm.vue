@@ -6,20 +6,13 @@
 
 <script lang="ts">
 import type { AxiosRequestConfig } from 'axios';
-import { ValidationObserver } from 'vee-validate';
+import type { ValidationObserver } from 'vee-validate';
 import { Component, Ref, Vue } from 'vue-property-decorator';
 
 import type { SettingsSchema } from '@/api/Settings';
 import Settings from '@/api/Settings';
 
-import SettingsFormFields from './SettingsFormFields.vue';
-
-@Component({
-  components: {
-    SettingsFormFields,
-    ValidationObserver,
-  },
-})
+@Component
 export default class SettingsForm extends Vue {
   @Ref() readonly observer!: InstanceType<typeof ValidationObserver>;
 
@@ -56,3 +49,13 @@ export default class SettingsForm extends Vue {
   }
 }
 </script>
+
+<i18n locale="en" lang="yaml">
+editSettings: 'Edit settings'
+editSuccess: 'The settings have been updated successfully.'
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+editSettings: 'Modification des paramètres'
+editSuccess: 'Les paramètres ont été modifiés.'
+</i18n>

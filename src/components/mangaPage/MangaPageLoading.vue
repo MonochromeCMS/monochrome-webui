@@ -15,11 +15,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
-import SearchBar from '@/components/mangaPage/SearchBar.vue';
-
-@Component({
-  components: { SearchBar },
-})
+@Component
 export default class MangaPageLoading extends Vue {
   @Prop(Number) readonly amount!: number;
 }

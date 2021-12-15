@@ -40,19 +40,13 @@ import { Component, Vue } from 'vue-property-decorator';
 import type { ChapterResponse, DetailedChapterResponse } from '@/api/Chapter';
 import Chapter from '@/api/Chapter';
 import Manga from '@/api/Manga';
-import CommentBox from '@/components/commentBox/CommentBox.vue';
-import PagedReader from '@/components/pagedReader/PagedReader.vue';
-import ReaderMenu from '@/components/readerMenu/ReaderMenu.vue';
-import VerticalReader from '@/components/VerticalReader.vue';
 
 export interface ChapterItem {
   text: string;
   value: string;
 }
 
-@Component({
-  components: { CommentBox, PagedReader, ReaderMenu, VerticalReader },
-})
+@Component
 export default class ChapterReader extends Vue {
   chapter: DetailedChapterResponse | null = null;
 

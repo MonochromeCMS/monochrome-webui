@@ -55,13 +55,8 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 
 import type { Role, UserResponse } from '@/api/User';
 import User from '@/api/User';
-import UserForm from '@/components/userForm/UserForm.vue';
-import UserFilter from '@/components/userList/UserFilter.vue';
-import UsersList from '@/components/userList/UsersList.vue';
 
-@Component({
-  components: { UserFilter, UserForm, UsersList },
-})
+@Component
 export default class Users extends Vue {
   icons = {
     mdiPlus,

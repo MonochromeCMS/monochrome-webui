@@ -25,13 +25,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-import AdminActions from '@/components/AdminActions.vue';
-import LatestChapters from '@/components/latestChapters/LatestChapters.vue';
-import LatestManga from '@/components/LatestManga.vue';
-
-@Component({
-  components: { AdminActions, LatestChapters, LatestManga },
-})
+@Component
 export default class Home extends Vue {
   get isConnected(): boolean {
     return this.$store.getters.isConnected;

@@ -23,20 +23,15 @@
 
 <script lang="ts">
 import type { AxiosRequestConfig } from 'axios';
-import { ValidationObserver } from 'vee-validate';
+import type { ValidationObserver } from 'vee-validate';
 import { Component, Emit, Prop, Ref, Vue } from 'vue-property-decorator';
 
 import type { UserResponse, UserSchema } from '@/api/User';
 import User from '@/api/User';
 
-import UserFormFields from './UserFormFields.vue';
+import type UserFormFields from './UserFormFields.vue';
 
-@Component({
-  components: {
-    UserFormFields,
-    ValidationObserver,
-  },
-})
+@Component
 export default class UserForm extends Vue {
   @Ref() readonly observer!: InstanceType<typeof ValidationObserver>;
 

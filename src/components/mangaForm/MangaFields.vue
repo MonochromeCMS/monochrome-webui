@@ -85,19 +85,12 @@
 </template>
 
 <script lang="ts">
-import { ValidationProvider } from 'vee-validate';
 import { Component, Emit, Prop, VModel, Vue, Watch } from 'vue-property-decorator';
 
 import type { MangaResponse, MangaSchema, Status } from '@/api/Manga';
 import Media from '@/api/Media';
-import MangaRow from '@/components/mangaRow/MangaRow.vue';
 
-@Component({
-  components: {
-    MangaRow,
-    ValidationProvider,
-  },
-})
+@Component
 export default class MangaFields extends Vue {
   @Prop() readonly manga!: MangaResponse | null;
 

@@ -15,11 +15,7 @@ import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 
 import type { UserResponse } from '@/api/User';
 
-import UserForm from '../userForm/UserForm.vue';
-
-@Component({
-  components: { UserForm },
-})
+@Component
 export default class UserEditButton extends Vue {
   @Prop() readonly user!: UserResponse;
 

@@ -95,11 +95,7 @@ import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 import type { DetailedChapterResponse } from '@/api/Chapter';
 import type { ChapterItem } from '@/views/ChapterReader.vue';
 
-import ReaderMenuFab from './ReaderMenuFab.vue';
-
-@Component({
-  components: { ReaderMenuFab },
-})
+@Component
 export default class ReaderMenu extends Vue {
   @Prop() readonly chapter!: DetailedChapterResponse;
 

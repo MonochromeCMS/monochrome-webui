@@ -40,11 +40,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 
 import type { MangaSchema } from '@/api/Manga';
 
-import MangaRowLoading from './MangaRowLoading.vue';
-
-@Component({
-  components: { MangaRowLoading },
-})
+@Component
 export default class MangaRow extends Vue {
   @Prop() readonly manga!: MangaSchema;
 

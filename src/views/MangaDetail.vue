@@ -75,12 +75,8 @@ import type { MangaResponse } from '@/api/Manga';
 import Manga from '@/api/Manga';
 import Media from '@/api/Media';
 import type { Role } from '@/api/User';
-import MangaChapters from '@/components/mangaChapters/MangaChapters.vue';
-import MangaRow from '@/components/mangaRow/MangaRow.vue';
 
-@Component({
-  components: { MangaChapters, MangaRow },
-})
+@Component
 export default class MangaDetail extends Vue {
   manga: MangaResponse | null = null;
 

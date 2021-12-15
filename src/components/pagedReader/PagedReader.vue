@@ -16,13 +16,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 import Media from '@/api/Media';
 
-import PagedReaderDelimiterSlide from './PagedReaderDelimiterSlide.vue';
-import PagedReaderSlide from './PagedReaderSlide.vue';
-import PagedReaderTabs from './PagedReaderTabs.vue';
-
-@Component({
-  components: { PagedReaderDelimiterSlide, PagedReaderSlide, PagedReaderTabs },
-})
+@Component
 export default class PagedReader extends Vue {
   @Prop(String) readonly mangaId!: string;
 

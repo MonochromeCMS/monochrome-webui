@@ -48,11 +48,8 @@ import type { DetailedCommentResponse } from '@/api/Comment';
 import Comment from '@/api/Comment';
 import Media from '@/api/Media';
 import type { Role } from '@/api/User';
-import CommentCardActions from '@/components/commentBox/CommentCardActions.vue';
-import CommentEditInput from '@/components/commentBox/CommentEditInput.vue';
-@Component({
-  components: { CommentCardActions, CommentEditInput },
-})
+
+@Component
 export default class CommentCard extends Vue {
   @Prop() comment!: DetailedCommentResponse;
 

@@ -29,12 +29,7 @@ import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 import Media from '@/api/Media';
 import type { UserResponse } from '@/api/User';
 
-import UserDeleteButton from './UserDeleteButton.vue';
-import UserEditButton from './UserEditButton.vue';
-
-@Component({
-  components: { UserDeleteButton, UserEditButton },
-})
+@Component
 export default class UserRow extends Vue {
   @Prop() readonly user!: UserResponse;
 

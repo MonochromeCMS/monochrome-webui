@@ -21,11 +21,8 @@ import { Component, Vue } from 'vue-property-decorator';
 
 import MangaAPI from '@/api/Manga';
 import type { Role } from '@/api/User';
-import MangaPage from '@/components/mangaPage/MangaPage.vue';
 
-@Component({
-  components: { MangaPage },
-})
+@Component
 export default class Manga extends Vue {
   get userRole(): Role {
     return this.$store.getters.userRole;

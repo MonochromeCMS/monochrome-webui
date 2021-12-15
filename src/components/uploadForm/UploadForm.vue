@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import type { AxiosRequestConfig } from 'axios';
-import { ValidationObserver } from 'vee-validate';
+import type { ValidationObserver } from 'vee-validate';
 import { Component, Prop, Ref, Vue } from 'vue-property-decorator';
 
 import type { ChapterResponse, ChapterSchema } from '@/api/Chapter';
@@ -23,11 +23,9 @@ import type { UploadSessionResponse } from '@/api/Upload';
 import Upload from '@/api/Upload';
 
 import type { UploadSubmitEvent } from './UploadFormFields.vue';
-import UploadFormFields from './UploadFormFields.vue';
+import type UploadFormFields from './UploadFormFields.vue';
 
-@Component({
-  components: { UploadFormFields, ValidationObserver },
-})
+@Component
 export default class UploadForm extends Vue {
   @Ref() readonly observer!: InstanceType<typeof ValidationObserver>;
 
