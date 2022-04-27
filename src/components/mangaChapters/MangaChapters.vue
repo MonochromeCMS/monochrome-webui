@@ -2,7 +2,9 @@
   <v-container>
     <manga-chapters-loading v-if="loading" :amount="limit" />
     <v-row v-else class="flex-column align-center">
-      <v-col cols="12" class="text-h3 text-center" tag="h2">{{ $t('chapters') }}</v-col>
+      <v-col cols="12" class="text-h6 text-lg-h5 text-xl-h3 text-center pt-0" tag="h2">
+        {{ $t('chapters') }}
+      </v-col>
       <v-col
         v-for="(item, index) in chaptersPage"
         :key="item.id"

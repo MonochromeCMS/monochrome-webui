@@ -6,7 +6,11 @@
       <v-col cols="12" md="9" class="d-flex flex-column justify-center">
         <v-tooltip top open-delay="600">
           <template #activator="{ on, attrs }">
-            <h1 class="text-h2 pb-2 ellipsis" v-bind="attrs" v-on="on">
+            <h1
+              class="text text-sm-6 text-md-h5 text-lg-h4 text-xl-h2 pb-2"
+              v-bind="attrs"
+              v-on="on"
+            >
               {{ manga.title }}
             </h1>
           </template>
