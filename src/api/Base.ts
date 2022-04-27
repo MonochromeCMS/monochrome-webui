@@ -19,14 +19,26 @@ export interface Pagination<T> {
   results: T[]
 }
 
-export interface ApiResponse<T> {
-  data: T | null
-  error: string | null
+interface ApiResponseSuccess<T> {
+  data: T
+  error: null
   status: number
 }
 
+interface ApiResponseFail {
+  data: null
+  error: string
+  status: number
+}
+
+export type ApiResponse<T> = ApiResponseSuccess<T> | ApiResponseFail
+
+type Handler<T> = ((result: ApiResponse<T>, response: AxiosResponse) => Promise<void>) | string
+
+export type Handlers<T> = Record<number, Handler<T>>
+
 export default class Base {
-  public static readonly prefix: string = process.env.VUE_APP_API_PATH
+  public static readonly basePath: string = process.env.VUE_APP_API_PATH
 
   public static readonly router: string = ""
 
@@ -37,18 +49,16 @@ export default class Base {
   }
 
   public static async _request(config: AxiosRequestConfig, delay = false): Promise<AxiosResponse> {
+    const newConfig = {
+      ...config,
+      validateStatus: () => true,
+    }
+
     try {
-      const response = await axios.request(config)
-      if (delay) {
-        await Base._delay()
-      }
+      const response = await axios.request(newConfig)
       return response
     } catch (error: unknown) {
-      if (axios.isAxiosError(error) && error.response) {
-        return error.response
-      } else {
-        return errorResponse
-      }
+      return errorResponse
     }
   }
 
@@ -60,7 +70,7 @@ export default class Base {
     return this._request(
       {
         method: "get",
-        url: this.prefix + this.router + url,
+        url: this.basePath + this.router + url,
         ...config,
       },
       delay,
@@ -70,7 +80,7 @@ export default class Base {
   public static async _delete(url: string, config: AxiosRequestConfig): Promise<AxiosResponse> {
     return this._request({
       method: "delete",
-      url: this.prefix + this.router + url,
+      url: this.basePath + this.router + url,
       ...config,
     })
   }
@@ -81,14 +91,14 @@ export default class Base {
     config: AxiosRequestConfig,
     contentType = "application/json",
   ): Promise<AxiosResponse> {
-    const settings = { headers: {}, ...config }
-    settings.headers["Content-Type"] = contentType
+    const newConfig = { headers: {}, ...config }
+    newConfig.headers["Content-Type"] = contentType
 
     return this._request({
       data,
       method: "post",
-      url: this.prefix + this.router + url,
-      ...settings,
+      url: this.basePath + this.router + url,
+      ...newConfig,
     })
   }
 
@@ -96,77 +106,105 @@ export default class Base {
     url: string,
     data: any,
     config: AxiosRequestConfig,
-    contentType = "",
+    contentType = "application/json",
   ): Promise<AxiosResponse> {
-    const settings = { ...config }
-    settings.headers["Content-Type"] = contentType || "application/json"
+    const newConfig = { headers: {}, ...config }
+    newConfig.headers["Content-Type"] = contentType
 
     return this._request({
       data,
       method: "put",
-      url: this.prefix + this.router + url,
-      ...settings,
+      url: this.basePath + this.router + url,
+      ...newConfig,
     })
   }
 
-  public static _apiResponse(status: number): ApiResponse<any> {
+  public static _apiResponse<T>(status: number): ApiResponse<T> {
     return {
       data: null,
-      error: null,
+      error: "",
       status,
     }
   }
 
-  public static _logout(): void {
-    require("@/store/index").default.commit("logout")
+  public static async _handleResponse<T>(response: AxiosResponse, handlers?: Handlers<T>) {
+    const defaultHandlers: Handlers<T> = {
+      401: async (result: ApiResponse<T>, response: AxiosResponse) => {
+        result.error = i18n.tc("api.401")
+        await this._handle_401(response.config, result, handlers)
+      },
+      404: i18n.tc("api.404"),
+      422: i18n.tc("api.422"),
+    }
+
+    handlers ??= {}
+
+    handlers = {
+      ...defaultHandlers,
+      ...handlers,
+    }
+
+    const result = Base._apiResponse<T>(response.status)
+
+    if (response.status in handlers) {
+      const handler = handlers[response.status]
+      if (handler instanceof Function) {
+        await handler(result, response)
+      } else {
+        result.error = handler
+      }
+    } else {
+      if (response.status < 300 && response.status >= 200) {
+        result.data = response.data
+        result.error = null
+      } else {
+        result.error = response.data?.detail ?? response.data?.message ?? response.statusText
+      }
+    }
+
+    return result
   }
 
   public static async refresh(token: string) {
-    const response = await this._post("/refresh", { token }, {})
+    const response = await Base._post("/auth/refresh", { token }, {})
 
-    const result: ApiResponse<TokenResponse> = this._apiResponse(response.status)
-
-    switch (response.status) {
-      case 200:
-        result.data = response.data
-        break
-      case 401:
-        result.error = i18n.tc("api.auth.refresh_401")
-        break
-      case 422:
-        result.error = i18n.tc("api.422")
-        break
-      default:
-        result.error = response.data?.detail ?? response.statusText
+    const handlers = {
+      401: i18n.tc("api.auth.refresh_401"),
     }
-    return result
+
+    return Base._handleResponse<TokenResponse>(response, handlers)
   }
 
   public static async _handle_401<T>(
     config: AxiosRequestConfig,
-    oldResult: ApiResponse<T>,
+    result: ApiResponse<T>,
+    handlers?: Handlers<T>,
   ): Promise<ApiResponse<T>> {
     const store = require("@/store/index").default
 
-    const tokenResponse = await store.dispatch("refresh")
-    if (!tokenResponse?.data?.access_token) {
-      this._logout()
-      return oldResult
+    handlers ??= {}
+
+    const tokenResponse = await Base.refresh(store.getters.refreshToken)
+    if (tokenResponse.data === null) {
+      store.commit("logout")
+      return result
     }
+    store.commit("setToken", tokenResponse.data)
+
+    config.headers ??= {}
     config.headers.Authorization = "Bearer ".concat(tokenResponse.data.access_token)
+
     const response = await this._request(config)
 
-    const newResult: ApiResponse<T> = this._apiResponse(response.status)
-
-    if (response.status === 201 || response.status === 200) {
-      newResult.data = response.data
-      return newResult
-    } else if (response.status === 401) {
-      this._logout()
-      return oldResult
-    } else {
-      newResult.error = response.data?.detail ?? response.statusText
-      return newResult
+    handlers = {
+      ...handlers,
+      401: async () => {
+        store.commit("logout")
+      },
     }
+
+    Object.assign(result, await this._handleResponse<T>(response, handlers))
+
+    return result
   }
 }

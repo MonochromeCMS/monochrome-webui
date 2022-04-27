@@ -72,6 +72,9 @@ const getters = {
     const result = state.token && state.id
     return !!result
   },
+  refreshToken(state: UserState): string {
+    return state.refresh
+  },
   userId(state: UserState): string | null {
     return state.id ?? null
   },
@@ -103,26 +106,6 @@ const actions = {
     if (response.data) {
       commit("setToken", response.data)
       await dispatch("getUserData")
-    }
-    return response
-  },
-  async refresh({
-    commit,
-    state,
-  }: ActionContext<UserState, any>): Promise<ApiResponse<TokenResponse>> {
-    if (!state.refresh) {
-      return {
-        data: null,
-        error: "No refresh token",
-        status: 401,
-      }
-    }
-
-    const response = await Auth.refresh(state.refresh)
-
-    if (response.data) {
-      commit("setToken", response.data)
-      return response
     }
     return response
   },

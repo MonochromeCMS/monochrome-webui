@@ -114,7 +114,7 @@ export default class PageInput extends Vue {
       this.handleProgress(ev),
     )
 
-    if (response.data) {
+    if (response.data !== null) {
       this.pages.push(...response.data)
     } else {
       const notification = {

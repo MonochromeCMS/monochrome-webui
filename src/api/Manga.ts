@@ -3,7 +3,7 @@ import type { AxiosRequestConfig } from "axios"
 import type { Role } from "@/api/User"
 import i18n from "@/i18n"
 
-import type { ApiResponse, Pagination } from "./Base"
+import type { Pagination } from "./Base"
 import Base from "./Base"
 import type { ChapterResponse } from "./Chapter"
 
@@ -47,131 +47,54 @@ export default class Manga extends Base {
 
     const response = await Manga._get(url, {}, delay)
 
-    const result: ApiResponse<MangaSearchResponse> = Manga._apiResponse(response.status)
-
-    switch (response.status) {
-      case 200:
-        result.data = response.data
-        break
-      case 422:
-        result.error = i18n.tc("api.422")
-        break
-      default:
-        result.error = response.data?.detail ?? response.statusText
-    }
-    return result
+    return Manga._handleResponse<MangaSearchResponse>(response)
   }
 
   public static async create(data: MangaSchema, auth: AxiosRequestConfig) {
     const response = await Manga._post("", data, auth)
 
-    const result: ApiResponse<MangaResponse> = Manga._apiResponse(response.status)
-
-    switch (response.status) {
-      case 201:
-        result.data = response.data
-        break
-      case 401:
-        result.error = i18n.tc("api.401")
-        return await this._handle_401(response.config, result)
-      case 422:
-        result.error = i18n.tc("api.422")
-        break
-      default:
-        result.error = response.data?.detail ?? response.statusText
-    }
-    return result
+    return Manga._handleResponse<MangaResponse>(response)
   }
 
   public static async get(mangaId: string, delay = false) {
     const response = await Manga._get(`/${mangaId}`, {}, delay)
 
-    const result: ApiResponse<MangaResponse> = Manga._apiResponse(response.status)
-
-    switch (response.status) {
-      case 200:
-        result.data = response.data
-        break
-      case 404:
-        result.error = i18n.tc("api.manga.404")
-        break
-      case 422:
-        result.error = i18n.tc("api.422")
-        break
-      default:
-        result.error = response.data?.detail ?? response.statusText
+    const handlers = {
+      404: i18n.tc("api.manga.404"),
     }
-    return result
+
+    return Manga._handleResponse<MangaResponse>(response, handlers)
   }
 
   public static async edit(mangaId: string, data: MangaSchema, auth: AxiosRequestConfig) {
     const response = await Manga._put(`/${mangaId}`, data, auth)
 
-    const result: ApiResponse<MangaResponse> = Manga._apiResponse(response.status)
-
-    switch (response.status) {
-      case 200:
-        result.data = response.data
-        break
-      case 401:
-        result.error = i18n.tc("api.401")
-        return await this._handle_401(response.config, result)
-      case 404:
-        result.error = i18n.tc("api.manga.404")
-        break
-      case 422:
-        result.error = i18n.tc("api.422")
-        break
-      default:
-        result.error = response.data?.detail ?? response.statusText
+    const handlers = {
+      404: i18n.tc("api.manga.404"),
     }
-    return result
+
+    return Manga._handleResponse<MangaResponse>(response, handlers)
   }
 
   public static async delete(mangaId: string, auth: AxiosRequestConfig) {
     const response = await Manga._delete(`/${mangaId}`, auth)
 
-    const result: ApiResponse<string> = Manga._apiResponse(response.status)
-
-    switch (response.status) {
-      case 200:
-        result.data = "OK"
-        break
-      case 401:
-        result.error = i18n.tc("api.401")
-        return await this._handle_401(response.config, result)
-      case 404:
-        result.error = i18n.tc("api.manga.404")
-        break
-      case 422:
-        result.error = i18n.tc("api.422")
-        break
-      default:
-        result.error = response.data?.detail ?? response.statusText
+    const handlers = {
+      404: i18n.tc("api.manga.404"),
     }
-    return result
+
+    return Manga._handleResponse<string>(response, handlers)
   }
 
   public static async chapters(mangaId: string, delay = false) {
     const url = `/${mangaId}/chapters`
     const response = await Manga._get(url, {}, delay)
 
-    const result: ApiResponse<ChapterResponse[]> = Manga._apiResponse(response.status)
-
-    switch (response.status) {
-      case 200:
-        result.data = response.data
-        break
-      case 404:
-        result.error = i18n.tc("api.manga.404")
-        break
-      case 422:
-        result.error = i18n.tc("api.422")
-        break
-      default:
-        result.error = response.data?.detail ?? response.statusText
+    const handlers = {
+      404: i18n.tc("api.manga.404"),
     }
-    return result
+
+    return Manga._handleResponse<ChapterResponse[]>(response, handlers)
   }
 
   public static async setCover(mangaId: string, cover: File, auth: AxiosRequestConfig) {
@@ -181,27 +104,11 @@ export default class Manga extends Base {
 
     const response = await Manga._put(url, form, auth, "multipart/form-data")
 
-    const result = Manga._apiResponse(response.status)
-
-    switch (response.status) {
-      case 200:
-        result.data = response.data
-        break
-      case 400:
-        result.error = i18n.tc("api.manga.cover_400")
-        break
-      case 401:
-        result.error = i18n.tc("api.401")
-        return await this._handle_401(response.config, result)
-      case 404:
-        result.error = i18n.tc("api.manga.404")
-        break
-      case 422:
-        result.error = i18n.tc("api.422")
-        break
-      default:
-        result.error = response.data?.detail ?? response.statusText
+    const handlers = {
+      400: i18n.tc("api.manga.cover_400"),
+      404: i18n.tc("api.manga.404"),
     }
-    return result
+
+    return Manga._handleResponse<MangaResponse>(response, handlers)
   }
 }

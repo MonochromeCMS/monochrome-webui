@@ -86,7 +86,7 @@ export default class AdminActions extends Vue {
         to: "/logout",
       },
       {
-        href: `${Base.prefix}/docs`,
+        href: `${Base.basePath}/docs`,
         target: "_blank",
         text: this.$tc("apiDocs"),
       },

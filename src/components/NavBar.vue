@@ -49,10 +49,12 @@
           {{ link.text }}
         </v-list-item>
         <locales-item />
-        <v-list-item v-if="!isConnected" to="/login">{{ $t("login") }}</v-list-item>
+        <v-list-item v-if="!isConnected" to="/login" class="justify-end">
+          {{ $t("login") }}
+        </v-list-item>
         <v-menu v-else offset-y>
           <template #activator="{ on, attrs }">
-            <v-list-item v-bind="attrs" class="login-tab" v-on="on">
+            <v-list-item v-bind="attrs" class="login-tab justify-end" v-on="on">
               {{ displayUserRole }}
             </v-list-item>
           </template>

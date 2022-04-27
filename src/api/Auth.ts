@@ -1,6 +1,3 @@
-import i18n from "@/i18n"
-
-import type { ApiResponse } from "./Base"
 import Base from "./Base"
 
 export interface TokenResponse {
@@ -23,21 +20,6 @@ export default class Auth extends Base {
 
     const response = await Auth._post("/token", form, {}, "application/x-www-form-urlencoded")
 
-    const result: ApiResponse<TokenResponse> = Auth._apiResponse(response.status)
-
-    switch (response.status) {
-      case 200:
-        result.data = response.data
-        break
-      case 401:
-        result.error = i18n.tc("api.auth.401")
-        break
-      case 422:
-        result.error = i18n.tc("api.422")
-        break
-      default:
-        result.error = response.data?.detail ?? response.statusText
-    }
-    return result
+    return Auth._handleResponse<TokenResponse>(response)
   }
 }
