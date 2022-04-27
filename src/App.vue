@@ -10,11 +10,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue, Watch } from "vue-property-decorator"
 
-import NavBar from '@/components/NavBar.vue';
-import Notifications from '@/components/Notifications.vue';
-import ThemeToggler from '@/components/ThemeToggle.vue';
+import NavBar from "@/components/NavBar.vue"
+import Notifications from "@/components/Notifications.vue"
+import ThemeToggler from "@/components/ThemeToggle.vue"
 
 @Component({
   components: {
@@ -25,17 +25,17 @@ import ThemeToggler from '@/components/ThemeToggle.vue';
 })
 export default class App extends Vue {
   get isConnected() {
-    return this.$store.getters.isConnected;
+    return this.$store.getters.isConnected
   }
 
-  @Watch('isConnected')
+  @Watch("isConnected")
   onLoginChange() {
-    this.$router.replace('/');
+    this.$router.replace("/")
   }
 
   mounted() {
-    if (this.isConnected) this.$store.dispatch('getUserData');
-    this.$store.dispatch('getSettings');
+    if (this.isConnected) this.$store.dispatch("getUserData")
+    this.$store.dispatch("getSettings")
   }
 }
 </script>

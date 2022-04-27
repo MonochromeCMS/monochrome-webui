@@ -23,12 +23,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from "vue-property-decorator"
 
 @Component
 export default class Home extends Vue {
   get isConnected(): boolean {
-    return this.$store.getters.isConnected;
+    return this.$store.getters.isConnected
   }
 }
 </script>

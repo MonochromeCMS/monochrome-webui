@@ -2,7 +2,7 @@
   <v-card :color="color">
     <v-card-title>{{ title }}</v-card-title>
     <v-alert v-if="ownUser" type="warning" dense class="ma-3">
-      {{ $t('ownUserWarning') }}
+      {{ $t("ownUserWarning") }}
     </v-alert>
     <v-card-text>
       <validation-observer ref="observer">
@@ -22,149 +22,149 @@
 </template>
 
 <script lang="ts">
-import type { AxiosRequestConfig } from 'axios';
-import type { ValidationObserver } from 'vee-validate';
-import { Component, Emit, Prop, Ref, Vue } from 'vue-property-decorator';
+import type { AxiosRequestConfig } from "axios"
+import type { ValidationObserver } from "vee-validate"
+import { Component, Emit, Prop, Ref, Vue } from "vue-property-decorator"
 
-import type { UserResponse, UserSchema } from '@/api/User';
-import User from '@/api/User';
+import type { UserResponse, UserSchema } from "@/api/User"
+import User from "@/api/User"
 
-import type UserFormFields from './UserFormFields.vue';
+import type UserFormFields from "./UserFormFields.vue"
 
 @Component
 export default class UserForm extends Vue {
-  @Ref() readonly observer!: InstanceType<typeof ValidationObserver>;
+  @Ref() readonly observer!: InstanceType<typeof ValidationObserver>
 
-  @Ref() readonly fields!: UserFormFields;
+  @Ref() readonly fields!: UserFormFields
 
-  @Prop({ default: null }) readonly user!: UserResponse;
+  @Prop({ default: null }) readonly user!: UserResponse
 
-  @Prop({ default: false, type: Boolean }) readonly register!: boolean;
+  @Prop({ default: false, type: Boolean }) readonly register!: boolean
 
-  @Prop({ default: 'background', type: String }) readonly color!: string;
+  @Prop({ default: "background", type: String }) readonly color!: string
 
-  @Prop({ default: false, type: Boolean }) readonly ownUser!: boolean;
+  @Prop({ default: false, type: Boolean }) readonly ownUser!: boolean
 
-  loading = false;
+  loading = false
 
   get title(): string {
     switch (true) {
       case this.register:
-        return this.$tc('registerUser');
+        return this.$tc("registerUser")
       case !!this.user:
-        return this.$tc('editUser');
+        return this.$tc("editUser")
       default:
-        return this.$tc('addUser');
+        return this.$tc("addUser")
     }
   }
 
   get authConfig(): AxiosRequestConfig {
-    return this.$store.getters.authConfig;
+    return this.$store.getters.authConfig
   }
 
-  @Emit('close')
+  @Emit("close")
   close(): boolean {
-    return true;
+    return true
   }
 
   clear(): void {
-    this.fields.clear();
-    this.observer.reset();
+    this.fields.clear()
+    this.observer.reset()
   }
 
   async submit(ev: UserSchema): Promise<void> {
-    const valid = await this.observer.validate();
+    const valid = await this.observer.validate()
     if (valid) {
       if (this.user) {
-        await this.editUser(this.user.id, ev);
+        await this.editUser(this.user.id, ev)
       } else if (this.register) {
-        await this.registerUser(ev);
+        await this.registerUser(ev)
       } else {
-        await this.addUser(ev);
+        await this.addUser(ev)
       }
     }
   }
 
   async editUser(userId: string, params: UserSchema): Promise<void> {
-    this.loading = true;
-    const response = await User.edit(userId, params, this.authConfig);
+    this.loading = true
+    const response = await User.edit(userId, params, this.authConfig)
 
     if (response.data) {
-      this.update();
-      this.clear();
-      this.close();
+      this.update()
+      this.clear()
+      this.close()
       if (this.ownUser) {
-        this.$store.commit('logout');
+        this.$store.commit("logout")
       }
     } else {
       const notification = {
-        color: 'error',
-        context: this.$t('editUser'),
-        message: response.error ?? '',
-      };
-      await this.$store.dispatch('pushNotification', notification);
+        color: "error",
+        context: this.$t("editUser"),
+        message: response.error ?? "",
+      }
+      await this.$store.dispatch("pushNotification", notification)
     }
 
-    this.loading = false;
+    this.loading = false
   }
 
   async addUser(params: UserSchema): Promise<void> {
-    this.loading = true;
-    const response = await User.create(params, this.authConfig);
+    this.loading = true
+    const response = await User.create(params, this.authConfig)
 
     if (response.data) {
-      this.update();
-      this.clear();
-      this.close();
+      this.update()
+      this.clear()
+      this.close()
     } else {
       const notification = {
-        color: 'error',
-        context: this.$t('addUser'),
-        message: response.error ?? '',
-      };
-      await this.$store.dispatch('pushNotification', notification);
+        color: "error",
+        context: this.$t("addUser"),
+        message: response.error ?? "",
+      }
+      await this.$store.dispatch("pushNotification", notification)
     }
 
-    this.loading = false;
+    this.loading = false
   }
 
   async registerUser(params: UserSchema): Promise<void> {
-    this.loading = true;
-    const response = await User.register(params);
+    this.loading = true
+    const response = await User.register(params)
 
     if (response.data) {
-      this.update();
-      this.clear();
-      this.close();
+      this.update()
+      this.clear()
+      this.close()
     } else {
       const notification = {
-        color: 'error',
-        context: this.$t('registerUser'),
-        message: response.error ?? '',
-      };
-      await this.$store.dispatch('pushNotification', notification);
+        color: "error",
+        context: this.$t("registerUser"),
+        message: response.error ?? "",
+      }
+      await this.$store.dispatch("pushNotification", notification)
     }
 
-    this.loading = false;
+    this.loading = false
   }
 
-  @Emit('update')
+  @Emit("update")
   update(): boolean {
-    return true;
+    return true
   }
 }
 </script>
 
 <i18n locale="en" lang="yaml">
 ownUserWarning: "You'll be logged out after editing your own user!"
-registerUser: 'Register user'
-editUser: 'Edit user'
-addUser: 'Add user'
+registerUser: "Register user"
+editUser: "Edit user"
+addUser: "Add user"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-ownUserWarning: 'Vous allez être déconnecté après avoir modifié votre propre utilisateur!'
-registerUser: 'Inscription'
+ownUserWarning: "Vous allez être déconnecté après avoir modifié votre propre utilisateur!"
+registerUser: "Inscription"
 editUser: "Modification d'utilisateur"
 addUser: "Ajout d'utilisateur"
 </i18n>

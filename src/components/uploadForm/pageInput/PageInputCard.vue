@@ -15,29 +15,29 @@
 </template>
 
 <script lang="ts">
-import { mdiClose } from '@mdi/js';
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+import { mdiClose } from "@mdi/js"
+import { Component, Emit, Prop, Vue } from "vue-property-decorator"
 
-import Media from '@/api/Media';
-import type { UploadedBlobResponse } from '@/api/Upload';
+import Media from "@/api/Media"
+import type { UploadedBlobResponse } from "@/api/Upload"
 
 @Component
 export default class PageInputCard extends Vue {
-  @Prop() readonly page!: UploadedBlobResponse;
+  @Prop() readonly page!: UploadedBlobResponse
 
-  @Prop(Boolean) readonly disabled!: boolean;
+  @Prop(Boolean) readonly disabled!: boolean
 
   icons = {
     mdiClose,
-  };
-
-  get blob(): string {
-    return Media.blob(this.page.id);
   }
 
-  @Emit('delete')
+  get blob(): string {
+    return Media.blob(this.page.id)
+  }
+
+  @Emit("delete")
   deletePage(): boolean {
-    return true;
+    return true
   }
 }
 </script>

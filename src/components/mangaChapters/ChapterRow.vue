@@ -7,7 +7,7 @@
     >
       <v-row class="justify-space-around ma-0">
         <v-col cols="6" sm="3" md="2">
-          {{ chapter.volume ? `Vol ${chapter.volume} ` : '' }}{{ $t('chapter') }}
+          {{ chapter.volume ? `Vol ${chapter.volume} ` : "" }}{{ $t("chapter") }}
           {{ chapter.number }}
         </v-col>
         <v-col cols="3" md="4" class="hidden-sm-and-down ellipsis">
@@ -18,7 +18,7 @@
         </v-col>
         <v-col cols="3" lg="2" class="pa-0 text-right hidden-xs-only">
           <v-chip color="backgroundAlt" class="ma-2">
-            {{ $t('timeAgo', { time: ago(new Date(chapter.uploadTime).getTime()) }) }}
+            {{ $t("timeAgo", { time: ago(new Date(chapter.uploadTime).getTime()) }) }}
           </v-chip>
         </v-col>
       </v-row>
@@ -30,7 +30,7 @@
         </v-btn>
       </template>
       <v-btn block color="background" :to="`/chapters/${chapter.id}/edit`">
-        {{ $t('editChapter') }}
+        {{ $t("editChapter") }}
       </v-btn>
       <chapter-delete :id="chapter.id" @input="deleteChapter()" />
     </v-menu>
@@ -38,46 +38,46 @@
 </template>
 
 <script lang="ts">
-import { mdiDotsVertical } from '@mdi/js';
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+import { mdiDotsVertical } from "@mdi/js"
+import { Component, Emit, Prop, Vue } from "vue-property-decorator"
 
-import type { ChapterResponse } from '@/api/Chapter';
+import type { ChapterResponse } from "@/api/Chapter"
 
 @Component
 export default class ChapterRow extends Vue {
-  @Prop() readonly chapter!: ChapterResponse;
+  @Prop() readonly chapter!: ChapterResponse
 
-  @Prop(Boolean) readonly showEdit!: boolean;
+  @Prop(Boolean) readonly showEdit!: boolean
 
   icons = {
     mdiDotsVertical,
-  };
+  }
 
-  @Emit('delete')
+  @Emit("delete")
   deleteChapter(): boolean {
-    return true;
+    return true
   }
 
   ago(val: number): string {
-    val = 0 | ((Date.now() - val) / 1000);
+    val = 0 | ((Date.now() - val) / 1000)
 
     const length = new Map([
-      ['second', 60],
-      ['minute', 60],
-      ['hour', 24],
-      ['day', 7],
-      ['week', 4.35],
-      ['month', 12],
-      ['year', 10000],
-    ]);
+      ["second", 60],
+      ["minute", 60],
+      ["hour", 24],
+      ["day", 7],
+      ["week", 4.35],
+      ["month", 12],
+      ["year", 10000],
+    ])
 
     for (const [k, l] of length) {
-      const result = val % l;
+      const result = val % l
       if (!(val = 0 | (val / l))) {
-        return this.$tc(`timeUnits.${k}`, result);
+        return this.$tc(`timeUnits.${k}`, result)
       }
     }
-    return 'ERROR';
+    return "ERROR"
   }
 }
 </script>
@@ -90,11 +90,11 @@ export default class ChapterRow extends Vue {
 </style>
 
 <i18n locale="en" lang="yaml">
-chapter: 'Chapter'
-editChapter: 'Edit chapter'
+chapter: "Chapter"
+editChapter: "Edit chapter"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-chapter: 'Chapitre'
-editChapter: 'Modifier chapitre'
+chapter: "Chapitre"
+editChapter: "Modifier chapitre"
 </i18n>

@@ -10,26 +10,26 @@
 </template>
 
 <script lang="ts">
-import { mdiPencil } from '@mdi/js';
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+import { mdiPencil } from "@mdi/js"
+import { Component, Emit, Prop, Vue } from "vue-property-decorator"
 
-import type { UserResponse } from '@/api/User';
+import type { UserResponse } from "@/api/User"
 
 @Component
 export default class UserEditButton extends Vue {
-  @Prop() readonly user!: UserResponse;
+  @Prop() readonly user!: UserResponse
 
-  @Prop(Boolean) readonly ownUser!: boolean;
+  @Prop(Boolean) readonly ownUser!: boolean
 
   icons = {
     mdiPencil,
-  };
+  }
 
-  dialog = false;
+  dialog = false
 
-  @Emit('update')
+  @Emit("update")
   update(): boolean {
-    return true;
+    return true
   }
 }
 </script>

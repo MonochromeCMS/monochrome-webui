@@ -4,7 +4,7 @@
     :color="notification ? notification.color : 'gray'"
     timeout="4000"
   >
-    {{ notification ? `${notification.context}: ${notification.message}` : $t('noNotifications') }}
+    {{ notification ? `${notification.context}: ${notification.message}` : $t("noNotifications") }}
 
     <template #action="{ attrs }">
       <v-badge
@@ -24,35 +24,35 @@
 </template>
 
 <script lang="ts">
-import { mdiClose } from '@mdi/js';
-import { Component, Vue } from 'vue-property-decorator';
+import { mdiClose } from "@mdi/js"
+import { Component, Vue } from "vue-property-decorator"
 
-import type { Notification } from '@/store/notifications';
+import type { Notification } from "@/store/notifications"
 
 @Component
 export default class Notifications extends Vue {
   icons = {
     mdiClose,
-  };
+  }
 
   close(): void {
-    this.$store.commit('closeNotification');
+    this.$store.commit("closeNotification")
   }
 
   get notification(): Notification {
-    return this.$store.getters.getNotification;
+    return this.$store.getters.getNotification
   }
 
   get notificationsAmount(): number {
-    return this.$store.getters.notificationsAmount;
+    return this.$store.getters.notificationsAmount
   }
 }
 </script>
 
 <i18n locale="en" lang="yaml">
-noNotifications: 'No notifications left'
+noNotifications: "No notifications left"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-noNotifications: 'Il ne reste aucune notification'
+noNotifications: "Il ne reste aucune notification"
 </i18n>

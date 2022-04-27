@@ -14,9 +14,9 @@
 </template>
 
 <script lang="ts">
-import { mdiLightbulb } from '@mdi/js';
-import { Component, Vue } from 'vue-property-decorator';
-import { Scroll } from 'vuetify/lib';
+import { mdiLightbulb } from "@mdi/js"
+import { Component, Vue } from "vue-property-decorator"
+import { Scroll } from "vuetify/lib"
 
 @Component({
   directives: { scroll: Scroll },
@@ -24,28 +24,28 @@ import { Scroll } from 'vuetify/lib';
 export default class ThemeToggle extends Vue {
   icons = {
     mdiLightbulb,
-  };
+  }
 
-  currentScroll = 0;
+  currentScroll = 0
 
-  scrollClass = '';
+  scrollClass = ""
 
   toggleTheme(): void {
-    const dark = !this.$vuetify.theme.dark;
-    window.localStorage.setItem('monochrome-dark', dark ? '1' : '0');
-    this.$vuetify.theme.dark = dark;
+    const dark = !this.$vuetify.theme.dark
+    window.localStorage.setItem("monochrome-dark", dark ? "1" : "0")
+    this.$vuetify.theme.dark = dark
   }
 
   onScroll(ev: any): void {
-    const newScroll = ev.target.scrollingElement.scrollTop;
+    const newScroll = ev.target.scrollingElement.scrollTop
 
-    this.scrollClass = newScroll > this.currentScroll ? 'scrolling' : '';
+    this.scrollClass = newScroll > this.currentScroll ? "scrolling" : ""
 
-    this.currentScroll = newScroll;
+    this.currentScroll = newScroll
   }
 
   mounted(): void {
-    this.$vuetify.theme.dark = window.localStorage.getItem('monochrome-dark') === '1';
+    this.$vuetify.theme.dark = window.localStorage.getItem("monochrome-dark") === "1"
   }
 }
 </script>

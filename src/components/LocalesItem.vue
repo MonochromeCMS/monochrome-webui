@@ -20,26 +20,26 @@
 </template>
 
 <script lang="ts">
-import { localize } from 'vee-validate';
-import { Component, Vue } from 'vue-property-decorator';
+import { localize } from "vee-validate"
+import { Component, Vue } from "vue-property-decorator"
 
 @Component
 export default class LocalesItem extends Vue {
-  locales = (process.env.VUE_APP_I18N_LOCALES || 'en,fr').split(',');
+  locales = (process.env.VUE_APP_I18N_LOCALES || "en,fr").split(",")
 
   get currentLocale(): string {
-    return this.$root.$i18n.locale;
+    return this.$root.$i18n.locale
   }
 
   changeLocale(locale: string): void {
-    window.localStorage.setItem('monochrome-lang', locale);
-    this.$root.$i18n.locale = locale;
-    localize(locale);
+    window.localStorage.setItem("monochrome-lang", locale)
+    this.$root.$i18n.locale = locale
+    localize(locale)
   }
 
   mounted(): void {
-    const locale = window.localStorage.getItem('monochrome-lang') || this.$i18n.locale;
-    this.changeLocale(locale);
+    const locale = window.localStorage.getItem("monochrome-lang") || this.$i18n.locale
+    this.changeLocale(locale)
   }
 }
 </script>

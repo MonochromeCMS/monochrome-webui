@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" md="11" lg="10" class="mx-auto">
         <v-card rounded="lg" color="backgroundAlt" elevation="0" class="pa-4">
-          <v-card-title class="justify-center lemon-milk">{{ $t('handleUsers') }}</v-card-title>
+          <v-card-title class="justify-center lemon-milk">{{ $t("handleUsers") }}</v-card-title>
           <v-card-text>
             <user-filter v-model="filters" @update="getUsers" />
             <users-list :loading="loading" :users="users" :limit="limit" @update="getUsers">
@@ -49,94 +49,94 @@
 </template>
 
 <script lang="ts">
-import { mdiPlus } from '@mdi/js';
-import type { AxiosRequestConfig } from 'axios';
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { mdiPlus } from "@mdi/js"
+import type { AxiosRequestConfig } from "axios"
+import { Component, Vue, Watch } from "vue-property-decorator"
 
-import type { Role, UserResponse } from '@/api/User';
-import User from '@/api/User';
+import type { Role, UserResponse } from "@/api/User"
+import User from "@/api/User"
 
 @Component
 export default class Users extends Vue {
   icons = {
     mdiPlus,
-  };
+  }
 
-  page = 1;
+  page = 1
 
-  total = 0;
+  total = 0
 
-  limit = 10;
+  limit = 10
 
-  users: UserResponse[] = [];
+  users: UserResponse[] = []
 
-  loading = true;
+  loading = true
 
-  addDialog = false;
+  addDialog = false
 
-  filters = {};
+  filters = {}
 
   get isConnected(): boolean {
-    return this.$store.getters.isConnected;
+    return this.$store.getters.isConnected
   }
 
   get userRole(): Role {
-    return this.$store.getters.userRole;
+    return this.$store.getters.userRole
   }
 
   get authConfig(): AxiosRequestConfig {
-    return this.$store.getters.authConfig;
+    return this.$store.getters.authConfig
   }
 
   get offset(): number {
-    return (this.page - 1) * this.limit;
+    return (this.page - 1) * this.limit
   }
 
   get pageAmount(): number {
-    return Math.ceil((this.total + 1) / this.limit);
+    return Math.ceil((this.total + 1) / this.limit)
   }
 
-  @Watch('page')
+  @Watch("page")
   onPageChange(): void {
-    this.getUsers();
+    this.getUsers()
   }
 
   async getUsers(): Promise<void> {
-    let config = this.authConfig;
+    let config = this.authConfig
 
-    const response = await User.search(config, this.filters, this.limit, this.offset);
+    const response = await User.search(config, this.filters, this.limit, this.offset)
 
     if (response.data) {
-      this.total = response.data.total;
-      this.users = response.data.results;
+      this.total = response.data.total
+      this.users = response.data.results
     } else {
       const notification = {
-        color: 'error',
-        context: this.$t('getUsers'),
-        message: response.error ?? '',
-      };
-      await this.$store.dispatch('pushNotification', notification);
+        color: "error",
+        context: this.$t("getUsers"),
+        message: response.error ?? "",
+      }
+      await this.$store.dispatch("pushNotification", notification)
     }
 
-    this.loading = false;
+    this.loading = false
   }
 
   mounted(): void {
     if (!this.isConnected || !User.canEdit(this.userRole)) {
-      this.$router.replace('/');
+      this.$router.replace("/")
     } else {
-      this.getUsers();
+      this.getUsers()
     }
   }
 }
 </script>
 
 <i18n locale="en" lang="yaml">
-getUsers: 'Get users'
-handleUsers: 'Handle users'
+getUsers: "Get users"
+handleUsers: "Handle users"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-getUsers: 'Chargement des utilisateurs'
-handleUsers: 'Gestion des utilisateurs'
+getUsers: "Chargement des utilisateurs"
+handleUsers: "Gestion des utilisateurs"
 </i18n>

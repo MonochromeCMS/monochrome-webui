@@ -21,7 +21,7 @@
           @change="goToChapter"
         />
         <v-divider class="mt-3" />
-        <v-subheader>{{ $t('readerSettings') }}</v-subheader>
+        <v-subheader>{{ $t("readerSettings") }}</v-subheader>
         <v-select v-model="readerMode" :label="$t('readerMode')" hide-details :items="modeItems" />
         <!-- Width setting -->
         <v-slider
@@ -40,13 +40,13 @@
         </v-slider>
         <!-- Fit setting -->
         <v-row v-else align="center" class="ma-1">
-          <v-col class="text-body-1">{{ $t('imageFit') }}</v-col>
+          <v-col class="text-body-1">{{ $t("imageFit") }}</v-col>
           <v-col class="text-right pa-2">
             <v-btn-toggle v-model="fit" mandatory>
               <v-btn color="background">
                 <v-icon>{{ icons.mdiArrowExpandHorizontal }}</v-icon>
               </v-btn>
-              <v-btn color="background">{{ $t('default') }}</v-btn>
+              <v-btn color="background">{{ $t("default") }}</v-btn>
               <v-btn color="background">
                 <v-icon>{{ icons.mdiArrowExpandVertical }}</v-icon>
               </v-btn>
@@ -55,7 +55,7 @@
         </v-row>
         <!-- Direction setting -->
         <v-row v-if="['Single', 'Double'].includes(readerMode)" align="center" class="ma-1">
-          <v-col class="text-body-1">{{ $t('pageDirection') }}</v-col>
+          <v-col class="text-body-1">{{ $t("pageDirection") }}</v-col>
           <v-col class="text-right pa-2">
             <v-btn-toggle v-model="direction" mandatory>
               <v-btn color="background">
@@ -69,11 +69,11 @@
         </v-row>
         <!-- Double parity setting -->
         <v-row v-if="readerMode === 'Double'" align="center" class="ma-1">
-          <v-col class="text-body-1">{{ $t('doublePageParity') }}</v-col>
+          <v-col class="text-body-1">{{ $t("doublePageParity") }}</v-col>
           <v-col class="text-right pa-2">
             <v-btn-toggle v-model="doubleParity" mandatory>
-              <v-btn color="background">{{ $t('even') }}</v-btn>
-              <v-btn color="background">{{ $t('odd') }}</v-btn>
+              <v-btn color="background">{{ $t("even") }}</v-btn>
+              <v-btn color="background">{{ $t("odd") }}</v-btn>
             </v-btn-toggle>
           </v-col>
         </v-row>
@@ -89,17 +89,17 @@ import {
   mdiArrowLeft,
   mdiArrowRight,
   mdiClose,
-} from '@mdi/js';
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+} from "@mdi/js"
+import { Component, Emit, Prop, Vue } from "vue-property-decorator"
 
-import type { DetailedChapterResponse } from '@/api/Chapter';
-import type { ChapterItem } from '@/views/ChapterReader.vue';
+import type { DetailedChapterResponse } from "@/api/Chapter"
+import type { ChapterItem } from "@/views/ChapterReader.vue"
 
 @Component
 export default class ReaderMenu extends Vue {
-  @Prop() readonly chapter!: DetailedChapterResponse;
+  @Prop() readonly chapter!: DetailedChapterResponse
 
-  @Prop() readonly chapterItems!: ChapterItem[];
+  @Prop() readonly chapterItems!: ChapterItem[]
 
   icons = {
     mdiArrowExpandHorizontal,
@@ -107,103 +107,103 @@ export default class ReaderMenu extends Vue {
     mdiArrowLeft,
     mdiArrowRight,
     mdiClose,
-  };
+  }
 
-  menu = false;
+  menu = false
 
   @Emit()
   goToChapter(id: string): string {
-    return id;
+    return id
   }
 
   get modeItems(): string[] {
-    return this.chapter.webtoon ? ['Webtoon'] : ['Single', 'Double', 'Vertical'];
+    return this.chapter.webtoon ? ["Webtoon"] : ["Single", "Double", "Vertical"]
   }
 
   get doubleParity(): number {
-    return this.$store.getters.getParity;
+    return this.$store.getters.getParity
   }
 
   set doubleParity(value: number) {
-    this.$store.commit('setParity', value);
+    this.$store.commit("setParity", value)
   }
 
   get fit(): number {
-    const value = this.$store.getters.getFit;
+    const value = this.$store.getters.getFit
     switch (value) {
-      case 'width':
-        return 0;
-      case 'height':
-        return 2;
+      case "width":
+        return 0
+      case "height":
+        return 2
       default:
-        return 1;
+        return 1
     }
   }
 
   set fit(value: number) {
     switch (value) {
       case 0:
-        this.$store.commit('setFit', 'width');
-        break;
+        this.$store.commit("setFit", "width")
+        break
       case 2:
-        this.$store.commit('setFit', 'height');
-        break;
+        this.$store.commit("setFit", "height")
+        break
       default:
-        this.$store.commit('setFit', 'default');
-        break;
+        this.$store.commit("setFit", "default")
+        break
     }
   }
 
   get width(): number {
-    return Number(this.$store.getters.getWidth.slice(0, -1));
+    return Number(this.$store.getters.getWidth.slice(0, -1))
   }
 
   set width(value: number) {
-    this.$store.commit('setWidth', `${value}%`);
+    this.$store.commit("setWidth", `${value}%`)
   }
 
   get direction(): number {
-    return this.$store.getters.getDirection;
+    return this.$store.getters.getDirection
   }
 
   set direction(value: number) {
-    this.$store.commit('setDirection', value);
+    this.$store.commit("setDirection", value)
   }
 
   get readerMode(): string {
-    return this.chapter.webtoon ? 'Webtoon' : this.$store.getters.getReaderMode;
+    return this.chapter.webtoon ? "Webtoon" : this.$store.getters.getReaderMode
   }
 
   set readerMode(value: string) {
     if (!this.chapter.webtoon) {
-      this.$store.commit('setReaderMode', value);
+      this.$store.commit("setReaderMode", value)
     }
   }
 }
 </script>
 
 <i18n locale="en" lang="yaml">
-chapter: 'Chapter'
-readerSettings: 'Reader settings'
-readerMode: 'Reader mode'
-width: 'Width'
-imageFit: 'Image fit'
-pageDirection: 'Page direction'
-doublePageParity: 'Double page parity'
-default: 'Default'
-even: 'Even'
-odd: 'Odd'
+chapter: "Chapter"
+readerSettings: "Reader settings"
+readerMode: "Reader mode"
+width: "Width"
+imageFit: "Image fit"
+pageDirection: "Page direction"
+doublePageParity: "Double page parity"
+default: "Default"
+even: "Even"
+odd: "Odd"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-chapter: 'Chapitre'
-readerSettings: 'Paramètres du lecteur'
-readerMode: 'Mode de lecture'
-width: 'Largeur'
+chapter: "Chapitre"
+readerSettings: "Paramètres du lecteur"
+readerMode: "Mode de lecture"
+width: "Largeur"
 imageFit: "Ajustement de l'image"
-pageDirection: 'Direction de lecture'
-doublePageParity: 'Parité des pages'
-default: 'Défaut'
-even: 'Paire'
-odd: 'Impaire'
+pageDirection: "Direction de lecture"
+doublePageParity: "Parité des pages"
+default: "Défaut"
+even: "Paire"
+odd: "Impaire"
 </i18n>

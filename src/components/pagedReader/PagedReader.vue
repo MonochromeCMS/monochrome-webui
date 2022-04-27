@@ -12,138 +12,138 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from "vue-property-decorator"
 
-import Media from '@/api/Media';
+import Media from "@/api/Media"
 
 @Component
 export default class PagedReader extends Vue {
-  @Prop(String) readonly mangaId!: string;
+  @Prop(String) readonly mangaId!: string
 
-  @Prop(String) readonly chapterId!: string;
+  @Prop(String) readonly chapterId!: string
 
-  @Prop(Number) readonly version!: number;
+  @Prop(Number) readonly version!: number
 
-  @Prop(Number) readonly length!: number;
+  @Prop(Number) readonly length!: number
 
-  @Prop(Boolean) readonly double!: boolean;
+  @Prop(Boolean) readonly double!: boolean
 
-  currentPage: number | null = null;
+  currentPage: number | null = null
 
   handleArrows(ev: KeyboardEvent): void {
     if (this.currentPage === null) {
-      return;
+      return
     }
 
     switch (ev.code) {
-      case 'KeyA':
-      case 'ArrowLeft':
-        this.currentPage -= 1;
-        break;
-      case 'KeyD':
-      case 'ArrowRight':
-        this.currentPage += 1;
+      case "KeyA":
+      case "ArrowLeft":
+        this.currentPage -= 1
+        break
+      case "KeyD":
+      case "ArrowRight":
+        this.currentPage += 1
     }
   }
 
   get reverse(): boolean {
-    return !this.$store.getters.getDirection;
+    return !this.$store.getters.getDirection
   }
 
   get parity(): number {
-    return this.$store.getters.getParity;
+    return this.$store.getters.getParity
   }
 
   get amountTabs(): number {
-    return this.double ? Math.ceil((this.length + this.parity) / 2) : this.length;
+    return this.double ? Math.ceil((this.length + this.parity) / 2) : this.length
   }
 
   get urls(): (string | null)[] {
-    let result: (string | null)[] = Array.from({ length: this.length }, this.page);
+    let result: (string | null)[] = Array.from({ length: this.length }, this.page)
 
     if (this.double) {
       if (this.parity) {
-        const tempResult: (string | null)[] = [null];
-        result = tempResult.concat(result);
+        const tempResult: (string | null)[] = [null]
+        result = tempResult.concat(result)
       }
       if (result.length % 2 !== 0) {
-        result.push(null);
+        result.push(null)
       }
     }
 
-    return this.reverse ? result.reverse() : result;
+    return this.reverse ? result.reverse() : result
   }
 
   page(_: any, index: number) {
-    return Media.page(this.mangaId, this.chapterId, index + 1, this.version);
+    return Media.page(this.mangaId, this.chapterId, index + 1, this.version)
   }
 
   slidePages(index: number) {
     if (this.double) {
-      return this.urls.slice(2 * (index - 1), 2 * index);
+      return this.urls.slice(2 * (index - 1), 2 * index)
     } else {
-      return this.urls.slice(index - 1, index);
+      return this.urls.slice(index - 1, index)
     }
   }
 
-  @Watch('chapterId')
+  @Watch("chapterId")
   onChapterChange(): void {
-    this.currentPage = this.reverse ? this.amountTabs : 1;
+    this.currentPage = this.reverse ? this.amountTabs : 1
   }
 
-  @Watch('reverse')
+  @Watch("reverse")
   onDirectionChange(): void {
     if (this.currentPage == null) {
-      return;
+      return
     }
 
-    this.currentPage = this.amountTabs - this.currentPage + 1;
+    this.currentPage = this.amountTabs - this.currentPage + 1
   }
 
-  @Watch('parity')
+  @Watch("parity")
   onParityChange(value: boolean): void {
     if (this.currentPage == null) {
-      return;
+      return
     }
 
     switch (true) {
       case this.double && value && this.length % 2 === 0:
-        this.currentPage += Number(this.reverse);
-        break;
+        this.currentPage += Number(this.reverse)
+        break
       case this.double && this.length % 2 === 0:
-        this.currentPage -= Number(this.reverse);
+        this.currentPage -= Number(this.reverse)
     }
   }
 
-  @Watch('currentPage')
+  @Watch("currentPage")
   onPageChange(value: number): void {
     switch (true) {
       case value === this.amountTabs + 1 && !this.reverse:
       case value === 0 && this.reverse:
-        this.$emit('next', 1);
-        break;
+        this.$emit("next", 1)
+        break
       case value === this.amountTabs + 1 && this.reverse:
       case value === 0 && !this.reverse:
-        this.$emit('previous', 1);
+        this.$emit("previous", 1)
     }
   }
 
-  @Watch('double')
+  @Watch("double")
   onDoubleChange(value: boolean): void {
     if (this.currentPage == null) {
-      return;
+      return
     }
 
     if (value) {
-      this.currentPage = Math.ceil((this.currentPage + Number(this.reverse)) / 2);
+      this.currentPage = Math.ceil((this.currentPage + Number(this.reverse)) / 2)
     } else {
-      this.currentPage = this.currentPage * 2 - 1;
+      this.currentPage = this.currentPage * 2 - 1
     }
   }
 
   mounted(): void {
-    this.currentPage = this.reverse ? this.amountTabs : 1;
-    document.addEventListener('keyup', this.handleArrows);
+    this.currentPage = this.reverse ? this.amountTabs : 1
+    document.addEventListener("keyup", this.handleArrows)
   }
 }
 </script>

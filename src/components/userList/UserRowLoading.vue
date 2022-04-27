@@ -17,10 +17,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator"
 
 @Component
 export default class UsersRowLoading extends Vue {
-  @Prop(Number) readonly headersAmount!: number;
+  @Prop(Number) readonly headersAmount!: number
 }
 </script>

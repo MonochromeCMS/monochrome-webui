@@ -1,14 +1,14 @@
-import Vue from 'vue';
-import Vuetify from 'vuetify/lib/framework';
-import colors from 'vuetify/lib/util/colors';
+import Vue from "vue"
+import Vuetify from "vuetify/lib/framework"
+import colors from "vuetify/lib/util/colors"
 
-import i18n from '../i18n';
+import i18n from "../i18n"
 
-Vue.use(Vuetify);
+Vue.use(Vuetify)
 
 export default new Vuetify({
   icons: {
-    iconfont: 'mdiSvg',
+    iconfont: "mdiSvg",
   },
   lang: {
     t: (key, ...params) => i18n.tc(key, 0, params),
@@ -31,4 +31,4 @@ export default new Vuetify({
       },
     },
   },
-});
+})

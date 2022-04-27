@@ -22,7 +22,7 @@
             </v-list-item>
           </template>
         </v-list>
-        <div v-if="manga.length === 0" class="text-center mb-2">{{ $t('noManga') }}</div>
+        <div v-if="manga.length === 0" class="text-center mb-2">{{ $t("noManga") }}</div>
       </v-col>
     </v-row>
     <v-row v-else>
@@ -37,23 +37,23 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from "vue-property-decorator"
 
-import type { MangaResponse } from '@/api/Manga';
-import Manga from '@/api/Manga';
-import Media from '@/api/Media';
+import type { MangaResponse } from "@/api/Manga"
+import Manga from "@/api/Manga"
+import Media from "@/api/Media"
 
 @Component
 export default class LatestManga extends Vue {
-  loading = true;
+  loading = true
 
-  rawManga: MangaResponse[] = [];
+  rawManga: MangaResponse[] = []
 
-  offset = 0;
+  offset = 0
 
-  limit = 5;
+  limit = 5
 
-  total = 0;
+  total = 0
 
   get manga(): any[] {
     let m = this.rawManga
@@ -66,44 +66,44 @@ export default class LatestManga extends Vue {
         },
         { divider: true, inset: true },
       ])
-      .reduce((acc, el) => [...acc, ...el], []);
+      .reduce((acc, el) => [...acc, ...el], [])
 
-    if (m.length !== 0) m.pop();
-    return m;
+    if (m.length !== 0) m.pop()
+    return m
   }
 
   async getManga(): Promise<void> {
-    const response = await Manga.search(null, this.limit, this.offset, this.loading);
+    const response = await Manga.search(null, this.limit, this.offset, this.loading)
 
     if (response.data) {
-      this.rawManga = response.data.results;
-      this.total = response.data.total;
+      this.rawManga = response.data.results
+      this.total = response.data.total
     } else {
       const notification = {
-        color: 'error',
-        context: this.$tc('latestManga'),
-        message: response.error ?? '',
-      };
-      await this.$store.dispatch('pushNotification', notification);
+        color: "error",
+        context: this.$tc("latestManga"),
+        message: response.error ?? "",
+      }
+      await this.$store.dispatch("pushNotification", notification)
     }
 
-    this.loading = false;
+    this.loading = false
   }
 
   mounted(): void {
-    this.getManga();
+    this.getManga()
   }
 }
 </script>
 
 <i18n locale="en" lang="yaml">
-latestManga: 'Latest manga'
-manga: 'Manga'
-recentlyAdded: 'Recently added'
+latestManga: "Latest manga"
+manga: "Manga"
+recentlyAdded: "Recently added"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-latestManga: 'Derniers mangas ajoutés'
-manga: 'Manga'
-recentlyAdded: 'Ajoutés récemment'
+latestManga: "Derniers mangas ajoutés"
+manga: "Manga"
+recentlyAdded: "Ajoutés récemment"
 </i18n>

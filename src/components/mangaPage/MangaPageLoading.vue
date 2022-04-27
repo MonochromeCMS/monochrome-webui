@@ -13,11 +13,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator"
 
 @Component
 export default class MangaPageLoading extends Vue {
-  @Prop(Number) readonly amount!: number;
+  @Prop(Number) readonly amount!: number
 }
 </script>
 

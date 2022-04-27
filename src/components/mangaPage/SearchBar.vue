@@ -15,38 +15,38 @@
 </template>
 
 <script lang="ts">
-import { mdiMagnify } from '@mdi/js';
-import { debounce } from 'typescript-debounce-decorator';
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { mdiMagnify } from "@mdi/js"
+import { debounce } from "typescript-debounce-decorator"
+import { Component, Prop, Vue } from "vue-property-decorator"
 
 @Component
 export default class SearchBar extends Vue {
-  @Prop(String) value!: string;
+  @Prop(String) value!: string
 
   icons = {
     mdiMagnify,
-  };
+  }
 
-  loading = false;
+  loading = false
 
   @debounce(1200)
   _searchInput(value: string): void {
-    this.$emit('input', value);
-    this.$emit('update:value', value);
-    this.loading = false;
+    this.$emit("input", value)
+    this.$emit("update:value", value)
+    this.loading = false
   }
 
   searchInput(value: string): void {
-    this.loading = true;
-    this._searchInput(value);
+    this.loading = true
+    this._searchInput(value)
   }
 }
 </script>
 
 <i18n locale="en" lang="yaml">
-search: 'Search'
+search: "Search"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-search: 'Recherche'
+search: "Recherche"
 </i18n>

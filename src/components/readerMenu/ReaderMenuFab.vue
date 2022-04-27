@@ -13,32 +13,32 @@
 </template>
 
 <script lang="ts">
-import { mdiMenu } from '@mdi/js';
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Scroll } from 'vuetify/lib';
+import { mdiMenu } from "@mdi/js"
+import { Component, Prop, Vue } from "vue-property-decorator"
+import { Scroll } from "vuetify/lib"
 
 @Component({
   directives: { scroll: Scroll },
 })
 export default class ReaderMenuFab extends Vue {
-  @Prop() readonly attrs!: any;
+  @Prop() readonly attrs!: any
 
-  @Prop() readonly on!: any;
+  @Prop() readonly on!: any
 
   icons = {
     mdiMenu,
-  };
+  }
 
-  currentScroll = 0;
+  currentScroll = 0
 
-  scrollClass = '';
+  scrollClass = ""
 
   onScroll(ev: any): void {
-    const newScroll = ev.target.scrollingElement.scrollTop;
+    const newScroll = ev.target.scrollingElement.scrollTop
 
-    this.scrollClass = newScroll > this.currentScroll ? 'reader-button scrolling' : 'reader-button';
+    this.scrollClass = newScroll > this.currentScroll ? "reader-button scrolling" : "reader-button"
 
-    this.currentScroll = newScroll;
+    this.currentScroll = newScroll
   }
 }
 </script>

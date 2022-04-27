@@ -10,58 +10,58 @@
     class="reader-tabs"
   >
     <v-tab :key="0">
-      {{ reverse ? $t('nextChapter') : $t('previousChapter') }}
+      {{ reverse ? $t("nextChapter") : $t("previousChapter") }}
     </v-tab>
     <v-tab v-for="index in amount" :key="index">
       {{ reverse ? amount - index + 1 : index }}
     </v-tab>
     <v-tab :key="amount + 1">
-      {{ reverse ? $t('previousChapter') : $t('nextChapter') }}
+      {{ reverse ? $t("previousChapter") : $t("nextChapter") }}
     </v-tab>
   </v-tabs>
 </template>
 
 <script lang="ts">
-import { Component, Prop, VModel, Vue } from 'vue-property-decorator';
-import { Scroll } from 'vuetify/lib';
+import { Component, Prop, VModel, Vue } from "vue-property-decorator"
+import { Scroll } from "vuetify/lib"
 
 @Component({
   directives: { scroll: Scroll },
 })
 export default class PagedReaderTabs extends Vue {
-  @VModel() readonly currentPage!: number | null;
+  @VModel() readonly currentPage!: number | null
 
-  @Prop(Number) readonly amount!: number;
+  @Prop(Number) readonly amount!: number
 
-  currentScroll = 0;
+  currentScroll = 0
 
-  scrollClass = '';
+  scrollClass = ""
 
-  currentThreshold = 8;
+  currentThreshold = 8
 
-  isScrollingUp = false;
+  isScrollingUp = false
 
   get reverse(): boolean {
-    return !this.$store.getters.getDirection;
+    return !this.$store.getters.getDirection
   }
 
   onScroll(ev: any): void {
-    const newScroll = ev.target.scrollingElement.scrollTop;
+    const newScroll = ev.target.scrollingElement.scrollTop
 
-    const scrollAmount = Math.abs(newScroll - this.currentScroll);
+    const scrollAmount = Math.abs(newScroll - this.currentScroll)
 
     if (newScroll > this.currentScroll === this.isScrollingUp) {
-      this.currentThreshold = 8;
-      this.isScrollingUp = !this.isScrollingUp;
+      this.currentThreshold = 8
+      this.isScrollingUp = !this.isScrollingUp
     }
 
     if (scrollAmount > this.currentThreshold) {
-      this.scrollClass = newScroll > this.currentScroll ? 'tabs-scrolling' : '';
+      this.scrollClass = newScroll > this.currentScroll ? "tabs-scrolling" : ""
     } else {
-      this.currentThreshold -= scrollAmount;
+      this.currentThreshold -= scrollAmount
     }
 
-    this.currentScroll = newScroll;
+    this.currentScroll = newScroll
   }
 }
 </script>
@@ -84,11 +84,11 @@ export default class PagedReaderTabs extends Vue {
 </style>
 
 <i18n locale="en" lang="yaml">
-nextChapter: 'Next chapter'
-previousChapter: 'Previous chapter'
+nextChapter: "Next chapter"
+previousChapter: "Previous chapter"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-nextChapter: 'Chapitre suivant'
-previousChapter: 'Chapitre précédent'
+nextChapter: "Chapitre suivant"
+previousChapter: "Chapitre précédent"
 </i18n>

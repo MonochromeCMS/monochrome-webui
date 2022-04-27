@@ -15,30 +15,30 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from "vue-property-decorator"
 
-import type { UserResponse } from '@/api/User';
+import type { UserResponse } from "@/api/User"
 
 @Component
 export default class About extends Vue {
   get user(): UserResponse {
-    return this.$store.state.user;
+    return this.$store.state.user
   }
 
   get isConnected(): boolean {
-    return this.$store.getters.isConnected;
+    return this.$store.getters.isConnected
   }
 
   updateUser(): void {
-    this.$store.dispatch('getUserData');
+    this.$store.dispatch("getUserData")
   }
 
   goBack(): void {
-    this.$router.go(-1);
+    this.$router.go(-1)
   }
 
   mounted(): void {
-    if (!this.isConnected) this.$router.replace('/');
+    if (!this.isConnected) this.$router.replace("/")
   }
 }
 </script>

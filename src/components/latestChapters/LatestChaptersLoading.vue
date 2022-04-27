@@ -35,12 +35,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator"
 
 @Component
 export default class LatestChaptersLoading extends Vue {
-  @Prop(Number) readonly amount!: number;
+  @Prop(Number) readonly amount!: number
 
-  @Prop(Number) readonly columns!: number;
+  @Prop(Number) readonly columns!: number
 }
 </script>

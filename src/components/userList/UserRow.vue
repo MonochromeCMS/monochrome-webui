@@ -24,28 +24,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+import { Component, Emit, Prop, Vue } from "vue-property-decorator"
 
-import Media from '@/api/Media';
-import type { UserResponse } from '@/api/User';
+import Media from "@/api/Media"
+import type { UserResponse } from "@/api/User"
 
 @Component
 export default class UserRow extends Vue {
-  @Prop() readonly user!: UserResponse;
+  @Prop() readonly user!: UserResponse
 
-  defAvatar = Media.defaultAvatar;
+  defAvatar = Media.defaultAvatar
 
   get userId(): string {
-    return this.$store.getters.userId;
+    return this.$store.getters.userId
   }
 
   avatar(userId: string, version: number): string {
-    return Media.avatar(userId, version);
+    return Media.avatar(userId, version)
   }
 
-  @Emit('update')
+  @Emit("update")
   update(): boolean {
-    return true;
+    return true
   }
 }
 </script>

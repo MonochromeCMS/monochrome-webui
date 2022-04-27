@@ -6,7 +6,7 @@
     <manga-page-loading v-if="loading" :amount="limit" />
     <v-row v-else>
       <v-col v-if="manga.length === 0" class="text-center text-body-1">
-        {{ search ? $t('noMangaFound') : $t('noManga') }}
+        {{ search ? $t("noMangaFound") : $t("noManga") }}
       </v-col>
       <v-col v-for="item in manga" v-else :key="item.id" cols="12" sm="6" md="4" lg="3">
         <manga-card :manga="item" />
@@ -24,81 +24,81 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue, Watch } from "vue-property-decorator"
 
-import type { MangaResponse } from '@/api/Manga';
-import Manga from '@/api/Manga';
+import type { MangaResponse } from "@/api/Manga"
+import Manga from "@/api/Manga"
 
 @Component
 export default class MangaPage extends Vue {
-  loading = true;
+  loading = true
 
-  manga: MangaResponse[] = [];
+  manga: MangaResponse[] = []
 
-  limit = 12;
+  limit = 12
 
-  page = 1;
+  page = 1
 
-  total = 0;
+  total = 0
 
-  search: any = null;
+  search: any = null
 
   get offset(): number {
-    return (this.page - 1) * this.limit;
+    return (this.page - 1) * this.limit
   }
 
   get pageAmount(): number {
-    return Math.ceil(this.total / this.limit);
+    return Math.ceil(this.total / this.limit)
   }
 
   async getManga(): Promise<void> {
-    const response = await Manga.search(this.search, this.limit, this.offset, this.loading);
+    const response = await Manga.search(this.search, this.limit, this.offset, this.loading)
 
     if (response.data) {
-      this.manga = response.data.results;
-      this.total = response.data.total;
+      this.manga = response.data.results
+      this.total = response.data.total
     } else {
       const notification = {
-        color: 'error',
-        context: this.$t('mangaPagination'),
-        message: response.error ?? '',
-      };
-      await this.$store.dispatch('pushNotification', notification);
+        color: "error",
+        context: this.$t("mangaPagination"),
+        message: response.error ?? "",
+      }
+      await this.$store.dispatch("pushNotification", notification)
     }
 
-    this.loading = false;
+    this.loading = false
   }
 
-  @Watch('page')
+  @Watch("page")
   onPageUpdate(): void {
-    this.getManga();
+    this.getManga()
   }
 
-  @Watch('search')
+  @Watch("search")
   onSearch(): void {
     if (this.page === 1) {
-      this.getManga();
+      this.getManga()
     } else {
-      this.page = 1;
+      this.page = 1
     }
   }
 
   mounted(): void {
     if (this.$route.query.q) {
-      this.search = this.$route.query.q.length ? this.$route.query.q[0] : this.$route.query.q;
+      this.search = this.$route.query.q.length ? this.$route.query.q[0] : this.$route.query.q
     } else {
-      this.getManga();
+      this.getManga()
     }
   }
 }
 </script>
 
 <i18n locale="en" lang="yaml">
-noMangaFound: 'No manga could be found.'
-mangaPagination: 'Manga pagination'
+noMangaFound: "No manga could be found."
+mangaPagination: "Manga pagination"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
 noMangaFound: "Aucun manga n'a pu être trouvé."
-mangaPagination: 'Liste manga'
+mangaPagination: "Liste manga"
 </i18n>

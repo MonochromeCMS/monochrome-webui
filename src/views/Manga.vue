@@ -8,7 +8,7 @@
           <v-divider v-if="canCreate" />
           <v-card-actions>
             <v-btn v-if="canCreate" class="my-2 mx-auto" to="/manga/new" color="background">
-              {{ $t('addManga') }}
+              {{ $t("addManga") }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -17,27 +17,27 @@
   </v-container>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from "vue-property-decorator"
 
-import MangaAPI from '@/api/Manga';
-import type { Role } from '@/api/User';
+import MangaAPI from "@/api/Manga"
+import type { Role } from "@/api/User"
 
 @Component
 export default class Manga extends Vue {
   get userRole(): Role {
-    return this.$store.getters.userRole;
+    return this.$store.getters.userRole
   }
 
   get canCreate(): boolean {
-    return this.$store.getters.isConnected && MangaAPI.canCreate(this.userRole);
+    return this.$store.getters.isConnected && MangaAPI.canCreate(this.userRole)
   }
 }
 </script>
 
 <i18n locale="en" lang="yaml">
-addManga: 'Add a manga'
+addManga: "Add a manga"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-addManga: 'Ajouter un manga'
+addManga: "Ajouter un manga"
 </i18n>

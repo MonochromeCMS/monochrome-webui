@@ -17,64 +17,64 @@
 </template>
 
 <script lang="ts">
-import { mdiCheck, mdiClose } from '@mdi/js';
-import type { AxiosRequestConfig } from 'axios';
-import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator';
+import { mdiCheck, mdiClose } from "@mdi/js"
+import type { AxiosRequestConfig } from "axios"
+import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator"
 
-import type { CommentEditSchema, CommentResponse } from '@/api/Comment';
-import Comment from '@/api/Comment';
+import type { CommentEditSchema, CommentResponse } from "@/api/Comment"
+import Comment from "@/api/Comment"
 
 @Component
 export default class CommentEditInput extends Vue {
-  @Prop() readonly comment!: CommentResponse;
+  @Prop() readonly comment!: CommentResponse
 
-  icons = { mdiCheck, mdiClose };
+  icons = { mdiCheck, mdiClose }
 
-  content = '...';
+  content = "..."
 
   get authConfig(): AxiosRequestConfig {
-    return this.$store.getters.authConfig;
+    return this.$store.getters.authConfig
   }
 
   get params(): CommentEditSchema {
     return {
       content: this.content,
-    };
-  }
-
-  @Emit('close')
-  close(): boolean {
-    return true;
-  }
-
-  @Emit('update')
-  update(): boolean {
-    return true;
-  }
-
-  async editComment(): Promise<void> {
-    const response = await Comment.edit(this.comment.id, this.params, this.authConfig);
-
-    if (response.data) {
-      this.close();
-      this.update();
-    } else {
-      const notification = {
-        color: 'error',
-        context: this.$t('commentEdit'),
-        message: response.error ?? '',
-      };
-      await this.$store.dispatch('pushNotification', notification);
     }
   }
 
-  @Watch('comment')
+  @Emit("close")
+  close(): boolean {
+    return true
+  }
+
+  @Emit("update")
+  update(): boolean {
+    return true
+  }
+
+  async editComment(): Promise<void> {
+    const response = await Comment.edit(this.comment.id, this.params, this.authConfig)
+
+    if (response.data) {
+      this.close()
+      this.update()
+    } else {
+      const notification = {
+        color: "error",
+        context: this.$t("commentEdit"),
+        message: response.error ?? "",
+      }
+      await this.$store.dispatch("pushNotification", notification)
+    }
+  }
+
+  @Watch("comment")
   onCommentChange() {
-    this.content = this.comment.content;
+    this.content = this.comment.content
   }
 
   mounted() {
-    this.content = this.comment.content;
+    this.content = this.comment.content
   }
 }
 </script>
@@ -82,11 +82,11 @@ export default class CommentEditInput extends Vue {
 <style lang="scss"></style>
 
 <i18n locale="en" lang="yaml">
-commentEdit: 'Edit comment'
-inputLabel: 'Edit the comment'
+commentEdit: "Edit comment"
+inputLabel: "Edit the comment"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-commentEdit: 'Modifier le commentaire'
-inputLabel: 'Modifie le comment'
+commentEdit: "Modifier le commentaire"
+inputLabel: "Modifie le comment"
 </i18n>

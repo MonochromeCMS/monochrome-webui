@@ -16,28 +16,28 @@
 </template>
 
 <script lang="ts">
-import { mdiPlus } from '@mdi/js';
-import { Component, Emit, Prop, Ref, Vue } from 'vue-property-decorator';
+import { mdiPlus } from "@mdi/js"
+import { Component, Emit, Prop, Ref, Vue } from "vue-property-decorator"
 
 @Component
 export default class PageInputAddCard extends Vue {
-  @Ref() readonly fileInput!: HTMLInputElement;
+  @Ref() readonly fileInput!: HTMLInputElement
 
-  @Prop(Boolean) readonly loading!: boolean;
+  @Prop(Boolean) readonly loading!: boolean
 
-  @Prop(Number) readonly progress!: number;
+  @Prop(Number) readonly progress!: number
 
   icons = {
     mdiPlus,
-  };
+  }
 
-  @Emit('fileUpload')
+  @Emit("fileUpload")
   updateFile(event: any): any {
-    return event;
+    return event
   }
 
   uploadClick(): void {
-    this.fileInput.click();
+    this.fileInput.click()
   }
 }
 </script>

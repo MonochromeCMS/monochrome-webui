@@ -23,57 +23,57 @@
       />
     </v-col>
     <v-col cols="12" sm="4">
-      <v-btn class="float-right" @click="useFilters()">{{ $t('filter') }}</v-btn>
+      <v-btn class="float-right" @click="useFilters()">{{ $t("filter") }}</v-btn>
     </v-col>
   </v-row>
 </template>
 
 <script lang="ts">
-import { mdiMagnify } from '@mdi/js';
-import { Component, Emit, VModel, Vue } from 'vue-property-decorator';
+import { mdiMagnify } from "@mdi/js"
+import { Component, Emit, VModel, Vue } from "vue-property-decorator"
 
-import type { Role, UserFilters } from '@/api/User';
+import type { Role, UserFilters } from "@/api/User"
 
 @Component
 export default class UserFilter extends Vue {
-  @VModel() filters!: UserFilters;
+  @VModel() filters!: UserFilters
 
   icons = {
     mdiMagnify,
-  };
+  }
 
   roleItems = [
-    { text: '---', value: null },
-    { text: this.upper(this.$tc('roles.admin')), value: 'admin' },
-    { text: this.upper(this.$tc('roles.uploader')), value: 'uploader' },
-    { text: this.upper(this.$tc('roles.user')), value: 'user' },
-  ];
+    { text: "---", value: null },
+    { text: this.upper(this.$tc("roles.admin")), value: "admin" },
+    { text: this.upper(this.$tc("roles.uploader")), value: "uploader" },
+    { text: this.upper(this.$tc("roles.user")), value: "user" },
+  ]
 
   updateFilter(field: string, value: string | Role): void {
-    const filters: Record<string, any> = { ...this.filters };
-    filters[field] = value;
-    this.filters = filters;
+    const filters: Record<string, any> = { ...this.filters }
+    filters[field] = value
+    this.filters = filters
   }
 
   upper(str: string): string {
-    return str ? str[0].toUpperCase() + str.slice(1) : '';
+    return str ? str[0].toUpperCase() + str.slice(1) : ""
   }
 
-  @Emit('update')
+  @Emit("update")
   useFilters(): boolean {
-    return true;
+    return true
   }
 }
 </script>
 
 <i18n locale="en" lang="yaml">
-username: 'Username'
-role: 'Role'
-filter: 'Filter'
+username: "Username"
+role: "Role"
+filter: "Filter"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
 username: "Nom d'utilisateur"
-role: 'Rôle'
-filter: 'Filtrer'
+role: "Rôle"
+filter: "Filtrer"
 </i18n>

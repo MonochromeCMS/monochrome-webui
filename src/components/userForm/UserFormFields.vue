@@ -51,7 +51,7 @@
 
     <v-divider />
     <div class="d-flex justify-end pt-4">
-      <v-btn color="gray" class="mr-2" text @click="close">{{ $t('cancel') }}</v-btn>
+      <v-btn color="gray" class="mr-2" text @click="close">{{ $t("cancel") }}</v-btn>
       <v-btn :disabled="disabled" type="submit" color="green" class="text--white">
         {{ buttonText }}
       </v-btn>
@@ -60,73 +60,73 @@
 </template>
 
 <script lang="ts">
-import { mdiEye, mdiEyeOff } from '@mdi/js';
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+import { mdiEye, mdiEyeOff } from "@mdi/js"
+import { Component, Emit, Prop, Vue } from "vue-property-decorator"
 
-import type { Role, UserSchema } from '@/api/User';
-import User from '@/api/User';
+import type { Role, UserSchema } from "@/api/User"
+import User from "@/api/User"
 
 @Component
 export default class UserForm extends Vue {
-  @Prop() readonly user!: UserSchema;
+  @Prop() readonly user!: UserSchema
 
-  @Prop(String) readonly color!: string;
+  @Prop(String) readonly color!: string
 
-  @Prop(Boolean) readonly register!: boolean;
+  @Prop(Boolean) readonly register!: boolean
 
-  @Prop(Boolean) readonly disabled!: boolean;
+  @Prop(Boolean) readonly disabled!: boolean
 
   icons = {
     mdiEye,
     mdiEyeOff,
-  };
+  }
 
-  username = '';
+  username = ""
 
-  password = '';
+  password = ""
 
-  email?: string | null = null;
+  email?: string | null = null
 
-  showPass = false;
+  showPass = false
 
-  role: Role = 'user';
+  role: Role = "user"
 
   roleItems = [
-    { text: this.upper(this.$tc('roles.admin')), value: 'admin' },
-    { text: this.upper(this.$tc('roles.uploader')), value: 'uploader' },
-    { text: this.upper(this.$tc('roles.user')), value: 'user' },
-  ];
+    { text: this.upper(this.$tc("roles.admin")), value: "admin" },
+    { text: this.upper(this.$tc("roles.uploader")), value: "uploader" },
+    { text: this.upper(this.$tc("roles.user")), value: "user" },
+  ]
 
   set(user: UserSchema) {
-    this.username = user.username;
-    this.password = user.password;
-    this.email = user.email;
-    this.role = user.role;
+    this.username = user.username
+    this.password = user.password
+    this.email = user.email
+    this.role = user.role
   }
 
   mounted(): void {
     if (this.user) {
-      this.set(this.user);
+      this.set(this.user)
     }
   }
 
   upper(str: string): string {
-    return str ? str[0].toUpperCase() + str.slice(1) : '';
+    return str ? str[0].toUpperCase() + str.slice(1) : ""
   }
 
   get buttonText(): string {
     switch (true) {
       case this.register:
-        return this.$tc('register');
+        return this.$tc("register")
       case !!this.user:
-        return this.$tc('edit');
+        return this.$tc("edit")
       default:
-        return this.$tc('add');
+        return this.$tc("add")
     }
   }
 
   get canEditRoles(): boolean {
-    return User.canEdit(this.$store.getters.userRole);
+    return User.canEdit(this.$store.getters.userRole)
   }
 
   get params(): UserSchema {
@@ -135,55 +135,55 @@ export default class UserForm extends Vue {
       password: this.password,
       role: this.role || undefined,
       username: this.username,
-    };
+    }
   }
 
-  @Emit('submit')
+  @Emit("submit")
   submit(): UserSchema {
-    return this.params;
+    return this.params
   }
 
-  @Emit('update')
+  @Emit("update")
   update(): boolean {
-    return true;
+    return true
   }
 
-  @Emit('close')
+  @Emit("close")
   close(): boolean {
-    return true;
+    return true
   }
 
   clear(): void {
-    this.username = '';
-    this.email = null;
-    this.password = '';
-    this.role = 'user';
+    this.username = ""
+    this.email = null
+    this.password = ""
+    this.role = "user"
   }
 }
 </script>
 
 <i18n locale="en" lang="yaml">
-username: 'Username'
-email: 'Email'
-password: 'Password'
-role: 'Role'
-registerUser: 'Register user'
-editUser: 'Edit user'
-addUser: 'Add user'
-register: 'Register'
-edit: 'Edit'
-add: 'Add'
+username: "Username"
+email: "Email"
+password: "Password"
+role: "Role"
+registerUser: "Register user"
+editUser: "Edit user"
+addUser: "Add user"
+register: "Register"
+edit: "Edit"
+add: "Add"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
 username: "Nom d'utilisateur"
-email: 'Email'
-password: 'Mot de passe'
-role: 'Rôle'
-registerUser: 'Inscription'
+email: "Email"
+password: "Mot de passe"
+role: "Rôle"
+registerUser: "Inscription"
 editUser: "Modification d'utilisateur"
 addUser: "Ajout d'utilisateur"
 register: "S'inscrire"
-edit: 'Modifier'
-add: 'Ajouter'
+edit: "Modifier"
+add: "Ajouter"
 </i18n>

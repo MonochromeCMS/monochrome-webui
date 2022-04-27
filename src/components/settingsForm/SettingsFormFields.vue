@@ -28,13 +28,13 @@
       <a href="https://www.markdownguide.org/basic-syntax" class="text-decoration-none">
         Markdown
       </a>
-      {{ $t('markdownCaption') }}
+      {{ $t("markdownCaption") }}
     </div>
 
     <!-- PREVIEW -->
     <v-expansion-panels class="mb-4">
       <v-expansion-panel>
-        <v-expansion-panel-header>{{ $t('preview') }}</v-expansion-panel-header>
+        <v-expansion-panel-header>{{ $t("preview") }}</v-expansion-panel-header>
         <v-expansion-panel-content class="text-center">
           <div v-html="markdownHTML" />
         </v-expansion-panel-content>
@@ -42,84 +42,84 @@
     </v-expansion-panels>
     <div class="text-center">
       <v-btn type="submit" block color="background" :disabled="disabled" class="text--primary">
-        {{ $t('customize') }}
+        {{ $t("customize") }}
       </v-btn>
     </div>
   </v-form>
 </template>
 
 <script lang="ts">
-import marked from 'marked';
-import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator';
+import marked from "marked"
+import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator"
 
-import type { SettingsSchema } from '@/api/Settings';
+import type { SettingsSchema } from "@/api/Settings"
 
 @Component
 export default class SettingsFormFields extends Vue {
-  @Prop(Boolean) readonly disabled!: boolean;
+  @Prop(Boolean) readonly disabled!: boolean
 
-  title1?: string | null = null;
+  title1?: string | null = null
 
-  title2?: string | null = null;
+  title2?: string | null = null
 
-  about?: string | null = null;
+  about?: string | null = null
 
   get params(): SettingsSchema {
     return {
       about: this.about || undefined,
       title1: this.title1 || undefined,
       title2: this.title2 || undefined,
-    };
+    }
   }
 
   get markdownHTML() {
-    return this.about ? marked(this.about) : '';
+    return this.about ? marked(this.about) : ""
   }
 
   get settings(): SettingsSchema {
-    return this.$store.getters.settings;
+    return this.$store.getters.settings
   }
 
   set(settings: SettingsSchema) {
-    this.title1 = settings.title1;
-    this.title2 = settings.title2;
-    this.about = settings.about;
+    this.title1 = settings.title1
+    this.title2 = settings.title2
+    this.about = settings.about
   }
 
-  @Emit('submit')
+  @Emit("submit")
   submit(): SettingsSchema {
-    return this.params;
+    return this.params
   }
 
-  @Watch('settings')
+  @Watch("settings")
   onSettingsUpdate(value: SettingsSchema): void {
-    this.set(value);
+    this.set(value)
   }
 
   mounted(): void {
-    this.set(this.settings);
+    this.set(this.settings)
   }
 }
 </script>
 
 <i18n locale="en" lang="yaml">
-title1: 'Title (first part)'
-title2: 'Title (second part)'
-aboutPage: 'About page'
-markdownCaption: '(or HTML) can be used to customize the About page.'
-preview: 'Preview'
-customize: 'Customize'
-editSettings: 'Edit settings'
-editSuccess: 'The settings have been updated'
+title1: "Title (first part)"
+title2: "Title (second part)"
+aboutPage: "About page"
+markdownCaption: "(or HTML) can be used to customize the About page."
+preview: "Preview"
+customize: "Customize"
+editSettings: "Edit settings"
+editSuccess: "The settings have been updated"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-title1: 'Titre (première partie)'
-title2: 'Titre (deuxième partie)'
-aboutPage: 'Page à propos'
-markdownCaption: '(ou du HTML) peuvent être utilisés pour personnaliser la page à propos.'
-preview: 'Aperçu'
-customize: 'Personnaliser'
-editSettings: 'Modifier les paramètres'
-editSuccess: 'Les paramètres ont été mis à jour'
+title1: "Titre (première partie)"
+title2: "Titre (deuxième partie)"
+aboutPage: "Page à propos"
+markdownCaption: "(ou du HTML) peuvent être utilisés pour personnaliser la page à propos."
+preview: "Aperçu"
+customize: "Personnaliser"
+editSettings: "Modifier les paramètres"
+editSuccess: "Les paramètres ont été mis à jour"
 </i18n>

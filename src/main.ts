@@ -1,16 +1,16 @@
-import './registerServiceWorker';
-import './app.scss';
-import './vee-validate';
+import "./registerServiceWorker"
+import "./app.scss"
+import "./vee-validate"
 
-import Vue from 'vue';
+import Vue from "vue"
 
-import App from './App.vue';
-import i18n from './i18n';
-import vuetify from './plugins/vuetify';
-import router from './router';
-import store from './store';
+import App from "./App.vue"
+import i18n from "./i18n"
+import vuetify from "./plugins/vuetify"
+import router from "./router"
+import store from "./store"
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 new Vue({
   i18n,
@@ -18,4 +18,4 @@ new Vue({
   router,
   store,
   vuetify,
-}).$mount('#app');
+}).$mount("#app")

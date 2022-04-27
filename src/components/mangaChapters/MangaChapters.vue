@@ -3,7 +3,7 @@
     <manga-chapters-loading v-if="loading" :amount="limit" />
     <v-row v-else class="flex-column align-center">
       <v-col cols="12" class="text-h6 text-lg-h5 text-xl-h3 text-center pt-0" tag="h2">
-        {{ $t('chapters') }}
+        {{ $t("chapters") }}
       </v-col>
       <v-col
         v-for="(item, index) in chaptersPage"
@@ -14,7 +14,7 @@
         <chapter-row :chapter="item" :show-edit="canEdit(item)" @delete="popChapter(index)" />
       </v-col>
       <v-col v-if="chapters.length === 0" cols="12" class="text-body-1 text-center">
-        {{ $t('noChapters') }}
+        {{ $t("noChapters") }}
       </v-col>
       <v-col v-if="pageAmount > 1" cols="12">
         <v-pagination
@@ -29,82 +29,82 @@
 </template>
 
 <script lang="ts">
-import { mdiDotsVertical } from '@mdi/js';
-import { Component, Prop, VModel, Vue, Watch } from 'vue-property-decorator';
+import { mdiDotsVertical } from "@mdi/js"
+import { Component, Prop, VModel, Vue, Watch } from "vue-property-decorator"
 
-import type { ChapterResponse } from '@/api/Chapter';
-import Chapter from '@/api/Chapter';
-import Manga from '@/api/Manga';
-import type { Role } from '@/api/User';
+import type { ChapterResponse } from "@/api/Chapter"
+import Chapter from "@/api/Chapter"
+import Manga from "@/api/Manga"
+import type { Role } from "@/api/User"
 
 @Component
 export default class MangaChapters extends Vue {
-  @Prop() readonly mangaId!: string;
+  @Prop() readonly mangaId!: string
 
-  @VModel({ type: String }) firstChapter!: string;
+  @VModel({ type: String }) firstChapter!: string
 
   icons = {
     mdiDotsVertical,
-  };
+  }
 
-  chapters: ChapterResponse[] = [];
+  chapters: ChapterResponse[] = []
 
-  loading = true;
+  loading = true
 
-  limit = 10;
+  limit = 10
 
-  page = 1;
+  page = 1
 
   get pageAmount(): number {
-    return Math.ceil(this.chapters.length / this.limit);
+    return Math.ceil(this.chapters.length / this.limit)
   }
 
   get chaptersPage(): ChapterResponse[] {
-    const start = this.limit * (this.page - 1);
-    return this.chapters.slice(start, start + this.limit);
+    const start = this.limit * (this.page - 1)
+    return this.chapters.slice(start, start + this.limit)
   }
 
   get userId(): string {
-    return this.$store.getters.userId;
+    return this.$store.getters.userId
   }
 
   get userRole(): Role {
-    return this.$store.getters.userRole;
+    return this.$store.getters.userRole
   }
 
   canEdit(chapter: ChapterResponse): boolean {
-    return Chapter.canEdit(chapter, this.userId, this.userRole);
+    return Chapter.canEdit(chapter, this.userId, this.userRole)
   }
 
   popChapter(index: number): void {
-    this.chapters.splice(index, 1);
+    this.chapters.splice(index, 1)
   }
 
   async getChapters(): Promise<void> {
-    const response = await Manga.chapters(this.mangaId, this.loading);
+    const response = await Manga.chapters(this.mangaId, this.loading)
 
     if (response.data) {
-      this.chapters = response.data;
-      this.loading = false;
+      this.chapters = response.data
+      this.loading = false
     } else {
       const notification = {
-        color: 'error',
-        context: this.$t('mangaChapters'),
-        message: response.error ?? '',
-      };
-      await this.$store.dispatch('pushNotification', notification);
+        color: "error",
+        context: this.$t("mangaChapters"),
+        message: response.error ?? "",
+      }
+      await this.$store.dispatch("pushNotification", notification)
     }
   }
 
-  @Watch('chapters')
+  @Watch("chapters")
   onChaptersUpdate(): void {
     if (this.chapters.length > 0) {
-      this.firstChapter = this.chapters[this.chapters.length - 1].id;
+      this.firstChapter = this.chapters[this.chapters.length - 1].id
     }
   }
 
   mounted(): void {
-    this.getChapters();
+    this.getChapters()
   }
 }
 </script>
@@ -146,11 +146,11 @@ export default class MangaChapters extends Vue {
 </style>
 
 <i18n locale="en" lang="yaml">
-chapters: 'Chapters'
-mangaChapters: 'Manga chapters'
+chapters: "Chapters"
+mangaChapters: "Manga chapters"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-chapters: 'Chapitres'
-mangaChapters: 'Chapitres du manga'
+chapters: "Chapitres"
+mangaChapters: "Chapitres du manga"
 </i18n>

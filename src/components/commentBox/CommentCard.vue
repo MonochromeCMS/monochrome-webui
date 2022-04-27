@@ -34,118 +34,118 @@
       />
     </div>
     <div class="text-right text--secondary">
-      {{ $t('timeAgo', { time: ago(new Date(comment.createTime).getTime()) }) }}
-      <span v-if="comment.version > 1" class="font-italic">({{ $t('edited') }})</span>
+      {{ $t("timeAgo", { time: ago(new Date(comment.createTime).getTime()) }) }}
+      <span v-if="comment.version > 1" class="font-italic">({{ $t("edited") }})</span>
     </div>
   </v-card>
 </template>
 
 <script lang="ts">
-import type { AxiosRequestConfig } from 'axios';
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+import type { AxiosRequestConfig } from "axios"
+import { Component, Emit, Prop, Vue } from "vue-property-decorator"
 
-import type { DetailedCommentResponse } from '@/api/Comment';
-import Comment from '@/api/Comment';
-import Media from '@/api/Media';
-import type { Role } from '@/api/User';
+import type { DetailedCommentResponse } from "@/api/Comment"
+import Comment from "@/api/Comment"
+import Media from "@/api/Media"
+import type { Role } from "@/api/User"
 
 @Component
 export default class CommentCard extends Vue {
-  @Prop() comment!: DetailedCommentResponse;
+  @Prop() comment!: DetailedCommentResponse
 
-  defAvatar = Media.defaultAvatar;
+  defAvatar = Media.defaultAvatar
 
-  editing = false;
+  editing = false
 
-  replyContent = '...';
+  replyContent = "..."
 
   get avatar(): string {
-    return Media.avatar(this.comment.authorId, this.comment.author.version);
+    return Media.avatar(this.comment.authorId, this.comment.author.version)
   }
 
   get userId(): string {
-    return this.$store.getters.userId;
+    return this.$store.getters.userId
   }
 
   get userRole(): Role {
-    return this.$store.getters.userRole;
+    return this.$store.getters.userRole
   }
 
   get authConfig(): AxiosRequestConfig {
-    return this.$store.getters.authConfig;
+    return this.$store.getters.authConfig
   }
 
   get canEdit(): boolean {
-    return Comment.canEdit(this.comment, this.userId, this.userRole);
+    return Comment.canEdit(this.comment, this.userId, this.userRole)
   }
 
   get canCreate(): boolean {
-    return Comment.canCreate(this.userRole);
+    return Comment.canCreate(this.userRole)
   }
 
-  @Emit('reply')
+  @Emit("reply")
   reply(): DetailedCommentResponse {
-    return this.comment;
+    return this.comment
   }
 
-  @Emit('update')
+  @Emit("update")
   update(): boolean {
-    return true;
+    return true
   }
 
   ago(val: number): string {
-    val = 0 | ((Date.now() - val) / 1000);
+    val = 0 | ((Date.now() - val) / 1000)
 
     const length = new Map([
-      ['second', 60],
-      ['minute', 60],
-      ['hour', 24],
-      ['day', 7],
-      ['week', 4.35],
-      ['month', 12],
-      ['year', 10000],
-    ]);
+      ["second", 60],
+      ["minute", 60],
+      ["hour", 24],
+      ["day", 7],
+      ["week", 4.35],
+      ["month", 12],
+      ["year", 10000],
+    ])
 
     for (const [k, l] of length) {
-      const result = val % l;
+      const result = val % l
       if (!(val = 0 | (val / l))) {
-        return this.$tc(`timeUnits.${k}`, result);
+        return this.$tc(`timeUnits.${k}`, result)
       }
     }
-    return 'ERROR';
+    return "ERROR"
   }
 
   async getReply() {
     if (!this.comment.replyTo) {
-      return;
+      return
     }
 
-    const response = await Comment.get(this.comment.replyTo);
+    const response = await Comment.get(this.comment.replyTo)
 
     if (response.data) {
-      this.replyContent = response.data.content;
+      this.replyContent = response.data.content
     } else {
-      this.replyContent = this.$tc('deletedReply');
+      this.replyContent = this.$tc("deletedReply")
     }
   }
 
   async deleteComment(): Promise<void> {
-    const response = await Comment.delete(this.comment.id, this.authConfig);
+    const response = await Comment.delete(this.comment.id, this.authConfig)
 
     if (response.data) {
-      this.update();
+      this.update()
     } else {
       const notification = {
-        color: 'error',
-        context: this.$t('deleteComment'),
-        message: response.error ?? '',
-      };
-      await this.$store.dispatch('pushNotification', notification);
+        color: "error",
+        context: this.$t("deleteComment"),
+        message: response.error ?? "",
+      }
+      await this.$store.dispatch("pushNotification", notification)
     }
   }
 
   mounted() {
-    this.getReply();
+    this.getReply()
   }
 }
 </script>
@@ -164,13 +164,13 @@ export default class CommentCard extends Vue {
 </style>
 
 <i18n locale="en" lang="yaml">
-edited: 'edited'
-deletedReply: 'Deleted comment.'
-deleteComment: 'Delete comment'
+edited: "edited"
+deletedReply: "Deleted comment."
+deleteComment: "Delete comment"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-edited: 'modifié'
-deletedReply: 'Commentaire supprimé.'
-deleteComment: 'Suppression de commentaire'
+edited: "modifié"
+deletedReply: "Commentaire supprimé."
+deleteComment: "Suppression de commentaire"
 </i18n>

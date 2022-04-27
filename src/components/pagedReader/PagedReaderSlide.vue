@@ -27,16 +27,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator"
 
 @Component
 export default class PagedReaderSlide extends Vue {
-  @Prop(Boolean) readonly double!: boolean;
+  @Prop(Boolean) readonly double!: boolean
 
-  @Prop() readonly pages!: string[];
+  @Prop() readonly pages!: string[]
 
   get fit(): string {
-    return this.$store.getters.getFit;
+    return this.$store.getters.getFit
   }
 }
 </script>

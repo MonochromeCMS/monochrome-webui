@@ -27,37 +27,37 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+import { Component, Emit, Prop, Vue } from "vue-property-decorator"
 
-import type { UserResponse } from '@/api/User';
+import type { UserResponse } from "@/api/User"
 
 @Component
 export default class UsersList extends Vue {
-  @Prop() readonly users!: UserResponse[];
+  @Prop() readonly users!: UserResponse[]
 
-  @Prop(Number) readonly limit!: number;
+  @Prop(Number) readonly limit!: number
 
-  @Prop(Boolean) readonly loading!: boolean;
+  @Prop(Boolean) readonly loading!: boolean
 
   headers = [
     {
-      title: this.$t('role'),
+      title: this.$t("role"),
     },
     {
-      title: this.$t('username'),
+      title: this.$t("username"),
     },
     {
-      class: 'hidden-sm-and-down',
-      title: this.$t('email'),
+      class: "hidden-sm-and-down",
+      title: this.$t("email"),
     },
     {
-      title: this.$t('actions'),
+      title: this.$t("actions"),
     },
-  ];
+  ]
 
-  @Emit('update')
+  @Emit("update")
   update(): boolean {
-    return true;
+    return true
   }
 }
 </script>
@@ -69,15 +69,15 @@ export default class UsersList extends Vue {
 </style>
 
 <i18n locale="en" lang="yaml">
-role: 'Role'
-username: 'Username'
-email: 'Email'
-actions: 'Actions'
+role: "Role"
+username: "Username"
+email: "Email"
+actions: "Actions"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-role: 'Rôle'
+role: "Rôle"
 username: "Nom d'utilisateur"
-email: 'Email'
-actions: 'Actions'
+email: "Email"
+actions: "Actions"
 </i18n>

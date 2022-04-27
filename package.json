@@ -70,15 +70,16 @@
     "vue-tsc": "^0.3.0"
   },
   "prettier": {
-    "printWidth": 100,
-    "tabWidth": 2,
-    "useTabs": false,
-    "singleQuote": true,
-    "jsxSingleQuote": false,
-    "trailingComma": "all",
-    "bracketSpacing": true,
+    "arrowParens": "always",
     "bracketSameLine": false,
-    "arrowParens": "always"
+    "bracketSpacing": true,
+    "jsxSingleQuote": false,
+    "printWidth": 100,
+    "quoteProps": "consistent",
+    "semi": false,
+    "tabWidth": 2,
+    "trailingComma": "all",
+    "useTabs": false
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

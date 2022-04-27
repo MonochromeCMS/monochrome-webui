@@ -17,7 +17,7 @@
     <v-list class="hidden-sm-and-down action-list">
       <locales-item />
       <v-list-item v-if="!isConnected" to="/login" active-class="fake-tab">
-        {{ $t('login') }}
+        {{ $t("login") }}
       </v-list-item>
       <v-menu v-else offset-y>
         <template #activator="{ on, attrs }">
@@ -49,7 +49,7 @@
           {{ link.text }}
         </v-list-item>
         <locales-item />
-        <v-list-item v-if="!isConnected" to="/login">{{ $t('login') }}</v-list-item>
+        <v-list-item v-if="!isConnected" to="/login">{{ $t("login") }}</v-list-item>
         <v-menu v-else offset-y>
           <template #activator="{ on, attrs }">
             <v-list-item v-bind="attrs" class="login-tab" v-on="on">
@@ -65,66 +65,66 @@
 </template>
 
 <script lang="ts">
-import { mdiMenu } from '@mdi/js';
-import type { TranslateResult } from 'vue-i18n';
-import { Component, Vue } from 'vue-property-decorator';
+import { mdiMenu } from "@mdi/js"
+import type { TranslateResult } from "vue-i18n"
+import { Component, Vue } from "vue-property-decorator"
 
-import type { SettingsSchema } from '@/api/Settings';
-import type { Role } from '@/api/User';
+import type { SettingsSchema } from "@/api/Settings"
+import type { Role } from "@/api/User"
 
 interface Link {
-  text: TranslateResult;
-  to: string;
+  text: TranslateResult
+  to: string
 }
 
 @Component
 export default class NavBar extends Vue {
   icons = {
     mdiMenu,
-  };
+  }
 
-  tabs = null;
+  tabs = null
 
   get links(): Link[] {
     return [
       {
-        text: this.$t('home'),
-        to: '/',
+        text: this.$t("home"),
+        to: "/",
       },
       {
-        text: this.$t('manga'),
-        to: '/manga',
+        text: this.$t("manga"),
+        to: "/manga",
       },
       {
-        text: this.$t('about'),
-        to: '/about',
+        text: this.$t("about"),
+        to: "/about",
       },
-    ];
+    ]
   }
 
   get reader(): boolean {
-    return this.$route.name === 'ChapterReader';
+    return this.$route.name === "ChapterReader"
   }
 
   get isConnected(): boolean {
-    return this.$store.getters.isConnected;
+    return this.$store.getters.isConnected
   }
 
   get userRole(): Role {
-    return this.$store.getters.userRole;
+    return this.$store.getters.userRole
   }
 
   get displayUserRole(): string {
-    return this.$store.getters.displayUserRole;
+    return this.$store.getters.displayUserRole
   }
 
   get settings(): SettingsSchema {
-    return this.$store.getters.settings;
+    return this.$store.getters.settings
   }
 
   get dynamicLogoSize(): string {
-    const length = (this.settings.title1?.length ?? 0) + (this.settings.title2?.length ?? 0);
-    return `font-size: clamp(1em, calc((100vw - 48px - 18px) / ${length}), 2em);`;
+    const length = (this.settings.title1?.length ?? 0) + (this.settings.title2?.length ?? 0)
+    return `font-size: clamp(1em, calc((100vw - 48px - 18px) / ${length}), 2em);`
   }
 }
 </script>
@@ -160,15 +160,15 @@ export default class NavBar extends Vue {
 </style>
 
 <i18n locale="en" lang="yaml">
-login: 'Login'
-home: 'Home'
-manga: 'Manga'
-about: 'About'
+login: "Login"
+home: "Home"
+manga: "Manga"
+about: "About"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-login: 'Se connecter'
-home: 'Accueil'
-manga: 'Manga'
-about: 'À propos'
+login: "Se connecter"
+home: "Accueil"
+manga: "Manga"
+about: "À propos"
 </i18n>

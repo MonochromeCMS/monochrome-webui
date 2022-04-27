@@ -70,7 +70,7 @@
     <v-divider class="my-3" />
 
     <v-btn v-if="chapter && !session" color="info" @click="createSession()">
-      {{ $t('editPages') }}
+      {{ $t("editPages") }}
     </v-btn>
 
     <page-input
@@ -83,47 +83,47 @@
 
     <div class="text-center mt-4">
       <v-btn :loading="disabled" type="submit" block color="background" class="text--primary">
-        {{ chapter ? $t('editChapter') : $t('uploadChapter') }}
+        {{ chapter ? $t("editChapter") : $t("uploadChapter") }}
       </v-btn>
     </div>
   </v-form>
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
+import { Component, Emit, Prop, Vue } from "vue-property-decorator"
 
-import Autocomplete from '@/api/Autocomplete';
-import type { ChapterResponse, ChapterSchema } from '@/api/Chapter';
-import type { UploadSessionResponse } from '@/api/Upload';
+import Autocomplete from "@/api/Autocomplete"
+import type { ChapterResponse, ChapterSchema } from "@/api/Chapter"
+import type { UploadSessionResponse } from "@/api/Upload"
 
 export interface UploadSubmitEvent {
-  chapterDraft: ChapterSchema;
-  pageOrder: string[];
+  chapterDraft: ChapterSchema
+  pageOrder: string[]
 }
 
 @Component
 export default class UploadFormFields extends Vue {
-  @Prop(String) readonly mangaId!: string;
+  @Prop(String) readonly mangaId!: string
 
-  @Prop(Boolean) readonly disabled!: boolean;
+  @Prop(Boolean) readonly disabled!: boolean
 
-  @Prop() readonly session!: UploadSessionResponse | null;
+  @Prop() readonly session!: UploadSessionResponse | null
 
-  @Prop() readonly chapter!: ChapterResponse | null;
+  @Prop() readonly chapter!: ChapterResponse | null
 
-  groupAutocomplete: string[] = [];
+  groupAutocomplete: string[] = []
 
-  name = '';
+  name = ""
 
-  volume?: number | null = null;
+  volume?: number | null = null
 
-  number?: number | null = null;
+  number?: number | null = null
 
-  webtoon = false;
+  webtoon = false
 
-  pageOrder: string[] = [];
+  pageOrder: string[] = []
 
-  scanGroup = 'no group';
+  scanGroup = "no group"
 
   get chapterDraft(): ChapterSchema {
     return {
@@ -132,79 +132,79 @@ export default class UploadFormFields extends Vue {
       scanGroup: this.scanGroup,
       volume: this.volume ?? undefined,
       webtoon: this.webtoon,
-    };
+    }
   }
 
-  @Emit('session')
+  @Emit("session")
   createSession(): boolean {
-    return true;
+    return true
   }
 
-  @Emit('submit')
+  @Emit("submit")
   submit(): UploadSubmitEvent {
-    return { chapterDraft: this.chapterDraft, pageOrder: this.pageOrder };
+    return { chapterDraft: this.chapterDraft, pageOrder: this.pageOrder }
   }
 
   public clear(): void {
-    this.name = '';
-    this.number = undefined;
-    this.volume = null;
-    this.webtoon = false;
-    this.scanGroup = 'no group';
+    this.name = ""
+    this.number = undefined
+    this.volume = null
+    this.webtoon = false
+    this.scanGroup = "no group"
   }
 
   async autocomplete(): Promise<void> {
-    const response = await Autocomplete.groups();
+    const response = await Autocomplete.groups()
 
     if (response.data) {
-      this.groupAutocomplete = response.data;
+      this.groupAutocomplete = response.data
     } else {
       const notification = {
-        color: 'error',
-        context: this.$t('groupAutocomplete'),
-        message: response.error ?? '',
-      };
-      await this.$store.dispatch('pushNotification', notification);
+        color: "error",
+        context: this.$t("groupAutocomplete"),
+        message: response.error ?? "",
+      }
+      await this.$store.dispatch("pushNotification", notification)
     }
   }
 
   mounted(): void {
     if (this.chapter) {
-      this.name = this.chapter.name;
-      this.number = this.chapter.number;
-      this.volume = this.chapter.volume;
-      this.webtoon = this.chapter.webtoon;
-      this.scanGroup = this.chapter.scanGroup;
+      this.name = this.chapter.name
+      this.number = this.chapter.number
+      this.volume = this.chapter.volume
+      this.webtoon = this.chapter.webtoon
+      this.scanGroup = this.chapter.scanGroup
     }
-    this.autocomplete();
+    this.autocomplete()
   }
 }
 </script>
 
 <i18n locale="en" lang="yaml">
-volumeNumber: 'Volume number'
-chapterNumber: 'Chapter number'
-scanGroup: 'Scan group'
-chapterName: 'Chapter name'
-webtoonDescription: 'This chapter is a webtoon (the webtoon reader will be used)'
-editPages: 'Edit pages'
-editChapter: 'Edit chapter'
-uploadChapter: 'Upload chapter'
-createSession: 'Create upload session'
-commitSession: 'Commit upload session'
-groupAutocomplete: 'Group autocomplete'
+volumeNumber: "Volume number"
+chapterNumber: "Chapter number"
+scanGroup: "Scan group"
+chapterName: "Chapter name"
+webtoonDescription: "This chapter is a webtoon (the webtoon reader will be used)"
+editPages: "Edit pages"
+editChapter: "Edit chapter"
+uploadChapter: "Upload chapter"
+createSession: "Create upload session"
+commitSession: "Commit upload session"
+groupAutocomplete: "Group autocomplete"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-volumeNumber: 'Numéro de volume'
-chapterNumber: 'Numéro de chapitre'
-scanGroup: 'Nom du groupe'
-chapterName: 'Nom du chapitre'
-webtoonDescription: 'Ce chapitre est un webtoon (le lecteur de webtoon sera utilisé)'
-editPages: 'Modifier les pages'
-editChapter: 'Modifier le chapitre'
-uploadChapter: 'Ajouter un chapitre'
-createSession: 'Création de session'
-commitSession: 'Confirmation de session'
-groupAutocomplete: 'Autocomplétion de groupe'
+volumeNumber: "Numéro de volume"
+chapterNumber: "Numéro de chapitre"
+scanGroup: "Nom du groupe"
+chapterName: "Nom du chapitre"
+webtoonDescription: "Ce chapitre est un webtoon (le lecteur de webtoon sera utilisé)"
+editPages: "Modifier les pages"
+editChapter: "Modifier le chapitre"
+uploadChapter: "Ajouter un chapitre"
+createSession: "Création de session"
+commitSession: "Confirmation de session"
+groupAutocomplete: "Autocomplétion de groupe"
 </i18n>

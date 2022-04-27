@@ -1,6 +1,6 @@
 <template>
   <v-row class="flex-column align-center">
-    <v-col cols="12" class="text-h3 text-center" tag="h2">{{ $t('chapters') }}</v-col>
+    <v-col cols="12" class="text-h3 text-center" tag="h2">{{ $t("chapters") }}</v-col>
     <v-col v-for="i in amount" :key="i">
       <v-row class="justify-space-around background">
         <v-col cols="7" sm="4" md="3">
@@ -21,18 +21,18 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator"
 
 @Component
 export default class MangaChaptersLoading extends Vue {
-  @Prop(Number) readonly amount!: number;
+  @Prop(Number) readonly amount!: number
 }
 </script>
 
 <i18n locale="en" lang="yaml">
-chapters: 'Chapters'
+chapters: "Chapters"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-chapters: 'Chapitres'
+chapters: "Chapitres"
 </i18n>

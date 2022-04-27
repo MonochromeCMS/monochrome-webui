@@ -23,13 +23,13 @@
             v-text="upper(manga.status)"
           />
           <v-chip class="chip-tag" color="background">
-            <span>{{ $t('author') }}</span> {{ manga.author }}
+            <span>{{ $t("author") }}</span> {{ manga.author }}
           </v-chip>
           <v-chip class="chip-tag" color="background">
-            <span>{{ $t('artist') }}</span> {{ manga.artist }}
+            <span>{{ $t("artist") }}</span> {{ manga.artist }}
           </v-chip>
           <v-chip v-if="manga.year" class="chip-tag" color="background">
-            <span>{{ $t('release') }}</span> {{ manga.year }}
+            <span>{{ $t("release") }}</span> {{ manga.year }}
           </v-chip>
         </v-chip-group>
         <div class="manga-desc" v-text="manga.description" />
@@ -40,27 +40,27 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator"
 
-import type { MangaSchema } from '@/api/Manga';
+import type { MangaSchema } from "@/api/Manga"
 
 @Component
 export default class MangaRow extends Vue {
-  @Prop() readonly manga!: MangaSchema;
+  @Prop() readonly manga!: MangaSchema
 
-  @Prop(String) readonly cover!: string;
+  @Prop(String) readonly cover!: string
 
-  @Prop(Boolean) readonly loading!: boolean;
+  @Prop(Boolean) readonly loading!: boolean
 
   statusColor = {
-    cancelled: 'red',
-    completed: 'green darken-2',
-    hiatus: 'orange',
-    ongoing: 'green',
-  };
+    cancelled: "red",
+    completed: "green darken-2",
+    hiatus: "orange",
+    ongoing: "green",
+  }
 
   upper(status: string): string {
-    return status ? status.charAt(0).toUpperCase() + status.slice(1) : '';
+    return status ? status.charAt(0).toUpperCase() + status.slice(1) : ""
   }
 }
 </script>
@@ -88,13 +88,13 @@ export default class MangaRow extends Vue {
 </style>
 
 <i18n locale="en" lang="yaml">
-author: 'Author:'
-artist: 'Artist:'
-release: 'Release:'
+author: "Author:"
+artist: "Artist:"
+release: "Release:"
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-author: 'Auteur:'
-artist: 'Artiste:'
-release: 'Parution:'
+author: "Auteur:"
+artist: "Artiste:"
+release: "Parution:"
 </i18n>

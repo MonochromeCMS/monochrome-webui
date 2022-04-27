@@ -18,11 +18,11 @@
 </template>
 
 <script lang="ts">
-import { mdiReply } from '@mdi/js';
-import { Component, Vue } from 'vue-property-decorator';
+import { mdiReply } from "@mdi/js"
+import { Component, Vue } from "vue-property-decorator"
 
 @Component
 export default class LoadingCommentCard extends Vue {
-  icons = { mdiReply };
+  icons = { mdiReply }
 }
 </script>

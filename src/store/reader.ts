@@ -1,59 +1,59 @@
-type fakeBoolean = 0 | 1;
+type fakeBoolean = 0 | 1
 
 interface ReaderState {
-  direction: fakeBoolean;
-  readerMode: string;
-  parity: fakeBoolean;
-  width: string;
-  fit: string;
+  direction: fakeBoolean
+  readerMode: string
+  parity: fakeBoolean
+  width: string
+  fit: string
 }
 
 const state = (): ReaderState => ({
   direction: 0,
-  fit: 'default',
+  fit: "default",
   parity: 0,
-  readerMode: 'Single',
-  width: '75%',
-});
+  readerMode: "Single",
+  width: "75%",
+})
 
 const getters = {
   getDirection(state: ReaderState): fakeBoolean {
-    return state.direction;
+    return state.direction
   },
   getFit(state: ReaderState): string {
-    return state.fit;
+    return state.fit
   },
   getParity(state: ReaderState): fakeBoolean {
-    return state.parity;
+    return state.parity
   },
   getReaderMode(state: ReaderState): string {
-    return state.readerMode;
+    return state.readerMode
   },
   getWidth(state: ReaderState): string {
-    return state.width;
+    return state.width
   },
-};
+}
 
 const mutations = {
   setDirection(state: ReaderState, payload: fakeBoolean): void {
-    state.direction = payload;
+    state.direction = payload
   },
   setFit(state: ReaderState, payload: string): void {
-    state.fit = payload;
+    state.fit = payload
   },
   setParity(state: ReaderState, payload: fakeBoolean): void {
-    state.parity = payload;
+    state.parity = payload
   },
   setReaderMode(state: ReaderState, payload: string): void {
-    state.readerMode = payload;
+    state.readerMode = payload
   },
   setWidth(state: ReaderState, payload: string): void {
-    state.width = payload;
+    state.width = payload
   },
-};
+}
 
 export default {
   getters,
   mutations,
   state,
-};
+}

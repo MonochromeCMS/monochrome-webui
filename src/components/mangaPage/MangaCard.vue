@@ -14,28 +14,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator"
 
-import type { MangaResponse } from '@/api/Manga';
-import Media from '@/api/Media';
+import type { MangaResponse } from "@/api/Manga"
+import Media from "@/api/Media"
 
 @Component
 export default class MangaCard extends Vue {
-  @Prop() readonly manga!: MangaResponse;
+  @Prop() readonly manga!: MangaResponse
 
   statusColor = {
-    cancelled: 'red',
-    completed: 'green darken-2',
-    hiatus: 'orange',
-    ongoing: 'green',
-  };
+    cancelled: "red",
+    completed: "green darken-2",
+    hiatus: "orange",
+    ongoing: "green",
+  }
 
   cover(manga: MangaResponse): string {
-    return Media.cover(manga.id, manga.version);
+    return Media.cover(manga.id, manga.version)
   }
 
   to(manga: MangaResponse): string {
-    return `/manga/${manga.id}`;
+    return `/manga/${manga.id}`
   }
 }
 </script>
