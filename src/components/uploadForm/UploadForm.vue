@@ -67,6 +67,7 @@ export default class UploadForm extends Vue {
 
     if (response.data) {
       this.session = response.data;
+      this.$router.replace({ path: '', query: { id: response.data.id } });
     } else {
       const notification = {
         color: 'error',
@@ -74,6 +75,41 @@ export default class UploadForm extends Vue {
         message: response.error ?? '',
       };
       await this.$store.dispatch('pushNotification', notification);
+    }
+  }
+
+  async getSession(sessionId: string): Promise<void> {
+    const response = await Upload.get(sessionId, this.authConfig);
+
+    if (response.data) {
+      if (this.mangaId != response.data.mangaId) {
+        const notification = {
+          color: 'error',
+          context: this.$t('createSession'),
+          message: "The session's manga doesn't match",
+        };
+        await this.$store.dispatch('pushNotification', notification);
+        this.$router.replace('');
+      } else if (this.chapter && this.chapter.id !== response.data.chapterId) {
+        const notification = {
+          color: 'error',
+          context: this.$t('createSession'),
+          message: "The session's chapter doesn't match",
+        };
+        await this.$store.dispatch('pushNotification', notification);
+        this.$router.replace('');
+      } else {
+        this.session = response.data;
+      }
+    } else {
+      console.log('D');
+      const notification = {
+        color: 'error',
+        context: this.$t('getSession'),
+        message: response.error ?? '',
+      };
+      await this.$store.dispatch('pushNotification', notification);
+      this.$router.replace('');
     }
   }
 
@@ -119,7 +155,15 @@ export default class UploadForm extends Vue {
   }
 
   mounted(): void {
-    if (!this.chapter) {
+    if (this.$route.query.id) {
+      const sessionId = this.$route.query.id;
+      // Query params can be an array if multiple are provided
+      if (typeof sessionId == 'string') {
+        this.getSession(sessionId);
+      } else if (sessionId[0]) {
+        this.getSession(sessionId[0]);
+      }
+    } else if (!this.chapter) {
       this.createSession(this.mangaId, null);
     }
   }
@@ -136,6 +180,7 @@ editPages: 'Edit pages'
 editChapter: 'Edit chapter'
 uploadChapter: 'Upload chapter'
 createSession: 'Create upload session'
+getSession: 'Get upload session'
 commitSession: 'Commit upload session'
 groupAutocomplete: 'Group autocomplete'
 </i18n>
@@ -150,6 +195,7 @@ editPages: 'Modifier les pages'
 editChapter: 'Modifier le chapitre'
 uploadChapter: 'Ajouter un chapitre'
 createSession: 'Création de session'
+getSession: 'Demande de session'
 commitSession: 'Confirmation de session'
 groupAutocomplete: 'Autocomplétion de groupe'
 </i18n>
