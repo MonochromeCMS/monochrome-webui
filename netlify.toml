@@ -4,7 +4,7 @@
 
 
 [context.production.environment]
-  DOMAIN_NAME = "monochromecms.netlify.app""
+  DOMAIN_NAME = "monochromecms.netlify.app"
   PROTOCOL = "https"
   TITLE = "MonochromeCMS"
   DESCRIPTION = "The Monochrome CMS, running on Netlify and Heroku!"
