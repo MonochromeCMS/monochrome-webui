@@ -4,15 +4,15 @@
 
 
 [context.production.environment]
-  DOMAIN_NAME = monochromecms.netlify.app
-  PROTOCOL = https
-  TITLE = MonochromeCMS
-  DESCRIPTION = The Monochrome CMS, running on Netlify and Heroku!
-  VUE_APP_SECRET = gqzdubbugqzcdqzdqzd
-  VUE_APP_MEDIA_PATH = https://monochrome-scans-api.herokuapp.com/media
-  VUE_APP_API_PATH = https://monochrome-scans-api.herokuapp.com
-  VUE_APP_I18N_LOCALES = en,fr
-  VUE_APP_I18N_LOCALE = en
+  DOMAIN_NAME = "monochromecms.netlify.app""
+  PROTOCOL = "https"
+  TITLE = "MonochromeCMS"
+  DESCRIPTION = "The Monochrome CMS, running on Netlify and Heroku!"
+  VUE_APP_SECRET = "gqzdubbugqzcdqzdqzd"
+  VUE_APP_MEDIA_PATH = "https://monochrome-scans-api.herokuapp.com/media"
+  VUE_APP_API_PATH = "https://monochrome-scans-api.herokuapp.com"
+  VUE_APP_I18N_LOCALES = "en,fr"
+  VUE_APP_I18N_LOCALE = "en"
 
 [[redirects]]
   from = "/*"
