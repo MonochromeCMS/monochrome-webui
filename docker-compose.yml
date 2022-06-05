@@ -1,0 +1,15 @@
+version: "3.4"
+
+services:
+  webui:
+    image: monochrome-webui
+    build:
+      context: '.'
+      target: dev
+    env_file:
+      - ".env"
+    volumes:
+      - ".:/mnt"
+    working_dir: /mnt
+    ports:
+      - 8080:80
