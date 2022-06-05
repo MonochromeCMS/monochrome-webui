@@ -51,6 +51,10 @@ export default class MangaPage extends Vue {
     return Math.ceil(this.total / this.limit)
   }
 
+  get rawSearch(): string {
+    return typeof this.$route.query.q == "string" ? this.$route.query.q : ""
+  }
+
   async getManga(): Promise<void> {
     const response = await Manga.search(this.search, this.limit, this.offset, this.loading)
 
@@ -81,14 +85,16 @@ export default class MangaPage extends Vue {
     } else {
       this.page = 1
     }
+    this.$router.push({ query: { q: this.search || undefined } })
+  }
+
+  @Watch("rawSearch", { immediate: true })
+  onRawSearch(): void {
+    this.search = this.rawSearch
   }
 
   mounted(): void {
-    if (this.$route.query.q) {
-      this.search = this.$route.query.q.length ? this.$route.query.q[0] : this.$route.query.q
-    } else {
-      this.getManga()
-    }
+    this.getManga()
   }
 }
 </script>
