@@ -7,6 +7,7 @@
     :hide-on-scroll="reader"
     scroll-threshold="0"
   >
+    {{ hideModel }}
     <router-link v-if="!settings.title1 && !settings.title2" to="/" class="logo lemon-milk">
       Mono<span class="text--secondary">chrome</span>
     </router-link>
@@ -118,8 +119,8 @@ export default class NavBar extends Vue {
   }
 
   @Watch("reader")
-  onReaderChange(): void {
-    this.hideModel = true
+  onReaderChange(value: boolean): void {
+    this.hideModel = !value
   }
 
   get isConnected(): boolean {
