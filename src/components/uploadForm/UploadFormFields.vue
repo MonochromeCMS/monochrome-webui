@@ -12,6 +12,7 @@
             required
             hide-details="auto"
             outlined
+            min="1"
           />
         </validation-provider>
       </v-col>

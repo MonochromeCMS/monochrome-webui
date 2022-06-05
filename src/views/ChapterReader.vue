@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator"
+import { Component, Vue, Watch } from "vue-property-decorator"
 
 import type { ChapterResponse, DetailedChapterResponse } from "@/api/Chapter"
 import Chapter from "@/api/Chapter"
@@ -54,6 +54,11 @@ export default class ChapterReader extends Vue {
 
   get chapterId(): string {
     return this.$route.params.chapter
+  }
+
+  @Watch("chapterId", { immediate: true })
+  onChapterChange() {
+    this.getChapter()
   }
 
   get currentChapterIndex(): number {
@@ -90,7 +95,6 @@ export default class ChapterReader extends Vue {
   async goToChapter(id: string | null): Promise<void> {
     if (id) {
       await this.$router.push(`/chapters/${id}`)
-      await this.getChapter()
     }
   }
 
