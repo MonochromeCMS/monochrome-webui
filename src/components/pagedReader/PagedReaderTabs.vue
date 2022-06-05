@@ -8,6 +8,7 @@
     center-active
     :class="scrollClass"
     class="reader-tabs"
+    style="z-index: 2"
   >
     <v-tab :key="0">
       {{ reverse ? $t("nextChapter") : $t("previousChapter") }}
@@ -67,6 +68,12 @@ export default class PagedReaderTabs extends Vue {
 
 .tabs-scrolling {
   transform: translateY(-64px);
+
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 </style>
 

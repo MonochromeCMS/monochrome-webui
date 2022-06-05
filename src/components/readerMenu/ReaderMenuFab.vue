@@ -6,6 +6,7 @@
     v-bind="attrs"
     :class="scrollClass"
     color="background"
+    style="z-index: 2"
     v-on="on"
   >
     <v-icon color="primary">{{ icons.mdiMenu }}</v-icon>

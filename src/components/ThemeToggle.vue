@@ -7,6 +7,7 @@
     :class="scrollClass"
     class="theme-toggle"
     aria-label="Theme toggle"
+    style="z-index: 2"
     @click="toggleTheme"
   >
     <v-icon color="primary" large>{{ icons.mdiLightbulb }}</v-icon>

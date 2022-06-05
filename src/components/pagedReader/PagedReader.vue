@@ -1,7 +1,18 @@
 <template>
-  <div style="position: relative">
+  <div id="reader">
     <paged-reader-tabs v-model="currentPage" :amount="amountTabs" />
     <v-carousel v-model="currentPage" height="auto" hide-delimiters :continuous="false">
+      <template #prev="{ on, attrs }">
+        <button v-bind="attrs" class="reader-buttons" v-on="on">
+          <v-icon size="3rem">{{ icons.left }}</v-icon>
+        </button>
+      </template>
+      <template #next="{ on, attrs }">
+        <button v-bind="attrs" class="reader-buttons" v-on="on">
+          <v-icon size="3rem">{{ icons.right }}</v-icon>
+        </button>
+      </template>
+
       <paged-reader-delimiter-slide key="firstSlide" />
       <template v-for="index in amountTabs">
         <paged-reader-slide :key="index" :double="double" :pages="slidePages(index)" />
@@ -12,6 +23,7 @@
 </template>
 
 <script lang="ts">
+import { mdiChevronLeft, mdiChevronRight } from "@mdi/js"
 import { Component, Prop, Vue, Watch } from "vue-property-decorator"
 
 import Media from "@/api/Media"
@@ -27,6 +39,11 @@ export default class PagedReader extends Vue {
   @Prop(Number) readonly length!: number
 
   @Prop(Boolean) readonly double!: boolean
+
+  icons = {
+    left: mdiChevronLeft,
+    right: mdiChevronRight,
+  }
 
   currentPage: number | null = null
 
@@ -147,3 +164,38 @@ export default class PagedReader extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+#reader {
+  .v-window__prev,
+  .v-window__next {
+    height: 100%;
+    top: 0;
+    border-radius: 0;
+    margin: 0;
+    background: none;
+  }
+
+  .reader-buttons {
+    height: 100%;
+    padding: 16px;
+
+    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), visibility 0s;
+
+    .v-icon {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 50%;
+      opacity: 0.6;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+
+      .v-icon {
+        background-color: transparent;
+        opacity: 1;
+      }
+    }
+  }
+}
+</style>
