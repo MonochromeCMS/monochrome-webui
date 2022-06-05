@@ -20,6 +20,10 @@ export default class Auth extends Base {
 
     const response = await Auth._post("/token", form, {}, "application/x-www-form-urlencoded")
 
-    return Auth._handleResponse<TokenResponse>(response)
+    const handlers = {
+      401: "invalid_credentials",
+    }
+
+    return Auth._handleResponse<TokenResponse>(response, handlers)
   }
 }
