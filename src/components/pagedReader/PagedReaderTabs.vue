@@ -35,9 +35,7 @@ export default class PagedReaderTabs extends Vue {
 
   currentScroll = 0
 
-  scrollClass = ""
-
-  currentThreshold = 8
+  scrollClass = "tabs-scrolling"
 
   isScrollingUp = false
 
@@ -48,18 +46,7 @@ export default class PagedReaderTabs extends Vue {
   onScroll(ev: any): void {
     const newScroll = ev.target.scrollingElement.scrollTop
 
-    const scrollAmount = Math.abs(newScroll - this.currentScroll)
-
-    if (newScroll > this.currentScroll === this.isScrollingUp) {
-      this.currentThreshold = 8
-      this.isScrollingUp = !this.isScrollingUp
-    }
-
-    if (scrollAmount > this.currentThreshold) {
-      this.scrollClass = newScroll > this.currentScroll ? "tabs-scrolling" : ""
-    } else {
-      this.currentThreshold -= scrollAmount
-    }
+    this.scrollClass = newScroll > this.currentScroll ? "tabs-scrolling" : ""
 
     this.currentScroll = newScroll
   }

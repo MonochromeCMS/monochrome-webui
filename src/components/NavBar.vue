@@ -1,5 +1,12 @@
 <template>
-  <v-app-bar app flat color="backgroundAlt" :hide-on-scroll="reader">
+  <v-app-bar
+    v-model="hideModel"
+    app
+    flat
+    color="backgroundAlt"
+    :hide-on-scroll="reader"
+    scroll-threshold="0"
+  >
     <router-link v-if="!settings.title1 && !settings.title2" to="/" class="logo lemon-milk">
       Mono<span class="text--secondary">chrome</span>
     </router-link>
@@ -69,7 +76,7 @@
 <script lang="ts">
 import { mdiMenu } from "@mdi/js"
 import type { TranslateResult } from "vue-i18n"
-import { Component, Vue } from "vue-property-decorator"
+import { Component, Vue, Watch } from "vue-property-decorator"
 
 import type { SettingsSchema } from "@/api/Settings"
 import type { Role } from "@/api/User"
@@ -84,6 +91,8 @@ export default class NavBar extends Vue {
   icons = {
     mdiMenu,
   }
+
+  hideModel = true
 
   tabs = null
 
@@ -106,6 +115,11 @@ export default class NavBar extends Vue {
 
   get reader(): boolean {
     return this.$route.name === "ChapterReader"
+  }
+
+  @Watch("reader")
+  onReaderChange(): void {
+    this.hideModel = true
   }
 
   get isConnected(): boolean {
