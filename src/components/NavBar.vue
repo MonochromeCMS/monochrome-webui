@@ -7,7 +7,6 @@
     :hide-on-scroll="reader"
     scroll-threshold="0"
   >
-    {{ hideModel }}
     <router-link v-if="!settings.title1 && !settings.title2" to="/" class="logo lemon-milk">
       Mono<span class="text--secondary">chrome</span>
     </router-link>
