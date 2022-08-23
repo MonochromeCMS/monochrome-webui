@@ -36,7 +36,7 @@
       <v-expansion-panel>
         <v-expansion-panel-header>{{ $t("preview") }}</v-expansion-panel-header>
         <v-expansion-panel-content class="text-center">
-          <div v-html="markdownHTML" />
+          <div v-dompurify-html="markdownHTML" />
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>

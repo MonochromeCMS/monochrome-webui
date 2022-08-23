@@ -4,7 +4,7 @@
       <v-col class="mx-auto" cols="12" md="10" lg="8" xl="6">
         <v-card rounded="lg" color="backgroundAlt" elevation="0" class="text-center">
           <template v-if="settings.about">
-            <div class="pt-3 px-3" v-html="markdownHTML" />
+            <div class="pt-3 px-3" v-dompurify-html="markdownHTML" />
             <v-card-actions>
               <div class="caption ml-auto text--secondary">
                 {{ $t("createdWith") }}

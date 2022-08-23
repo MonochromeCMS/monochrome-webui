@@ -23,6 +23,7 @@
     "vee-validate": "^3.4.11",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.6",
+    "vue-dompurify-html": "^2.6.0",
     "vue-i18n": "^8.26.3",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.2.0",
