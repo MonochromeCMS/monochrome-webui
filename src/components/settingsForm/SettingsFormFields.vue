@@ -1,28 +1,16 @@
 <template>
-  <v-form @submit.prevent="submit">
+  <v-container>
     <!-- TITLE FIELD -->
     <v-row>
       <v-col cols="12" md="6">
-        <validation-provider v-slot="{ errors }" :name="$t('title1')">
-          <v-text-field v-model="title1" :error-messages="errors" :label="$t('title1')" outlined />
-        </validation-provider>
+        <v-text-field v-model="title1" :label="$t('title1')" outlined />
       </v-col>
       <v-col cols="12" md="6">
-        <validation-provider v-slot="{ errors }" :name="$t('title2')">
-          <v-text-field v-model="title2" :error-messages="errors" :label="$t('title2')" outlined />
-        </validation-provider>
+        <v-text-field v-model="title2" :label="$t('title2')" outlined />
       </v-col>
     </v-row>
     <!-- ABOUT FIELD -->
-    <validation-provider v-slot="{ errors }" :name="$t('aboutPage')">
-      <v-textarea
-        v-model="about"
-        :error-messages="errors"
-        :label="$t('aboutPage')"
-        hide-details="auto"
-        outlined
-      />
-    </validation-provider>
+    <v-textarea v-model="about" :label="$t('aboutPage')" hide-details="auto" outlined />
 
     <div class="caption ma-3">
       <a href="https://www.markdownguide.org/basic-syntax" class="text-decoration-none">
@@ -45,12 +33,12 @@
         {{ $t("customize") }}
       </v-btn>
     </div>
-  </v-form>
+  </v-container>
 </template>
 
 <script lang="ts">
 import marked from "marked"
-import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator"
+import { Component, Prop, Vue, Watch } from "vue-property-decorator"
 
 import type { SettingsSchema } from "@/api/Settings"
 
@@ -86,12 +74,7 @@ export default class SettingsFormFields extends Vue {
     this.about = settings.about
   }
 
-  @Emit("submit")
-  submit(): SettingsSchema {
-    return this.params
-  }
-
-  @Watch("settings")
+  @Watch("settings", { immediate: true })
   onSettingsUpdate(value: SettingsSchema): void {
     this.set(value)
   }

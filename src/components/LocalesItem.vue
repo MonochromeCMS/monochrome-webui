@@ -20,7 +20,6 @@
 </template>
 
 <script lang="ts">
-import { localize } from "vee-validate"
 import { Component, Vue } from "vue-property-decorator"
 
 @Component
@@ -34,7 +33,6 @@ export default class LocalesItem extends Vue {
   changeLocale(locale: string): void {
     window.localStorage.setItem("monochrome-lang", locale)
     this.$root.$i18n.locale = locale
-    localize(locale)
   }
 
   mounted(): void {

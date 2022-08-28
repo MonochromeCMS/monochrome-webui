@@ -1,46 +1,49 @@
 <template>
-  <validation-observer ref="observer">
-    <v-form @submit.prevent="submit">
-      <validation-provider v-slot="{ errors }" :name="$t('usernameEmail')" rules="required">
-        <v-text-field
-          v-model="username"
-          :error-messages="errors"
-          :label="$t('usernameEmail')"
-          required
-          outlined
-        />
-      </validation-provider>
-      <validation-provider v-slot="{ errors }" :name="$t('password')" rules="required">
-        <v-text-field
-          v-model="password"
-          :error-messages="errors"
-          :label="$t('password')"
-          :append-icon="showPass ? icons.mdiEye : icons.mdiEyeOff"
-          required
-          outlined
-          :type="showPass ? 'text' : 'password'"
-          @click:append="showPass = !showPass"
-        />
-      </validation-provider>
-      <div class="text-center">
-        <v-btn type="submit" block color="background" class="text--primary">
-          {{ $t("signIn") }}
-        </v-btn>
-      </div>
-    </v-form>
-  </validation-observer>
+  <v-form ref="formRef" v-model="valid" @submit.prevent="submit">
+    <v-text-field
+      v-model="username"
+      :label="$t('usernameEmail')"
+      :rules="[f.required]"
+      required
+      outlined
+    />
+    <v-text-field
+      v-model="password"
+      :label="$t('password')"
+      :rules="[f.required]"
+      :append-icon="showPass ? icons.mdiEye : icons.mdiEyeOff"
+      required
+      outlined
+      :type="showPass ? 'text' : 'password'"
+      @click:append="showPass = !showPass"
+    />
+    <div class="text-center">
+      <v-btn type="submit" block color="background" class="text--primary">
+        {{ $t("signIn") }}
+      </v-btn>
+    </div>
+  </v-form>
 </template>
 
 <script lang="ts">
 import { mdiEye, mdiEyeOff } from "@mdi/js"
-import type { ValidationObserver } from "vee-validate"
 import { Component, Ref, Vue } from "vue-property-decorator"
 
+import type { TokenResponse } from "@/api/Auth"
+import type { ApiResponse } from "@/api/Base"
+import type { IVForm } from "@/formRules"
+import { required } from "@/formRules"
 import type { UserLogin } from "@/store/user"
 
 @Component
 export default class LoginForm extends Vue {
-  @Ref() readonly observer!: InstanceType<typeof ValidationObserver>
+  @Ref() readonly formRef!: IVForm
+
+  f = {
+    required,
+  }
+
+  valid = false
 
   icons = {
     mdiEye,
@@ -61,8 +64,8 @@ export default class LoginForm extends Vue {
   }
 
   async submit(): Promise<void> {
-    const valid = await this.observer.validate()
-    if (valid) {
+    this.formRef.validate()
+    if (this.valid) {
       await this.login(this.params)
     }
   }
@@ -70,15 +73,14 @@ export default class LoginForm extends Vue {
   reset(): void {
     this.username = ""
     this.password = ""
-    this.observer.reset()
+    this.formRef.reset()
   }
 
   async login(params: UserLogin): Promise<void> {
-    const response = await this.$store.dispatch("login", params)
+    // this.reset() Not needed as we redirect on success
+    const response: ApiResponse<TokenResponse> = await this.$store.dispatch("login", params)
 
-    if (response.data) {
-      this.reset()
-    } else {
+    if (response.data === null) {
       const notification = {
         color: "error",
         context: this.$t("login"),

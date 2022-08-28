@@ -1,4 +1,12 @@
 {
+  "form": {
+    "required": "Ce champ ne peut pas être vide",
+    "email": "Ce champ doit être un email valide",
+    "numeric": "Ce champ doit être un numéro",
+    "max": "Ce champ ne peut pas être aussi long",
+    "regex": "Ce champ ne suit pas le format attendu",
+    "digits": "Ce champ doit être composé de {n} chiffres"
+  },
   "roles": {
     "admin": "administrateur",
     "uploader": "éditeur",

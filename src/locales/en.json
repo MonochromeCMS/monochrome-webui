@@ -1,4 +1,12 @@
 {
+  "form": {
+    "required": "This field can not be empty",
+    "email": "This field must be a valid email",
+    "numeric": "This field must be a number",
+    "max": "This field can not be that long",
+    "regex": "This field doesn't fit the expected pattern",
+    "digits": "This field requires {n} digits"
+  },
   "roles": {
     "admin": "admin",
     "uploader": "uploader",

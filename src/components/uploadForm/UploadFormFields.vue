@@ -3,68 +3,43 @@
     <v-row class="mb-3">
       <!-- VOLUME FIELD -->
       <v-col cols="12" sm="6" md="4" class="pa-3 pb-0">
-        <validation-provider v-slot="{ errors }" :name="$t('volumeNumber')" rules="numeric">
-          <v-text-field
-            v-model="volume"
-            :error-messages="errors"
-            :label="$t('volumeNumber')"
-            hide-details="auto"
-            outlined
-            min="1"
-          />
-        </validation-provider>
+        <v-text-field
+          v-model="volume"
+          :rules="[f.numeric]"
+          :label="$t('volumeNumber')"
+          hide-details="auto"
+          outlined
+          min="1"
+        />
       </v-col>
       <!-- NUMBER FIELD -->
       <v-col cols="12" sm="6" md="4" class="pa-3 pb-0">
-        <validation-provider
-          v-slot="{ errors }"
-          :name="$t('chapterNumber')"
-          :rules="{ required: true, regex: /^[0-9.]+$/ }"
-        >
-          <v-text-field
-            v-model="number"
-            :error-messages="errors"
-            :label="$t('chapterNumber')"
-            required
-            hide-details="auto"
-            outlined
-          />
-        </validation-provider>
+        <v-text-field
+          v-model="number"
+          :rules="[f.required, f.regex(/^[0-9.]+$/)]"
+          :label="$t('chapterNumber')"
+          required
+          hide-details="auto"
+          outlined
+        />
       </v-col>
       <!-- GROUP FIELD -->
       <v-col cols="12" md="4" class="pa-3 pb-0">
-        <validation-provider v-slot="{ errors }" :name="$t('scanGroup')" rules="required">
-          <v-combobox
-            v-model="scanGroup"
-            :items="groupAutocomplete"
-            :error-messages="errors"
-            :label="$t('scanGroup')"
-            outlined
-            hide-details="auto"
-          />
-        </validation-provider>
+        <v-combobox
+          v-model="scanGroup"
+          :items="groupAutocomplete"
+          :rules="[f.required]"
+          :label="$t('scanGroup')"
+          outlined
+          hide-details="auto"
+        />
       </v-col>
     </v-row>
     <!-- NAME FIELD -->
-    <validation-provider v-slot="{ errors }" :name="$t('chapterName')">
-      <v-text-field
-        v-model="name"
-        :error-messages="errors"
-        :label="$t('chapterName')"
-        hide-details="auto"
-        outlined
-      />
-    </validation-provider>
+    <v-text-field v-model="name" :label="$t('chapterName')" hide-details="auto" outlined />
 
     <!-- NAME FIELD -->
-    <validation-provider v-slot="{ errors }" name="Webtoon">
-      <v-checkbox
-        v-model="webtoon"
-        :error-messages="errors"
-        :label="$t('webtoonDescription')"
-        hide-details="auto"
-      />
-    </validation-provider>
+    <v-checkbox v-model="webtoon" :label="$t('webtoonDescription')" hide-details="auto" />
 
     <v-divider class="my-3" />
 
@@ -94,6 +69,7 @@ import { Component, Emit, Prop, Vue } from "vue-property-decorator"
 import Autocomplete from "@/api/Autocomplete"
 import type { ChapterResponse, ChapterSchema } from "@/api/Chapter"
 import type { UploadSessionResponse } from "@/api/Upload"
+import { numeric, regex, required } from "@/formRules"
 
 export interface UploadSubmitEvent {
   chapterDraft: ChapterSchema
@@ -109,6 +85,8 @@ export default class UploadFormFields extends Vue {
   @Prop() readonly session!: UploadSessionResponse | null
 
   @Prop() readonly chapter!: ChapterResponse | null
+
+  f = { numeric, regex, required }
 
   groupAutocomplete: string[] = []
 

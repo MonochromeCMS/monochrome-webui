@@ -5,35 +5,34 @@
       {{ $t("ownUserWarning") }}
     </v-alert>
     <v-card-text>
-      <validation-observer ref="observer">
+      <v-form ref="formRef" v-model="valid" @submit.prevent="submit">
         <user-form-fields
           ref="fields"
           :disabled="loading"
           :user="user"
           :color="color"
           :register="register"
-          @submit="submit"
           @close="close"
           @update="update"
         />
-      </validation-observer>
+      </v-form>
     </v-card-text>
   </v-card>
 </template>
 
 <script lang="ts">
 import type { AxiosRequestConfig } from "axios"
-import type { ValidationObserver } from "vee-validate"
 import { Component, Emit, Prop, Ref, Vue } from "vue-property-decorator"
 
 import type { UserResponse, UserSchema } from "@/api/User"
 import User from "@/api/User"
+import type { IVForm } from "@/formRules"
 
 import type UserFormFields from "./UserFormFields.vue"
 
 @Component
 export default class UserForm extends Vue {
-  @Ref() readonly observer!: InstanceType<typeof ValidationObserver>
+  @Ref() readonly formRef!: IVForm
 
   @Ref() readonly fields!: UserFormFields
 
@@ -44,6 +43,8 @@ export default class UserForm extends Vue {
   @Prop({ default: "background", type: String }) readonly color!: string
 
   @Prop({ default: false, type: Boolean }) readonly ownUser!: boolean
+
+  valid = false
 
   loading = false
 
@@ -69,18 +70,18 @@ export default class UserForm extends Vue {
 
   clear(): void {
     this.fields.clear()
-    this.observer.reset()
+    this.formRef.reset()
   }
 
-  async submit(ev: UserSchema): Promise<void> {
-    const valid = await this.observer.validate()
-    if (valid) {
+  async submit(): Promise<void> {
+    this.formRef.validate()
+    if (this.valid) {
       if (this.user) {
-        await this.editUser(this.user.id, ev)
+        await this.editUser(this.user.id, this.fields.params)
       } else if (this.register) {
-        await this.registerUser(ev)
+        await this.registerUser(this.fields.params)
       } else {
-        await this.addUser(ev)
+        await this.addUser(this.fields.params)
       }
     }
   }

@@ -1,26 +1,28 @@
 <template>
-  <validation-observer ref="observer">
+  <v-form ref="formRef" v-model="valid" @submit.prevent="submit">
     <manga-fields ref="fields" v-model="cover" :manga="manga" @submit="submit" />
-  </validation-observer>
+  </v-form>
 </template>
 
 <script lang="ts">
 import type { AxiosRequestConfig } from "axios"
-import type { ValidationObserver } from "vee-validate"
 import { Component, Prop, Ref, Vue } from "vue-property-decorator"
 
 import type { MangaResponse, MangaSchema } from "@/api/Manga"
 import Manga from "@/api/Manga"
+import type { IVForm } from "@/formRules"
 
 import type MangaFields from "./MangaFields.vue"
 
 @Component
 export default class MangaForm extends Vue {
-  @Ref() readonly observer!: InstanceType<typeof ValidationObserver>
+  @Ref() readonly formRef!: IVForm
 
   @Ref() readonly fields!: MangaFields
 
   @Prop() readonly manga!: MangaResponse | null
+
+  valid = false
 
   cover: File | null = null
 
@@ -28,20 +30,20 @@ export default class MangaForm extends Vue {
     return this.$store.getters.authConfig
   }
 
-  async submit(params: MangaSchema): Promise<void> {
-    const valid = await this.observer.validate()
-    if (valid) {
+  async submit(): Promise<void> {
+    this.formRef.validate()
+    if (this.valid) {
       if (this.manga) {
-        await this.editManga(params, this.manga.id)
+        await this.editManga(this.fields.params, this.manga.id)
       } else {
-        await this.createManga(params)
+        await this.createManga(this.fields.params)
       }
     }
   }
 
   clear(): void {
     this.fields.clear()
-    this.observer.reset()
+    this.formRef.reset()
   }
 
   async createManga(params: MangaSchema): Promise<void> {

@@ -1,72 +1,44 @@
 <template>
-  <v-form @submit.prevent="submit()">
+  <v-container>
     <!-- TITLE FIELD -->
-    <validation-provider v-slot="{ errors }" :name="$t('title')" rules="required">
-      <v-text-field
-        v-model="title"
-        :error-messages="errors"
-        :label="$t('title')"
-        required
-        outlined
-      />
-    </validation-provider>
+    <v-text-field v-model="title" :label="$t('title')" :rules="[f.required]" required outlined />
     <!-- DESC FIELD -->
-    <validation-provider v-slot="{ errors }" :name="$t('description')" rules="required">
-      <v-textarea
-        v-model="description"
-        :error-messages="errors"
-        :label="$t('description')"
-        required
-        outlined
-      />
-    </validation-provider>
+    <v-textarea
+      v-model="description"
+      :rules="[f.required]"
+      :label="$t('description')"
+      required
+      outlined
+    />
     <!-- AUTHOR FIELD -->
-    <validation-provider v-slot="{ errors }" :name="$t('author')" rules="required">
-      <v-text-field
-        v-model="author"
-        :error-messages="errors"
-        :label="$t('author')"
-        required
-        outlined
-      />
-    </validation-provider>
+    <v-text-field v-model="author" :rules="[f.required]" :label="$t('author')" required outlined />
     <!-- ARTIST FIELD -->
-    <validation-provider v-slot="{ errors }" :name="$t('artist')" rules="required">
-      <v-text-field
-        v-model="artist"
-        :error-messages="errors"
-        :label="$t('artist')"
-        required
-        outlined
-      />
-    </validation-provider>
+    <v-text-field v-model="artist" :rules="[f.required]" :label="$t('artist')" required outlined />
     <!-- YEAR FIELD -->
-    <validation-provider v-slot="{ errors }" :name="$t('year')" :rules="{ digits: 4 }">
-      <v-text-field
-        v-model="year"
-        type="number"
-        :error-messages="errors"
-        :label="$t('year')"
-        required
-        outlined
-      />
-    </validation-provider>
+    <v-text-field
+      v-model="year"
+      type="number"
+      :rules="[f.required, f.digits(4)]"
+      :label="$t('year')"
+      required
+      outlined
+    />
     <!-- STATUS FIELD -->
-    <validation-provider v-slot="{ errors }" :name="$t('status')" rules="required">
-      <v-select
-        v-model="status"
-        class="status-list"
-        :items="statusItems"
-        :error-messages="errors"
-        :label="$t('status')"
-        outlined
-      />
-    </validation-provider>
+    <v-select
+      v-model="status"
+      class="status-list"
+      :items="statusItems"
+      :rules="[f.required]"
+      :label="$t('status')"
+      outlined
+    />
     <!-- COVER FIELD -->
-    <validation-provider v-slot="{ errors }" :name="$t('cover')" :rules="manga ? '' : 'required'">
-      <v-file-input v-model="cover" :error-messages="errors" accept="image/*" :label="$t('cover')">
-      </v-file-input>
-    </validation-provider>
+    <v-file-input
+      v-model="cover"
+      accept="image/*"
+      :label="$t('cover')"
+      :rules="manga ? [] : [f.required]"
+    />
     <!-- PREVIEW -->
     <v-expansion-panels class="mb-4">
       <v-expansion-panel>
@@ -81,20 +53,23 @@
         {{ manga ? $t("editManga") : $t("createManga") }}
       </v-btn>
     </div>
-  </v-form>
+  </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, VModel, Vue, Watch } from "vue-property-decorator"
+import { Component, Prop, VModel, Vue, Watch } from "vue-property-decorator"
 
 import type { MangaResponse, MangaSchema, Status } from "@/api/Manga"
 import Media from "@/api/Media"
+import { digits, required } from "@/formRules"
 
 @Component
 export default class MangaFields extends Vue {
   @Prop() readonly manga!: MangaResponse | null
 
   @VModel() readonly cover!: File | null
+
+  f = { digits, required }
 
   title = ""
 
@@ -132,11 +107,6 @@ export default class MangaFields extends Vue {
     } else {
       return this.manga ? Media.cover(this.manga.id, this.manga.version) : null
     }
-  }
-
-  @Emit("submit")
-  submit(): MangaSchema {
-    return this.params
   }
 
   upper(str: string): string {

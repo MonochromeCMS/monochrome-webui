@@ -1,5 +1,5 @@
 <template>
-  <validation-observer ref="observer">
+  <v-form ref="formRef" v-model="valid" @submit.prevent="submit">
     <upload-form-fields
       ref="fields"
       :disabled="loading"
@@ -7,33 +7,33 @@
       :chapter="chapter"
       :session="session"
       @session="createSession(mangaId, chapter.id)"
-      @submit="submit"
     />
-  </validation-observer>
+  </v-form>
 </template>
 
 <script lang="ts">
 import type { AxiosRequestConfig } from "axios"
-import type { ValidationObserver } from "vee-validate"
 import { Component, Prop, Ref, Vue } from "vue-property-decorator"
 
 import type { ChapterResponse, ChapterSchema } from "@/api/Chapter"
 import Chapter from "@/api/Chapter"
 import type { UploadSessionResponse } from "@/api/Upload"
 import Upload from "@/api/Upload"
+import type { IVForm } from "@/formRules"
 
-import type { UploadSubmitEvent } from "./UploadFormFields.vue"
 import type UploadFormFields from "./UploadFormFields.vue"
 
 @Component
 export default class UploadForm extends Vue {
-  @Ref() readonly observer!: InstanceType<typeof ValidationObserver>
+  @Ref() readonly formRef!: IVForm
 
   @Ref() readonly fields!: UploadFormFields
 
   @Prop(String) readonly mangaId!: string
 
   @Prop() readonly chapter!: ChapterResponse
+
+  valid = false
 
   session: UploadSessionResponse | null = null
 
@@ -45,18 +45,19 @@ export default class UploadForm extends Vue {
 
   clear(): void {
     this.fields.clear()
-    this.observer.reset()
+    this.formRef.reset()
   }
 
-  async submit(ev: UploadSubmitEvent): Promise<void> {
-    const valid = await this.observer.validate()
-    if (valid) {
+  async submit(): Promise<void> {
+    this.formRef.validate()
+
+    if (this.valid) {
       switch (true) {
         case this.chapter && !this.session:
-          await this.editChapter(ev.chapterDraft)
+          await this.editChapter(this.fields.chapterDraft)
           break
-        case this.session && ev.pageOrder.length > 0:
-          await this.commitSession(ev.chapterDraft, ev.pageOrder)
+        case this.session && this.fields.pageOrder.length > 0:
+          await this.commitSession(this.fields.chapterDraft, this.fields.pageOrder)
       }
     }
   }

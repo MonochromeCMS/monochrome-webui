@@ -1,29 +1,35 @@
 <template>
-  <validation-observer ref="observer">
-    <settings-form-fields @submit="submit" />
-  </validation-observer>
+  <v-form ref="formRef" v-model="valid" @submit.prevent="submit">
+    <settings-form-fields ref="fields" />
+  </v-form>
 </template>
 
 <script lang="ts">
 import type { AxiosRequestConfig } from "axios"
-import type { ValidationObserver } from "vee-validate"
 import { Component, Ref, Vue } from "vue-property-decorator"
 
 import type { SettingsSchema } from "@/api/Settings"
 import Settings from "@/api/Settings"
+import type { IVForm } from "@/formRules"
+
+import type SettingsFormFields from "./SettingsFormFields.vue"
 
 @Component
 export default class SettingsForm extends Vue {
-  @Ref() readonly observer!: InstanceType<typeof ValidationObserver>
+  @Ref() readonly formRef!: IVForm
+
+  @Ref() readonly fields!: SettingsFormFields
+
+  valid = false
 
   get authConfig(): AxiosRequestConfig {
     return this.$store.getters.authConfig
   }
 
-  async submit(ev: SettingsSchema): Promise<void> {
-    const valid = await this.observer.validate()
-    if (valid) {
-      await this.editSettings(ev)
+  async submit(): Promise<void> {
+    this.formRef.validate()
+    if (this.valid) {
+      await this.editSettings(this.fields.params)
     }
   }
 
@@ -32,6 +38,7 @@ export default class SettingsForm extends Vue {
 
     if (response.data) {
       this.$store.commit("setSettings", response.data)
+      await this.$store.dispatch("getSettings")
       const notification = {
         color: "success",
         context: this.$t("editSettings"),
