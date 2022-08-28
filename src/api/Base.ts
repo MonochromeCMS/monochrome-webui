@@ -166,7 +166,15 @@ export default class Base {
   }
 
   public static async refresh(token: string) {
-    const response = await Base._post("/auth/refresh", { token }, {})
+    const config = {
+      headers: {
+        Accept: "*/*",
+        Authorization: "Bearer ".concat(token),
+      },
+      withCredentials: true,
+    }
+
+    const response = await Base._post("/auth/refresh", null, config)
 
     const handlers = {
       401: i18n.tc("api.auth.refresh_401"),

@@ -44,7 +44,7 @@ const mutations = {
   },
   setToken(state: UserState, payload: TokenResponse): void {
     state.token = payload.access_token
-    state.refresh = payload.refresh_token
+    state.refresh = payload.refresh_token || state.refresh
   },
   updateUser(state: UserState, payload: UserResponse): void {
     state.username = payload.username
