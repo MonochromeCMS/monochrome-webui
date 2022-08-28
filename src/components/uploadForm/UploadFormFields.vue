@@ -1,5 +1,5 @@
 <template>
-  <v-form @submit.prevent="submit">
+  <v-container>
     <v-row class="mb-3">
       <!-- VOLUME FIELD -->
       <v-col cols="12" sm="6" md="4" class="pa-3 pb-0">
@@ -60,7 +60,7 @@
         {{ chapter ? $t("editChapter") : $t("uploadChapter") }}
       </v-btn>
     </div>
-  </v-form>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -115,11 +115,6 @@ export default class UploadFormFields extends Vue {
   @Emit("session")
   createSession(): boolean {
     return true
-  }
-
-  @Emit("submit")
-  submit(): UploadSubmitEvent {
-    return { chapterDraft: this.chapterDraft, pageOrder: this.pageOrder }
   }
 
   public clear(): void {
