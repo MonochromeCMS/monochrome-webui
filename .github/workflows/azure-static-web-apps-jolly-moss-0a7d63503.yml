@@ -9,6 +9,10 @@ on:
     branches:
       - main
 
+env:
+  domain_name: jolly-moss-0a7d63503.1.azurestaticapps.net
+  api: https://monochrome-api.azurewebsites.net
+
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
@@ -33,14 +37,14 @@ jobs:
         id: node-build
         run: yarn build
         env:
-          DOMAIN_NAME: ${{ secrets.domain_name }}
-          TITLE: ${{ secrets.app_title }}
-          VUE_APP_MEDIA_PATH: ${{ secrets.media_path }}
-          VUE_APP_API_PATH: ${{ secrets.api_path }}
-          DESCRIPTION: ${{ secrets.app_description }}
+          DOMAIN_NAME: ${{ env.domain_name }}
+          TITLE: Monochrome Demo
+          VUE_APP_MEDIA_PATH: ${{ env.api }}
+          VUE_APP_API_PATH: ${{ env.api }}/media
+          DESCRIPTION: Monochrome is a manga CMS
           VUE_APP_SECRET: ${{ secrets.session_secret }}
-          PROTOCOL: ${{ secrets.protocol }}
-          PUBLIC_URL: ${{ secrets.public_url }}
+          PROTOCOL: https
+          PUBLIC_URL: /
           VUE_APP_I18N_LOCALES: ${{ secrets.i18n_locales }}
           VUE_APP_I18N_LOCALE: ${{ secrets.i18n_locale }}
       - name: Build And Deploy
