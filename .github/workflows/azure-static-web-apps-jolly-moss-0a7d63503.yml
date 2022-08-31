@@ -39,8 +39,8 @@ jobs:
         env:
           DOMAIN_NAME: ${{ env.domain_name }}
           TITLE: Monochrome Demo
-          VUE_APP_MEDIA_PATH: ${{ env.api }}
-          VUE_APP_API_PATH: ${{ env.api }}/media
+          VUE_APP_MEDIA_PATH: ${{ env.api }}/media
+          VUE_APP_API_PATH: ${{ env.api }}
           DESCRIPTION: Monochrome is a manga CMS
           VUE_APP_SECRET: ${{ secrets.session_secret }}
           PROTOCOL: https
