@@ -1,7 +1,14 @@
 <template>
   <div>
     <v-skeleton-loader v-if="loading" type="image" class="image-skeleton" :height="height" />
-    <v-carousel v-else v-model="model" :show-arrows="false" class="rounded-lg" :height="height">
+    <v-carousel
+      v-else
+      v-model="model"
+      cycle
+      :show-arrows="false"
+      class="rounded-lg"
+      :height="height"
+    >
       <v-carousel-item v-for="manga in mangaList" :key="manga.id" :to="`/manga/${manga.id}`">
         <v-parallax
           :height="height"
