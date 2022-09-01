@@ -1,18 +1,21 @@
 <template>
-  <v-carousel v-model="model" :show-arrows="false" class="rounded-lg" :height="height">
-    <v-carousel-item v-for="manga in mangaList" :key="manga.id" :to="`/manga/${manga.id}`">
-      <v-parallax
-        :height="height"
-        :src="getMangaImage(manga.id, manga.version)"
-        class="parallax-gradient"
-      >
-        <v-row class="fill-height px-3 row-column">
-          <div class="text-h2">{{ manga.title }}</div>
-          <div class="text-subtitle-1 pt-2">{{ manga.description }}</div>
-        </v-row>
-      </v-parallax>
-    </v-carousel-item>
-  </v-carousel>
+  <div>
+    <v-skeleton-loader v-if="loading" type="image" class="image-skeleton" :height="height" />
+    <v-carousel v-else v-model="model" :show-arrows="false" class="rounded-lg" :height="height">
+      <v-carousel-item v-for="manga in mangaList" :key="manga.id" :to="`/manga/${manga.id}`">
+        <v-parallax
+          :height="height"
+          :src="getMangaImage(manga.id, manga.version)"
+          class="parallax-gradient"
+        >
+          <v-row class="fill-height px-3 row-column">
+            <div class="text-h2">{{ manga.title }}</div>
+            <div class="text-subtitle-1 pt-2">{{ manga.description }}</div>
+          </v-row>
+        </v-parallax>
+      </v-carousel-item>
+    </v-carousel>
+  </div>
 </template>
 
 <script lang="ts">
@@ -26,6 +29,8 @@ import Media from "@/api/Media"
 export default class HeroBanner extends Vue {
   model = null
 
+  loading = true
+
   height = 400
 
   mangaList: MangaResponse[] = []
@@ -35,7 +40,7 @@ export default class HeroBanner extends Vue {
   }
 
   async getManga() {
-    const response = await Manga.search(null, 3, 0)
+    const response = await Manga.search(null, 3, 0, this.loading)
 
     if (response.data != null) {
       this.mangaList = response.data.results
@@ -47,6 +52,8 @@ export default class HeroBanner extends Vue {
       }
       await this.$store.dispatch("pushNotification", notification)
     }
+
+    this.loading = false
   }
 
   mounted() {
@@ -73,6 +80,10 @@ export default class HeroBanner extends Vue {
 .row-column {
   flex-direction: column;
   justify-content: flex-end;
+}
+
+.image-skeleton .v-skeleton-loader__image {
+  height: 100%;
 }
 </style>
 
