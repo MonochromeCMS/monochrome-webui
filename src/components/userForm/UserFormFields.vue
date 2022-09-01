@@ -13,7 +13,7 @@
         <v-text-field v-model="email" :rules="[f.email]" :label="$t('email')" outlined />
         <v-text-field
           v-model="password"
-          :erules="[f.required]"
+          :rules="[f.required]"
           :label="$t('password')"
           :append-icon="showPass ? icons.mdiEye : icons.mdiEyeOff"
           required

@@ -1,3 +1,5 @@
+import i18n from "@/i18n"
+
 import Base from "./Base"
 
 export interface TokenResponse {
@@ -21,7 +23,7 @@ export default class Auth extends Base {
     const response = await Auth._post("/token", form, {}, "application/x-www-form-urlencoded")
 
     const handlers = {
-      401: "invalid_credentials",
+      401: i18n.tc("api.auth.401"),
     }
 
     return Auth._handleResponse<TokenResponse>(response, handlers)

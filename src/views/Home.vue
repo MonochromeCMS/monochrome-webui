@@ -1,6 +1,9 @@
 <template>
   <v-container>
     <v-row>
+      <v-col cols="12">
+        <hero-banner />
+      </v-col>
       <v-col v-if="isConnected" lg="3" class="hidden-md-and-down">
         <v-sheet rounded="lg" color="backgroundAlt pa-1">
           <admin-actions :left="false" />
