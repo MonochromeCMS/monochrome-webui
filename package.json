@@ -1,7 +1,7 @@
 {
-  "name": "monochrome-webui-vue3",
+  "name": "monochrome",
   "type": "module",
-  "version": "0.0.0",
+  "version": "2.2.0",
   "private": true,
   "scripts": {
     "build": "vite build",
