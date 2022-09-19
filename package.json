@@ -47,6 +47,7 @@
     "vite-plugin-generate-file": "^0.0.3",
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-pages": "^0.26.0",
+    "vite-plugin-pwa": "^0.12.8",
     "vite-plugin-vuetify": "^1.0.0-alpha.12",
     "vue-cli-plugin-vuetify": "~2.5.5"
   }

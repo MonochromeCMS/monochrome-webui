@@ -4,13 +4,14 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
-import vuetify from 'vite-plugin-vuetify'
-import Components from 'unplugin-vue-components/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
-import Pages from 'vite-plugin-pages'
-import { createHtmlPlugin } from 'vite-plugin-html'
-import generateFile from 'vite-plugin-generate-file'
+import vuetify from 'vite-plugin-vuetify' // Components library auto-import
+import Components from 'unplugin-vue-components/vite' // Own components auto-import
+import AutoImport from 'unplugin-auto-import/vite' // Auto-import for libraries
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite' // Internationalization
+import Pages from 'vite-plugin-pages' // Replace views with pages
+import { createHtmlPlugin } from 'vite-plugin-html' // Dynamic HTML
+import generateFile from 'vite-plugin-generate-file' // Generate OpenSearch XML
+import { VitePWA } from 'vite-plugin-pwa' // Progressive Web App
 
 const protocol = process.env.PROTOCOL || 'http'
 const domainName = process.env.DOMAIN_NAME || 'localhost'
@@ -56,16 +57,19 @@ export default defineConfig({
         },
       },
     }),
-    generateFile([{
-      type: 'template',
-      output: './opensearch.xml',
-      template: './src/opensearch.ejs',
-      data: {
-        baseUrl,
-        fullUrl,
-        title,
-        description,
+    generateFile([
+      {
+        type: 'template',
+        output: './opensearch.xml',
+        template: './src/opensearch.ejs',
+        data: {
+          baseUrl,
+          fullUrl,
+          title,
+          description,
+        },
       },
-    }]),
+    ]),
+    VitePWA({ registerType: 'autoUpdate' }),
   ],
 })
