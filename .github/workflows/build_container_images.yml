@@ -8,7 +8,7 @@ env:
   REGISTRY: ghcr.io
   BASE_IMAGE_NGINX: flashspys/nginx-static
   BASE_IMAGE_CADDY: 'caddy:2.4.5-alpine'
-  BASE_IMAGE_PLATFORMS: 'linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x'
+  BASE_IMAGE_PLATFORMS: 'linux/amd64,linux/arm64/v8'
 
 jobs:
   build-and-push-image:
