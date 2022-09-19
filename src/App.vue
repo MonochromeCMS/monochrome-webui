@@ -1,47 +1,35 @@
+<script setup lang="ts">
+type NeedsAuth = boolean | undefined
+
+const auth = useAuth()
+const router = useRouter()
+const route = useRoute()
+const needsAuth = computed(() => route.meta.needsAuth as NeedsAuth)
+const settings = useSettings()
+
+watchEffect(() => {
+  switch (true) {
+    case needsAuth.value && !auth.isConnected:
+    case needsAuth.value === false && auth.isConnected:
+      router.replace('/')
+  }
+})
+
+onMounted(() => {
+  if (auth.isConnected)
+    auth.getUserData()
+
+  settings.get()
+})
+</script>
+
 <template>
-  <v-app id="monochrome" class="v-application">
+  <v-app>
     <nav-bar />
     <v-main class="background">
       <router-view />
     </v-main>
     <notifications />
-    <theme-toggler />
+    <theme-toggle />
   </v-app>
 </template>
-
-<script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator"
-
-import NavBar from "@/components/NavBar.vue"
-import Notifications from "@/components/Notifications.vue"
-import ThemeToggler from "@/components/ThemeToggle.vue"
-
-@Component({
-  components: {
-    NavBar,
-    Notifications,
-    ThemeToggler,
-  },
-})
-export default class App extends Vue {
-  get isConnected() {
-    return this.$store.getters.isConnected
-  }
-
-  @Watch("isConnected")
-  onLoginChange() {
-    this.$router.replace("/")
-  }
-
-  mounted() {
-    if (this.isConnected) this.$store.dispatch("getUserData")
-    this.$store.dispatch("getSettings")
-  }
-}
-</script>
-
-<style lang="scss">
-.v-application {
-  font-family: Roboto, serif;
-}
-</style>

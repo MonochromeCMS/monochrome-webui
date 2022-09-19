@@ -1,5 +1,5 @@
 # Monochrome
-Monochrome's WebUI, implemented with Vue.js.
+Monochrome's WebUI, implemented with Vue 3.
 
 Most users will prefer the [Monochrome full stack](https://github.com/MonochromeCMS/Monochrome), which contains the API, the frontend and the backend.
 
@@ -15,8 +15,7 @@ logs                 Read the container's logs
 sh                   Open a shell in the running container
 # Dev utils
 format               Format project code
-# Main utils
-secret               Generate a secret
+test                 Test the application
 ```
 So the basic usage would be:
 ```shell
@@ -49,36 +48,25 @@ DOMAIN_NAME = "localhost"
 // Protocol this UI will be served with
 PROTOCOL = "http"
 // Prefix for all the server files, if needed (ex. server on https://.../monochrome => /monochrome
-PUBLIC_URL = "/"
+BASE_URL = "/"
 // Base URL to access the images
-VUE_APP_MEDIA_PATH = "http://localhost/media"
+VITE_MEDIA_PATH = "http://localhost/media"
 // Base URL to access the API
-VUE_APP_API_PATH = "http://localhost/api"
+VITE_API_PATH = "http://localhost/api"
 
 // Title of the application
 TITLE = "Monochrome"
 // Short description of the application
 DESCRIPTION
-// Secret used to encrypt the local storage
-VUE_APP_SECRET
-
-// Comma separated list of languages available for the users (those below are the ones available for now)
-VUE_APP_I18N_LOCALES=fr,en
-// Default language
-VUE_APP_I18N_LOCALE=en
 ```
 
 ## Media
 Those production images can be used to serve the media handled by an API that stores it in the local FS,
 to do that simply mount the media folder on `/srv/media`.
 
-## Tools used
-* vuetify
-* vuedraggable
-
 ## Progress
-* Creation 🟢100% (new features can always be added)
-* Cleaner code 🟡??% (basically reading everything back and adding comments and modularity)
+* Migration to Vue 3 🟢100%
+* Adding new features in progress! 
 * Testing 🔴0% (It's a pain so no promises)
 
 Credits:

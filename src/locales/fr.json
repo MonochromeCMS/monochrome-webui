@@ -1,4 +1,5 @@
 {
+  "login": "Se connecter",
   "form": {
     "required": "Ce champ ne peut pas être vide",
     "email": "Ce champ doit être un email valide",
@@ -10,7 +11,8 @@
   "roles": {
     "admin": "administrateur",
     "uploader": "éditeur",
-    "user": "utilisateur"
+    "user": "utilisateur",
+    "guest": "chargement..."
   },
   "status": {
     "ongoing": "En cours",

@@ -1,107 +1,78 @@
-<template>
-  <v-form ref="formRef" v-model="valid" @submit.prevent="submit">
-    <v-text-field
-      v-model="username"
-      :label="$t('usernameEmail')"
-      :rules="[f.required]"
-      required
-      outlined
-    />
-    <v-text-field
-      v-model="password"
-      :label="$t('password')"
-      :rules="[f.required]"
-      :append-icon="showPass ? icons.mdiEye : icons.mdiEyeOff"
-      required
-      outlined
-      :type="showPass ? 'text' : 'password'"
-      @click:append="showPass = !showPass"
-    />
-    <div class="text-center">
-      <v-btn type="submit" block color="background" class="text--primary">
-        {{ $t("signIn") }}
-      </v-btn>
-    </div>
-  </v-form>
-</template>
+<script setup lang="ts">
+import { mdiEye, mdiEyeOff } from '@mdi/js'
+import { VForm } from 'vuetify/components'
+import { required } from '@/composables/formRules'
+import type { LoginForm } from '@/api/Auth'
 
-<script lang="ts">
-import { mdiEye, mdiEyeOff } from "@mdi/js"
-import { Component, Ref, Vue } from "vue-property-decorator"
+const { t } = useI18n()
+const auth = useAuth()
 
-import type { TokenResponse } from "@/api/Auth"
-import type { ApiResponse } from "@/api/Base"
-import type { IVForm } from "@/formRules"
-import { required } from "@/formRules"
-import type { UserLogin } from "@/store/user"
+const notifications = useNotifications()
 
-@Component
-export default class LoginForm extends Vue {
-  @Ref() readonly formRef!: IVForm
+const showPass = ref(false)
 
-  f = {
-    required,
-  }
+const form = ref<VForm>()
+const valid = ref(false)
 
-  valid = false
+const formData = reactive({
+  username: '',
+  password: '',
+} as LoginForm)
 
-  icons = {
-    mdiEye,
-    mdiEyeOff,
-  }
+async function submit() {
+  await form.value?.validate()
 
-  username = ""
+  if (valid.value)
+    await login(formData)
+}
 
-  password = ""
+async function login(params: LoginForm) {
+  const response = await auth.login(params)
 
-  showPass = false
-
-  get params(): UserLogin {
-    return {
-      password: this.password,
-      username: this.username,
-    }
-  }
-
-  async submit(): Promise<void> {
-    this.formRef.validate()
-    if (this.valid) {
-      await this.login(this.params)
-    }
-  }
-
-  reset(): void {
-    this.username = ""
-    this.password = ""
-    this.formRef.reset()
-  }
-
-  async login(params: UserLogin): Promise<void> {
-    // this.reset() Not needed as we redirect on success
-    const response: ApiResponse<TokenResponse> = await this.$store.dispatch("login", params)
-
-    if (response.data === null) {
-      const notification = {
-        color: "error",
-        context: this.$t("login"),
-        message: response.error ?? "",
-      }
-      await this.$store.dispatch("pushNotification", notification)
-    }
-  }
+  if (response.data === null)
+    notifications.create('error', t('login'), response.error)
 }
 </script>
 
+<template>
+  <VForm ref="form" v-model="valid" @submit.prevent="submit">
+    <v-text-field
+      v-model="formData.username"
+      :label="t('usernameEmail')"
+      :rules="[required]"
+      variant="outlined"
+      hide-details="auto"
+      required
+      class="my-4"
+    />
+    <v-text-field
+      v-model="formData.password"
+      :label="t('password')"
+      :rules="[required]"
+      :append-inner-icon="showPass ? mdiEye : mdiEyeOff"
+      :type="showPass ? 'text' : 'password'"
+      variant="outlined"
+      hide-details="auto"
+      required
+      class="my-4"
+      @click:append-inner="showPass = !showPass"
+    />
+    <v-btn type="submit" color="background" class="text-primary" block>
+      {{ t("signIn") }}
+    </v-btn>
+  </VForm>
+</template>
+
 <i18n locale="en" lang="yaml">
-usernameEmail: "Username/Email"
-password: "Password"
-signIn: "Sign In"
-login: "Login"
+usernameEmail: Username/Email
+password: Password
+signIn: Sign In
+login: Login
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-usernameEmail: "Nom d'utilisateur/Email"
-password: "Mot de passe"
-signIn: "Se connecter"
-login: "Connexion"
+usernameEmail: 'Nom d''utilisateur/Email'
+password: Mot de passe
+signIn: Se connecter
+login: Connexion
 </i18n>

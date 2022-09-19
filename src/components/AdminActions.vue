@@ -1,37 +1,6 @@
-<template>
-  <v-list color="backgroundAlt">
-    <v-subheader>
-      <div class="capitalize">{{ $t("userActions", { role: displayUserRole }) }}</div>
-    </v-subheader>
-    <v-list-item-group v-model="selectedItem" color="primary">
-      <v-list-item
-        v-for="item in items"
-        :key="item.text"
-        :to="item.to"
-        :href="item.href"
-        :target="item.target"
-      >
-        <v-tooltip :right="!left" :left="left" open-delay="600">
-          <template #activator="{ on, attrs }">
-            <v-list-item-content v-bind="attrs" v-on="on">
-              <v-list-item-title v-text="item.text" />
-            </v-list-item-content>
-          </template>
-          <span v-text="item.text" />
-        </v-tooltip>
-      </v-list-item>
-    </v-list-item-group>
-  </v-list>
-</template>
-
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator"
-
-import Base from "@/api/Base"
-import Manga from "@/api/Manga"
-import Settings from "@/api/Settings"
-import type { Role } from "@/api/User"
-import User from "@/api/User"
+<script setup lang="ts">
+const { t } = useI18n()
+const auth = useAuth()
 
 interface Item {
   text: string
@@ -40,85 +9,92 @@ interface Item {
   target?: string
 }
 
-@Component
-export default class AdminActions extends Vue {
-  @Prop(Boolean) readonly left!: boolean
-
-  selectedItem = null
-
-  get userRole(): Role {
-    return this.$store.getters.userRole
+const items = computed(() => {
+  const result: Item[] = []
+  if (Manga.canCreate(auth.role)) {
+    result.push({
+      text: 'createManga',
+      to: '/manga/new',
+    })
   }
 
-  get displayUserRole(): string {
-    return this.$store.getters.displayUserRole
+  result.push(
+    User.canEdit(auth.role)
+      ? {
+          text: 'handleUsers',
+          to: '/users',
+        }
+      : {
+          text: 'myUser',
+          to: '/users/me',
+        },
+  )
+
+  if (Settings.canEdit(auth.role)) {
+    result.push({
+      text: 'customizeWebsite',
+      to: '/settings',
+    })
   }
 
-  get items(): Item[] {
-    const result: Item[] = []
-    if (Manga.canCreate(this.userRole))
-      result.push({
-        text: this.$tc("createManga"),
-        to: "/manga/new",
-      })
+  result.push(
+    {
+      text: 'logout',
+      to: '/logout',
+    },
+    {
+      href: `${Base.basePath}/docs`,
+      target: '_blank',
+      text: 'apiDocs',
+    },
+  )
 
-    result.push(
-      User.canEdit(this.userRole)
-        ? {
-            text: this.$tc("handleUsers"),
-            to: "/users",
-          }
-        : {
-            text: this.$tc("myUser"),
-            to: "/users/me",
-          },
-    )
-
-    if (Settings.canEdit(this.userRole))
-      result.push({
-        text: this.$tc("customizeWebsite"),
-        to: "/settings",
-      })
-
-    result.push(
-      {
-        text: this.$tc("logout"),
-        to: "/logout",
-      },
-      {
-        href: `${Base.basePath}/docs`,
-        target: "_blank",
-        text: this.$tc("apiDocs"),
-      },
-    )
-
-    return result
-  }
-}
+  return result
+})
 </script>
 
+<template>
+  <v-list>
+    <v-list-subheader class="text-uppercase welcome-back">
+      {{ t("welcomeBack", { username: auth.username }) }}
+    </v-list-subheader>
+    <v-list-item
+      v-for="item in items"
+      :key="item.text"
+      :to="item.to"
+      :href="item.href"
+      :target="item.target"
+      :title="t(item.text)"
+    >
+      <v-tooltip activator="parent" bottom open-delay="600">
+        {{ t(item.text) }}
+      </v-tooltip>
+    </v-list-item>
+  </v-list>
+</template>
+
 <style>
-.capitalize:first-letter {
-  text-transform: uppercase;
-}
+  .welcome-back .v-list-subheader__text {
+    white-space: break-spaces;
+  }
 </style>
 
 <i18n locale="en" lang="yaml">
-userActions: "{role} actions"
-createManga: "Create manga"
-handleUsers: "Handle users"
-myUser: "My user"
-customizeWebsite: "Customize website"
-logout: "Logout"
-apiDocs: "API Documentation"
+welcomeBack: 'Welcome back, {username}'
+createManga: Create manga
+handleUsers: Handle users
+myUser: My user
+customizeWebsite: Customize website
+logout: Logout
+apiDocs: API Documentation
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-userActions: "Actions d'{role}"
-createManga: "Ajouter un manga"
-handleUsers: "Gérer les utilisateurs"
-myUser: "Mon utilisateur"
-customizeWebsite: "Personnaliser le site"
-logout: "Se déconnecter"
-apiDocs: "Documentation API"
+welcomeBack: 'Bienvenue, {username}'
+createManga: Ajouter un manga
+handleUsers: Gérer les utilisateurs
+myUser: Mon utilisateur
+customizeWebsite: Personnaliser le site
+logout: Se déconnecter
+apiDocs: Documentation API
 </i18n>

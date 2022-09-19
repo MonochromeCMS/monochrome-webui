@@ -1,23 +1,20 @@
-import "./registerServiceWorker"
-import "./app.scss"
+import { createApp } from 'vue'
+import VueDOMPurifyHTML from 'vue-dompurify-html'
+import App from './App.vue'
+import vuetify from './plugins/vuetify'
+import i18n from './plugins/i18n'
+import { loadFonts } from './plugins/webfontloader'
+import { router } from './plugins/router'
+import { pinia } from './store'
 
-import Vue from "vue"
-import VueDOMPurifyHTML from "vue-dompurify-html"
+import './main.scss'
 
-import App from "./App.vue"
-import i18n from "./i18n"
-import vuetify from "./plugins/vuetify"
-import router from "./router"
-import store from "./store"
+loadFonts()
 
-Vue.use(VueDOMPurifyHTML)
-
-Vue.config.productionTip = false
-
-new Vue({
-  i18n,
-  render: (h) => h(App),
-  router,
-  store,
-  vuetify,
-}).$mount("#app")
+createApp(App)
+  .use(router)
+  .use(pinia)
+  .use(i18n)
+  .use(vuetify)
+  .use(VueDOMPurifyHTML)
+  .mount('#app')

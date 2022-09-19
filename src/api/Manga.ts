@@ -1,20 +1,18 @@
-import type { AxiosRequestConfig } from "axios"
+import type { AxiosRequestConfig } from 'axios'
 
-import type { Role } from "@/api/User"
-import i18n from "@/i18n"
+import { Base } from './Base'
+import type { Pagination } from './Base'
+import type { ChapterResponse } from './Chapter'
+import type { Role } from '@/api/User'
 
-import type { Pagination } from "./Base"
-import Base from "./Base"
-import type { ChapterResponse } from "./Chapter"
-
-export type Status = "ongoing" | "completed" | "hiatus" | "cancelled"
+export type Status = 'ongoing' | 'completed' | 'hiatus' | 'cancelled'
 
 export interface MangaSchema {
   title: string
   description: string
   author: string
   artist: string
-  year?: number
+  year?: number | null
   status: Status
 }
 
@@ -27,23 +25,29 @@ export interface MangaResponse extends MangaSchema {
 
 type MangaSearchResponse = Pagination<MangaResponse>
 
-export default class Manga extends Base {
-  public static readonly router: string = "/manga"
+export class Manga extends Base {
+  public static readonly router: string = '/manga'
 
   public static canCreate(role: Role) {
-    return ["uploader", "admin"].includes(role)
+    return ['uploader', 'admin'].includes(role)
   }
 
   public static canEdit(manga: MangaResponse, userId: string, role: Role) {
-    return role === "admin" || (role === "uploader" && manga.ownerId === userId)
+    return (
+      role === 'admin' || (role === 'uploader' && manga.ownerId === userId)
+    )
   }
 
-  public static async search(title: string | null = null, limit = 10, offset = 0, delay = false) {
+  public static async search(
+    title: string | null = null,
+    limit = 10,
+    offset = 0,
+    delay = false,
+  ) {
     let url = `?limit=${limit}&offset=${offset}`
 
-    if (title) {
+    if (title)
       url += `&title=${title}`
-    }
 
     const response = await Manga._get(url, {}, delay)
 
@@ -51,7 +55,7 @@ export default class Manga extends Base {
   }
 
   public static async create(data: MangaSchema, auth: AxiosRequestConfig) {
-    const response = await Manga._post("", data, auth)
+    const response = await Manga._post('', data, auth)
 
     return Manga._handleResponse<MangaResponse>(response)
   }
@@ -60,17 +64,21 @@ export default class Manga extends Base {
     const response = await Manga._get(`/${mangaId}`, {}, delay)
 
     const handlers = {
-      404: i18n.tc("api.manga.404"),
+      404: 'api.manga.404',
     }
 
     return Manga._handleResponse<MangaResponse>(response, handlers)
   }
 
-  public static async edit(mangaId: string, data: MangaSchema, auth: AxiosRequestConfig) {
+  public static async edit(
+    mangaId: string,
+    data: MangaSchema,
+    auth: AxiosRequestConfig,
+  ) {
     const response = await Manga._put(`/${mangaId}`, data, auth)
 
     const handlers = {
-      404: i18n.tc("api.manga.404"),
+      404: 'api.manga.404',
     }
 
     return Manga._handleResponse<MangaResponse>(response, handlers)
@@ -80,33 +88,37 @@ export default class Manga extends Base {
     const response = await Manga._delete(`/${mangaId}`, auth)
 
     const handlers = {
-      404: i18n.tc("api.manga.404"),
+      404: 'api.manga.404',
     }
 
     return Manga._handleResponse<string>(response, handlers)
   }
 
-  public static async chapters(mangaId: string, delay = false) {
+  public static async chapters(mangaId: string, auth = {}, delay = false) {
     const url = `/${mangaId}/chapters`
-    const response = await Manga._get(url, {}, delay)
+    const response = await Manga._get(url, auth, delay)
 
     const handlers = {
-      404: i18n.tc("api.manga.404"),
+      404: 'api.manga.404',
     }
 
     return Manga._handleResponse<ChapterResponse[]>(response, handlers)
   }
 
-  public static async setCover(mangaId: string, cover: File, auth: AxiosRequestConfig) {
+  public static async setCover(
+    mangaId: string,
+    cover: File,
+    auth: AxiosRequestConfig,
+  ) {
     const url = `/${mangaId}/cover`
     const form = new FormData()
-    form.append("payload", cover)
+    form.append('payload', cover)
 
-    const response = await Manga._put(url, form, auth, "multipart/form-data")
+    const response = await Manga._put(url, form, auth, 'multipart/form-data')
 
     const handlers = {
-      400: i18n.tc("api.manga.cover_400"),
-      404: i18n.tc("api.manga.404"),
+      400: 'api.manga.cover_400',
+      404: 'api.manga.404',
     }
 
     return Manga._handleResponse<MangaResponse>(response, handlers)

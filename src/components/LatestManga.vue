@@ -1,109 +1,84 @@
-<template>
-  <v-container>
-    <v-card-title
-      class="justify-center lemon-milk"
-      v-text="$t(total <= limit ? 'manga' : 'recentlyAdded')"
-    />
-    <v-row v-if="!loading">
-      <v-col class="pt-0">
-        <v-list three-line color="backgroundAlt">
-          <template v-for="(item, index) in manga">
-            <v-divider v-if="item.divider" :key="index" :inset="item.inset" />
+<script setup lang="ts">
+import type { MangaResponse } from '@/api/Manga'
 
-            <v-list-item v-else :key="item.title" :to="item.to">
-              <v-list-item-avatar size="3rem">
-                <v-img :src="item.avatar" />
-              </v-list-item-avatar>
+const { t } = useI18n()
+const notifications = useNotifications()
 
-              <v-list-item-content>
-                <v-list-item-title v-text="item.title" />
-                <v-list-item-subtitle v-text="item.subtitle" />
-              </v-list-item-content>
-            </v-list-item>
-          </template>
-        </v-list>
-        <div v-if="manga.length === 0" class="text-center mb-2">{{ $t("noManga") }}</div>
-      </v-col>
-    </v-row>
-    <v-row v-else>
-      <v-col>
-        <v-skeleton-loader
-          class="w-100"
-          type="list-item-avatar-three-line, divider, list-item-avatar-three-line"
-        />
-      </v-col>
-    </v-row>
-  </v-container>
-</template>
+const total = ref(0)
+const limit = 5
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator"
+const manga = ref([] as MangaResponse[])
 
-import type { MangaResponse } from "@/api/Manga"
-import Manga from "@/api/Manga"
-import Media from "@/api/Media"
+interface Item {
+  type?: 'divider' | 'card'
+  inset?: boolean
+  prependAvatar?: string
+  title?: string
+  subtitle?: string
+  to?: string
+}
 
-@Component
-export default class LatestManga extends Vue {
-  loading = true
+const items = computed(() =>
+  manga.value.reduce((acc, m) => {
+    if (acc.length)
+      acc.push({ type: 'divider', inset: true })
 
-  rawManga: MangaResponse[] = []
+    acc.push({
+      prependAvatar: Media.cover(m.id, m.version),
+      title: m.title,
+      subtitle: m.description,
+      to: `/manga/${m.id}`,
+    })
 
-  offset = 0
+    return acc
+  }, [] as Item[]),
+)
 
-  limit = 5
+async function getManga() {
+  const response = await Manga.search(null, limit, 0)
 
-  total = 0
-
-  get manga(): any[] {
-    let m = this.rawManga
-      .map((el) => [
-        {
-          avatar: Media.cover(el.id, el.version),
-          subtitle: el.description,
-          title: el.title,
-          to: `/manga/${el.id}`,
-        },
-        { divider: true, inset: true },
-      ])
-      .reduce((acc, el) => [...acc, ...el], [])
-
-    if (m.length !== 0) m.pop()
-    return m
+  if (response.data) {
+    manga.value = response.data.results
+    total.value = response.data.total
   }
-
-  async getManga(): Promise<void> {
-    const response = await Manga.search(null, this.limit, this.offset, this.loading)
-
-    if (response.data) {
-      this.rawManga = response.data.results
-      this.total = response.data.total
-    } else {
-      const notification = {
-        color: "error",
-        context: this.$tc("latestManga"),
-        message: response.error ?? "",
-      }
-      await this.$store.dispatch("pushNotification", notification)
-    }
-
-    this.loading = false
-  }
-
-  mounted(): void {
-    this.getManga()
+  else {
+    notifications.create('error', t('latestManga'), response.error)
   }
 }
+
+onMounted(() => getManga())
 </script>
 
+<template>
+  <v-card-title class="text-center lemon-milk pa-2">
+    {{ t(total <= limit ? "manga" : "recentlyAdded") }}
+  </v-card-title>
+  <v-card-text>
+    <v-row class="pt-0">
+      <v-col>
+        <v-list
+          three-line
+          color="backgroundAlt"
+          :items="items"
+          item-props
+          lines="two"
+        />
+        <div v-if="manga.length === 0" class="text-center mb-2">
+          {{ t("noManga") }}
+        </div>
+      </v-col>
+    </v-row>
+  </v-card-text>
+</template>
+
 <i18n locale="en" lang="yaml">
-latestManga: "Latest manga"
-manga: "Manga"
-recentlyAdded: "Recently added"
+latestManga: Latest manga
+manga: Manga
+recentlyAdded: Recently added
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-latestManga: "Derniers mangas ajoutés"
-manga: "Manga"
-recentlyAdded: "Ajoutés récemment"
+latestManga: Derniers mangas ajoutés
+manga: Manga
+recentlyAdded: Ajoutés récemment
 </i18n>

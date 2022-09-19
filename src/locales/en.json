@@ -1,4 +1,5 @@
 {
+  "login": "Login",
   "form": {
     "required": "This field can not be empty",
     "email": "This field must be a valid email",
@@ -10,7 +11,8 @@
   "roles": {
     "admin": "admin",
     "uploader": "uploader",
-    "user": "user"
+    "user": "user",
+    "guest": "loading..."
   },
   "status": {
     "ongoing": "Ongoing",

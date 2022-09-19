@@ -1,0 +1,3 @@
+extends: '@antfu'
+rules:
+  vue/define-macros-order: off

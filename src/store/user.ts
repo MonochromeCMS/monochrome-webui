@@ -1,119 +1,79 @@
-import type { AxiosRequestConfig } from "axios"
-import type { ActionContext } from "vuex"
+import { defineStore } from 'pinia'
+import i18n from '@/plugins/i18n'
 
-import type { TokenResponse } from "@/api/Auth"
-import Auth from "@/api/Auth"
-import type { ApiResponse } from "@/api/Base"
-import type { Role, UserResponse } from "@/api/User"
-import User from "@/api/User"
-import i18n from "@/i18n"
+import type { LoginForm, TokenResponse } from '@/api/Auth'
 
-interface UserState {
-  token: string
-  refresh: string
-  username?: string
-  email?: string
-  id?: string
-  role?: Role
-  version?: number
-}
+import type { Role, UserResponse } from '@/api/User'
 
-export interface UserLogin {
-  username: string
-  password: string
-}
+export const useAuth = defineStore('user', {
+  state: () => ({
+    token: '',
+    refresh: '',
 
-const state = (): UserState => ({
-  email: undefined,
-  id: undefined,
-  refresh: "",
-  role: undefined,
-  token: "",
-  username: undefined,
-  version: undefined,
+    id: '',
+    role: 'guest' as Role,
+    username: '',
+  }),
+
+  actions: {
+    logout() {
+      this.$patch({
+        token: '',
+        refresh: '',
+
+        id: '',
+        role: 'guest',
+        username: '',
+      })
+    },
+    setToken(payload: TokenResponse) {
+      this.token = payload.access_token
+      if (payload.refresh_token)
+        this.refresh = payload.refresh_token
+    },
+    updateUser(payload: UserResponse) {
+      this.$patch(payload)
+    },
+    async getUserData() {
+      const response = await User.me(this.config)
+
+      if (response.data !== null)
+        this.updateUser(response.data)
+      else
+        this.logout()
+
+      return response
+    },
+    async login(form: LoginForm) {
+      const response = await Auth.login(form)
+
+      if (response.data !== null) {
+        this.setToken(response.data)
+        await this.getUserData()
+      }
+      return response
+    },
+  },
+
+  getters: {
+    config: state =>
+      state.token
+        ? {
+            headers: {
+              Accept: '*/*',
+              Authorization: 'Bearer '.concat(state.token),
+            },
+            withCredentials: true,
+          }
+        : {},
+    displayUserRole: state =>
+    // @ts-expect-error this returns a weird TS error
+      state.role ? i18n.global.t(`roles.${state.role}`) : undefined,
+    isConnected: state => !!state.token,
+  },
+
+  persist: {
+    key: 'monochrome-state-user',
+    paths: ['token', 'refresh'],
+  },
 })
-
-const mutations = {
-  logout(state: UserState): void {
-    state.token = ""
-    state.username = undefined
-    state.role = undefined
-    state.email = undefined
-    state.id = undefined
-    state.version = undefined
-  },
-  setToken(state: UserState, payload: TokenResponse): void {
-    state.token = payload.access_token
-    state.refresh = payload.refresh_token || state.refresh
-  },
-  updateUser(state: UserState, payload: UserResponse): void {
-    state.username = payload.username
-    state.role = payload.role
-    state.email = payload.email
-    state.id = payload.id
-    state.version = payload.version
-  },
-}
-
-const getters = {
-  authConfig(state: UserState): AxiosRequestConfig {
-    return {
-      headers: {
-        Accept: "*/*",
-        Authorization: "Bearer ".concat(state.token),
-      },
-      withCredentials: true,
-    }
-  },
-  displayUserRole(state: UserState): string | null {
-    return state.role ? i18n.tc(`roles.${state.role}`) : null
-  },
-  isConnected(state: UserState): boolean {
-    const result = state.token && state.id
-    return !!result
-  },
-  refreshToken(state: UserState): string {
-    return state.refresh
-  },
-  userId(state: UserState): string | null {
-    return state.id ?? null
-  },
-  userRole(state: UserState): string | null {
-    return state.role ?? null
-  },
-}
-
-const actions = {
-  async getUserData({
-    getters,
-    commit,
-  }: ActionContext<UserState, any>): Promise<ApiResponse<UserResponse>> {
-    const response = await User.me(getters.authConfig)
-
-    if (response.data) {
-      commit("updateUser", response.data)
-    } else if (response.status === 401) {
-      commit("logout")
-    }
-    return response
-  },
-  async login(
-    { commit, dispatch }: ActionContext<UserState, any>,
-    { username, password }: UserLogin,
-  ): Promise<ApiResponse<TokenResponse>> {
-    const response = await Auth.login(username, password)
-
-    if (response.data) {
-      commit("setToken", response.data)
-      await dispatch("getUserData")
-    }
-    return response
-  },
-}
-
-export default {
-  actions,
-  getters,
-  mutations,
-  state,
-}

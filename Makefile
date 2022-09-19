@@ -4,7 +4,7 @@ buildkit ?= 1 # If buildkit should be used
 test_exit ?= 0 # If a failed test should stop everything
 dir ?= `pwd`
 
-DOCKER_DEV = docker-compose run --rm -v "`pwd`:/mnt" -w "/mnt" webui
+DOCKER_DEV = docker-compose run --rm webui
 
 
 .PHONY: help
@@ -33,16 +33,14 @@ logs:	## Read the container's logs
 
 .PHONY: sh
 sh: ## Open a shell in the running container
-	docker-compose exec api bash
+	docker-compose exec webui bash
 
 # Utils
 
 .PHONY: format
 format:  ## Format project code
-	@$DOCKER_DEV yarn lint
+	docker-compose run --rm webui yarn lint:fix
 
-.PHONY: secret
-secret: ## Generate a secret
-	@openssl rand -hex 30
-
-# TODO: TESTING
+.PHONY: test
+test: ## Run tests
+	docker-compose run --rm webui yarn lint && yarn typecheck

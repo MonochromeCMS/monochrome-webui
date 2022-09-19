@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 'lts/*'
-          cache: 'yarn'
+          cache: yarn
 
       - name: Install dependencies
         id: node-deps
@@ -53,13 +53,13 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_JOLLY_MOSS_0A7D63503 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
-          action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+          action: upload
+          # ##### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
-          output_location: "dist" # Built app content directory - optional
-          app_build_command: 'echo 1'
-          ###### End of Repository/Build Configurations ######
+          app_location: / # App source code path
+          output_location: dist # Built app content directory - optional
+          app_build_command: echo 1
+          # ##### End of Repository/Build Configurations ######
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -71,4 +71,4 @@ jobs:
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_JOLLY_MOSS_0A7D63503 }}
-          action: "close"
+          action: close

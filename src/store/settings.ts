@@ -1,46 +1,27 @@
-import type { ActionContext } from "vuex"
+import { defineStore } from 'pinia'
+import type { SettingsSchema } from '@/api/Settings'
 
-import type { ApiResponse } from "@/api/Base"
-import type { SettingsSchema } from "@/api/Settings"
-import Settings from "@/api/Settings"
+export const useSettings = defineStore('settings', {
+  state: () => ({
+    about: '',
+    title1: '',
+    title2: '',
+  }),
+  actions: {
+    set(payload: SettingsSchema) {
+      this.$patch(payload)
+    },
+    async get() {
+      const response = await Settings.get()
 
-const state = (): SettingsSchema => ({
-  about: undefined,
-  title1: undefined,
-  title2: undefined,
+      if (response.data !== null) {
+        this.$patch(response.data)
+
+        this.title1 ||= 'Mono'
+        this.title2 ||= 'chrome'
+      }
+
+      return response
+    },
+  },
 })
-
-const mutations = {
-  setSettings(state: SettingsSchema, payload: SettingsSchema): void {
-    state.about = payload.about
-    state.title1 = payload.title1
-    state.title2 = payload.title2
-  },
-}
-
-const getters = {
-  settings(state: SettingsSchema): SettingsSchema {
-    return state
-  },
-}
-
-const actions = {
-  async getSettings({
-    commit,
-  }: ActionContext<SettingsSchema, any>): Promise<ApiResponse<SettingsSchema>> {
-    const response = await Settings.get()
-
-    if (response.data) {
-      commit("setSettings", response.data)
-    }
-
-    return response
-  },
-}
-
-export default {
-  actions,
-  getters,
-  mutations,
-  state,
-}

@@ -1,103 +1,98 @@
-<template>
-  <div>
-    <v-skeleton-loader v-if="loading" type="image" class="image-skeleton" :height="height" />
-    <v-carousel
-      v-else
-      v-model="model"
-      cycle
-      :show-arrows="false"
-      class="rounded-lg"
-      :height="height"
-    >
-      <v-carousel-item v-for="manga in mangaList" :key="manga.id" :to="`/manga/${manga.id}`">
-        <v-parallax
-          :height="height"
-          :src="getMangaImage(manga.id, manga.version)"
-          class="parallax-gradient"
-        >
-          <v-row class="fill-height px-3 row-column">
-            <div class="text-h2">{{ manga.title }}</div>
-            <div class="text-subtitle-1 pt-2">{{ manga.description }}</div>
-          </v-row>
-        </v-parallax>
-      </v-carousel-item>
-    </v-carousel>
-  </div>
-</template>
+<script setup lang="ts">
+import type { MangaResponse } from '@/api/Manga'
+import { Media } from '@/api/Media'
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator"
+const { t } = useI18n()
+const notifications = useNotifications()
 
-import type { MangaResponse } from "@/api/Manga"
-import Manga from "@/api/Manga"
-import Media from "@/api/Media"
+const model = ref(0)
 
-@Component
-export default class HeroBanner extends Vue {
-  model = null
+const height = 400
+const amount = 3
 
-  loading = true
+const manga = ref([] as MangaResponse[])
 
-  height = 400
+async function getManga() {
+  const response = await Manga.search(null, amount, 0)
 
-  mangaList: MangaResponse[] = []
-
-  getMangaImage(id: string, version: number) {
-    return Media.cover(id, version)
-  }
-
-  async getManga() {
-    const response = await Manga.search(null, 3, 0, this.loading)
-
-    if (response.data != null) {
-      this.mangaList = response.data.results
-    } else {
-      const notification = {
-        color: "error",
-        context: this.$tc("latestManga"),
-        message: response.error ?? "",
-      }
-      await this.$store.dispatch("pushNotification", notification)
-    }
-
-    this.loading = false
-  }
-
-  mounted() {
-    this.getManga()
-  }
+  if (response.data !== null)
+    manga.value = response.data.results
+  else
+    await notifications.create('error', t('latestManga'), response.error)
 }
+
+onMounted(getManga)
 </script>
+
+<template>
+  <v-carousel
+    v-model="model"
+    :show-arrows="false"
+    :height="height"
+    class="rounded-lg"
+    cycle
+  >
+    <v-carousel-item v-for="m in manga" :key="m.id">
+      <parallax
+        :height="height"
+        :src="Media.cover(m.id, m.version)"
+      >
+        <router-link
+          :to="`/manga/${m.id}`"
+          class="row-column parallax-gradient"
+        >
+          <div class="text-h5 text-sm-h4 text-md-h3 text-lg-h2 px-4 pb-2">
+            {{ m.title }}
+          </div>
+          <div
+            class="text-subtitle-2 text-md-subtitle-1 text-justify px-4 pt-2 pb-16"
+          >
+            {{ m.description }}
+          </div>
+        </router-link>
+      </parallax>
+    </v-carousel-item>
+  </v-carousel>
+</template>
 
 <style lang="scss">
 .parallax-gradient {
   position: relative;
-  padding-bottom: 5rem;
-
   &::before {
     content: "";
     position: absolute;
-    background: linear-gradient(to right, black, rgba(0, 0, 0, 0.3));
+    background: linear-gradient(
+      to right,
+      rgba(var(--v-theme-background), 0.7) 0%,
+      rgba(var(--v-theme-background), 0.4) 50%,
+      rgba(var(--v-theme-background), 0.7) 100%
+    );
     height: 100%;
     width: 100%;
-    z-index: 2;
+    z-index: 1;
   }
 }
 
 .row-column {
+  display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-}
+  justify-content: end;
 
-.image-skeleton .v-skeleton-loader__image {
   height: 100%;
+  margin: 0;
+
+  text-decoration: none;
+  color: var(--v-theme-primary);
+  div {
+    z-index: 2;
+  }
 }
 </style>
 
 <i18n locale="en" lang="yaml">
-latestManga: "Latest manga"
+latestManga: Latest manga
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-latestManga: "Derniers mangas ajoutés"
+latestManga: Derniers mangas ajoutés
 </i18n>

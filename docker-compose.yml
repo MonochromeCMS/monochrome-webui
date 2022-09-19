@@ -1,15 +1,15 @@
-version: "3.4"
+version: '3.4'
 
 services:
   webui:
-    image: monochrome-webui
+    image: monochrome-webui-vue3
     build:
-      context: '.'
+      context: .
       target: dev
     env_file:
-      - ".env"
+      - .env
     volumes:
-      - ".:/mnt"
+      - '.:/mnt'
     working_dir: /mnt
     ports:
       - 8080:80

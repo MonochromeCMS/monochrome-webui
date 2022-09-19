@@ -1,0 +1,39 @@
+@font-face {
+  font-family: "LemonMilk";
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+000-5FF;
+  src: local("LemonMilk"),
+    url(@/assets/LemonMilk/LemonMilk.woff2) format("woff2"),
+    url(@/assets/LemonMilk/LemonMilk.woff) format("woff");
+}
+
+.lemon-milk {
+  font-family: LemonMilk, Roboto, serif;
+}
+
+.nav-list {
+  .v-list-subheader__text,
+  .v-list-item-title {
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: right;
+    width: 100%;
+  }
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.capitalize:first-letter {
+  text-transform: uppercase !important;
+}
+
+.v-dialog .v-overlay__content {
+  width: 100%;
+}

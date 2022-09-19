@@ -2,29 +2,30 @@ FROM node:lts-slim as dev
 WORKDIR /app
 COPY package.json ./
 COPY yarn.lock ./
-RUN yarn && yarn cache clean
+RUN --mount=type=cache,target=/cache/yarn \
+  yarn --cache-folder /cache/yarn --frozen-lockfile
 
 ARG DOMAIN_NAME=localhost
 ARG PROTOCOL=http
-ARG PUBLIC_URL=/
+ARG BASE_URL=/
+
 ARG TITLE=Monochrome
 ARG DESCRIPTION
-ARG VUE_APP_MEDIA_PATH=$PROTOCOL://$DOMAIN_NAME/media
-ARG VUE_APP_API_PATH=$PROTOCOL://$DOMAIN_NAME/api
-ARG VUE_APP_SECRET
 
-ENV VUE_APP_MEDIA_PATH=$VUE_APP_MEDIA_PATH
-ENV VUE_APP_API_PATH=$VUE_APP_API_PATH
-ENV VUE_APP_SECRET=$VUE_APP_SECRET
+ARG VITE_MEDIA_PATH=/media
+ARG VITE_API_PATH=/api
+
+ENV VITE_MEDIA_PATH=$VITE_MEDIA_PATH
+ENV VITE_API_PATH=$VITE_API_PATH
 
 COPY . .
-CMD ["yarn", "serve"]
+CMD ["yarn", "dev", "--port=80", "--host=0.0.0.0"]
 
 FROM dev as build
 RUN yarn build
 
-FROM nginx:alpine as nginx
-COPY ./nginx.conf /etc/nginx/nginx.conf
+FROM flashspys/nginx-static as nginx
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 WORKDIR /srv
 COPY --from=build /app/dist .
 RUN mkdir /srv/media

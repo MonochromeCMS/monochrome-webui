@@ -1,34 +1,45 @@
-import Vue from "vue"
-import Vuetify from "vuetify/lib/framework"
-import colors from "vuetify/lib/util/colors"
+// Styles
+import 'vuetify/styles'
 
-import i18n from "../i18n"
+// Vuetify
+import { createVuetify } from 'vuetify'
+import type { ThemeDefinition } from 'vuetify'
+// import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
+import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 
-Vue.use(Vuetify)
-
-export default new Vuetify({
-  icons: {
-    iconfont: "mdiSvg",
+const lightTheme: ThemeDefinition = {
+  dark: false,
+  colors: {
+    background: '#EEEEEE',
+    backgroundAlt: '#FFFFFF',
+    primary: '#000000',
+    secondary: '#616161',
   },
-  lang: {
-    t: (key, ...params) => i18n.tc(key, 0, params),
+}
+const darkTheme: ThemeDefinition = {
+  dark: true,
+  colors: {
+    background: '#000000',
+    backgroundAlt: '#212121',
+    primary: '#FFFFFF',
+    secondary: '#9E9E9E',
+  },
+}
+
+export default createVuetify({
+  // locale: createVueI18nAdapter(),
+  icons: {
+    defaultSet: 'mdi',
+    aliases,
+    sets: {
+      mdi,
+    },
   },
   theme: {
+    defaultTheme: 'light',
     themes: {
-      dark: {
-        accent: colors.purple.accent4,
-        background: colors.shades.black,
-        backgroundAlt: colors.grey.darken4,
-        primary: colors.shades.white,
-        secondary: colors.grey.lighten3,
-      },
-      light: {
-        accent: colors.purple.accent1,
-        background: colors.grey.lighten3,
-        backgroundAlt: colors.shades.white,
-        primary: colors.shades.black,
-        secondary: colors.grey.darken3,
-      },
+      light: lightTheme,
+      dark: darkTheme,
     },
   },
 })

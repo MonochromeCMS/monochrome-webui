@@ -1,70 +1,67 @@
+<script setup lang="ts">
+import type { ChapterResponse } from '@/api/Chapter'
+
+const props = defineProps<{
+  chapter: ChapterResponse
+  webtoon: boolean
+  nextChapter: string | null
+  previousChapter: string | null
+}>()
+
+const emits = defineEmits<{
+  (e: 'lastPage'): void
+}>()
+
+const { t } = useI18n()
+const reader = useReader()
+const chapterId = useRouteSingleParam('chapterId')
+
+const currentPage = ref(1)
+const fit = computed(() => props.webtoon ? 'mx-auto' : reader.fit)
+const width = computed(() => props.webtoon ? reader.width : undefined)
+
+function page(index: number) {
+  return Media.page(props.chapter.mangaId, props.chapter.id, index, props.chapter.version)
+}
+
+function goToChapter(newChapter: string) {
+  chapterId.value = newChapter
+}
+
+function pageVisible(index: number) {
+  currentPage.value = index
+
+  if (index === props.chapter.length)
+    emits('lastPage')
+}
+
+const urls = computed(() => Array.from({ length: props.chapter.length }, (_, i) => [page(i + 1)]))
+
+useImageLoader(urls, computed(() => currentPage.value - 1))
+</script>
+
 <template>
   <v-row class="ma-0">
-    <v-col cols="12" class="pa-0">
-      <v-btn text :width="width" :class="fit" class="d-block mb-3" @click="previousChapter">
-        {{ $t("previousChapter") }}
+    <v-col v-if="previousChapter" cols="12" class="pa-0">
+      <v-btn block variant="text" :width="width" :class="fit" @click="goToChapter(previousChapter || '')">
+        {{ t('previousChapter') }}
       </v-btn>
     </v-col>
-    <v-col v-for="index in length" :key="page(index)" :class="webtoon ? 'webtoon' : ''" cols="12">
-      <v-img contain :class="fit" :width="width" :src="page(index)" :lazy-src="defaultImage">
-        <template #placeholder>
-          <v-row class="fill-height ma-0" align="center" justify="center">
-            <v-progress-circular indeterminate />
-          </v-row>
-        </template>
-      </v-img>
+    <v-col
+      v-for="index in chapter.length"
+      :key="page(index)"
+      cols="12"
+      class="pa-0"
+    >
+      <image-preload :class="fit" :width="width" :src="page(index)" @visible="pageVisible(index)" />
     </v-col>
-    <v-col cols="12" class="pa-0">
-      <v-btn text :width="width" :class="fit" class="d-block mt-3" @click="nextChapter">
-        {{ $t("nextChapter") }}
+    <v-col v-if="nextChapter" cols="12" class="pa-0">
+      <v-btn block variant="text" :width="width" :class="fit" @click="goToChapter(nextChapter || '')">
+        {{ t('nextChapter') }}
       </v-btn>
     </v-col>
   </v-row>
 </template>
-
-<script lang="ts">
-import { Component, Emit, Prop, Vue } from "vue-property-decorator"
-
-import Media from "@/api/Media"
-
-@Component
-export default class VerticalReader extends Vue {
-  @Prop(String) readonly mangaId!: string
-
-  @Prop(String) readonly chapterId!: string
-
-  @Prop(Number) readonly version!: number
-
-  @Prop(Number) readonly length!: number
-
-  @Prop(Boolean) readonly webtoon!: boolean
-
-  defaultImage =
-    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAFUlEQVQ4y2NgGAWjYBSMglEwCqgDAAZUAAFDhx+cAAAAAElFTkSuQmCC"
-
-  @Emit("next")
-  nextChapter() {
-    return true
-  }
-
-  @Emit("previous")
-  previousChapter() {
-    return true
-  }
-
-  get fit(): string {
-    return this.webtoon ? "mx-auto" : this.$store.getters.getFit
-  }
-
-  get width(): string {
-    return !this.webtoon ? null : this.$store.getters.getWidth
-  }
-
-  page(index: number): string {
-    return Media.page(this.mangaId, this.chapterId, index, this.version)
-  }
-}
-</script>
 
 <style lang="scss">
 .webtoon {
@@ -86,11 +83,11 @@ export default class VerticalReader extends Vue {
 </style>
 
 <i18n locale="en" lang="yaml">
-previousChapter: "Previous chapter"
-nextChapter: "Next chapter"
+previousChapter: Previous chapter
+nextChapter: Next chapter
 </i18n>
 
 <i18n locale="fr" lang="yaml">
-previousChapter: "Chapitre précédant"
-nextChapter: "Chapitre suivant"
+previousChapter: Chapitre précédant
+nextChapter: Chapitre suivant
 </i18n>

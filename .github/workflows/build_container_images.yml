@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  BASE_IMAGE_NGINX: 'nginx:1.21-alpine'
+  BASE_IMAGE_NGINX: 'flashspys/nginx-static'
   BASE_IMAGE_CADDY: 'caddy:2.4.5-alpine'
   BASE_IMAGE_PLATFORMS: 'linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x'
 
@@ -59,13 +59,12 @@ jobs:
           build_date=$(date "+%F")
           echo "::set-output name=build_date::$build_date"
 
-
       - name: Node.js setup
         id: node-setup
         uses: actions/setup-node@v2
         with:
           node-version: 'lts/*'
-          cache: 'yarn'
+          cache: yarn
 
       - name: Install dependencies
         id: node-deps
@@ -77,14 +76,11 @@ jobs:
         env:
           DOMAIN_NAME: ${{ secrets.domain_name }}
           TITLE: ${{ secrets.app_title }}
-          VUE_APP_MEDIA_PATH: ${{ secrets.media_path }}
-          VUE_APP_API_PATH: ${{ secrets.api_path }}
+          VITE_MEDIA_PATH: ${{ secrets.media_path }}
+          VITE_API_PATH: ${{ secrets.api_path }}
           DESCRIPTION: ${{ secrets.app_description }}
-          VUE_APP_SECRET: ${{ secrets.session_secret }}
           PROTOCOL: ${{ secrets.protocol }}
-          PUBLIC_URL: ${{ secrets.public_url }}
-          VUE_APP_I18N_LOCALES: ${{ secrets.i18n_locales }}
-          VUE_APP_I18N_LOCALE: ${{ secrets.i18n_locale }}
+          BASE_URL: ${{ secrets.public_url }}
       - name: Build and push nginx release
         id: docker_build_release_nginx
         uses: docker/build-push-action@v2
