@@ -50,7 +50,7 @@ watchEffect(getManga)
     </v-col>
   </v-row>
   <v-row class="ma-0">
-    <v-col v-if="manga.length === 0" cols="12">
+    <v-col v-if="manga.length === 0" cols="12" class="text-center">
       {{ t(search ? "noMangaFound" : "noManga") }}
     </v-col>
     <v-col v-for="item in manga" :key="item.id" cols="12" sm="6" md="4" lg="3" xl="2">

@@ -26,6 +26,7 @@ onMounted(getManga)
 
 <template>
   <v-carousel
+    v-if="manga.length > 0"
     v-model="model"
     :show-arrows="false"
     :height="height"
