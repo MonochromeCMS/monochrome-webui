@@ -6,53 +6,46 @@ const {
   updateServiceWorker,
 } = useRegisterSW()
 
+const { t } = useI18n()
+
 const close = async () => {
   needRefresh.value = false
 }
 </script>
 
 <template>
-  <div
-    v-if="needRefresh"
-    class="pwa-toast"
-    role="alert"
-  >
-    <div class="message">
-      <span>
-        New content available, click on reload button to update.
-      </span>
-    </div>
-    <button v-if="needRefresh" @click="updateServiceWorker()">
-      Reload
-    </button>
-    <button @click="close">
-      Close
-    </button>
-  </div>
+  <v-card v-if="needRefresh" class="pwa-toast ma-4">
+    <v-card-text>
+      {{ t('newVersionAvailable') }}
+    </v-card-text>
+    <v-card-actions>
+      <v-spacer />
+      <v-btn @click="updateServiceWorker()" color="success">
+        {{ t('update') }}
+      </v-btn>
+      <v-btn variant="text" @click="close">
+        {{ t('close') }}
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
-  <style>
-  .pwa-toast {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    margin: 16px;
-    padding: 12px;
-    border: 1px solid #8885;
-    border-radius: 4px;
-    z-index: 1;
-    text-align: left;
-    box-shadow: 3px 4px 5px 0 #8885;
-    background-color: white;
-  }
-  .pwa-toast .message {
-    margin-bottom: 8px;
-  }
-  .pwa-toast button {
-    border: 1px solid #8885;
-    outline: none;
-    margin-right: 5px;
-    border-radius: 2px;
-    padding: 3px 10px;
-  }
-  </style>
+<style>
+.pwa-toast {
+  position: fixed !important;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+}
+</style>
+
+<i18n locale="en" lang="yaml">
+newVersionAvailable: A new version is available, do you want to update?
+update: Update
+</i18n>
+
+<i18n locale="fr" lang="yaml">
+newVersionAvailable: Une nouvelle version est disponible, voulez-vous la mettre à jour ?
+update: Mettre à jour
+</i18n>
+  
