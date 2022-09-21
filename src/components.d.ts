@@ -46,6 +46,7 @@ declare module '@vue/runtime-core' {
     ReadButton: typeof import('./components/ReadButton.vue')['default']
     ReaderMenu: typeof import('./components/ReaderMenu/index.vue')['default']
     ReaderMenuDialog: typeof import('./components/ReaderMenu/Dialog.vue')['default']
+    ReloadPrompt: typeof import('./components/ReloadPrompt.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SettingsForm: typeof import('./components/SettingsForm/index.vue')['default']

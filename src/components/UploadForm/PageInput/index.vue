@@ -23,12 +23,13 @@ const notifications = useNotifications()
 const pageOrder = useVModel(props, 'modelValue', emits)
 
 const pages = ref([] as UploadedBlobResponse[])
+const pageOrderComp = computed(() => pages.value.map(page => page.id))
 const loading = ref(false)
 const deleting = ref(false)
 const progress = ref(0)
 
-watch(pages, (pages) => {
-  pageOrder.value = pages.map(page => page.id)
+watch(pageOrderComp, (pages) => {
+  pageOrder.value = pages
 })
 
 async function updateFile(ev: InputEvent) {
