@@ -6,6 +6,14 @@ services:
     build:
       context: .
       target: dev
+      args:
+        - PROTOCOL
+        - DOMAIN_NAME
+        - BASE_URL
+        - TITLE
+        - DESCRIPTION
+        - VITE_API_PATH
+        - VITE_MEDIA_PATH
     env_file:
       - .env
     volumes:

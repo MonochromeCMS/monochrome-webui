@@ -23,6 +23,7 @@ const fullUrl = `${protocol}://${domainName}${baseUrl}`
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: baseUrl,
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
@@ -70,6 +71,6 @@ export default defineConfig({
         },
       },
     ]),
-    VitePWA({ registerType: 'autoUpdate' }),
+    VitePWA({ scope: baseUrl }),
   ],
 })

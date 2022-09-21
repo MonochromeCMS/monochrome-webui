@@ -31,5 +31,6 @@ onMounted(() => {
     </v-main>
     <notifications />
     <theme-toggle />
+    <ReloadPrompt />
   </v-app>
 </template>
