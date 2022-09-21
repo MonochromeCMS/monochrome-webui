@@ -74,8 +74,8 @@ export default defineConfig({
     VitePWA({
       scope: baseUrl,
       workbox: {
-        navigateFallbackDenylist: [/^\/api/,/^\/media/],
-      }
+        navigateFallbackDenylist: [/^\/api/, /^\/media/],
+      },
     }),
   ],
 })

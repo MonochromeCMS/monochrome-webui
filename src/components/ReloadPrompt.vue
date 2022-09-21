@@ -20,7 +20,7 @@ const close = async () => {
     </v-card-text>
     <v-card-actions>
       <v-spacer />
-      <v-btn @click="updateServiceWorker()" color="success">
+      <v-btn color="success" @click="updateServiceWorker()">
         {{ t('update') }}
       </v-btn>
       <v-btn variant="text" @click="close">
@@ -48,4 +48,3 @@ update: Update
 newVersionAvailable: Une nouvelle version est disponible, voulez-vous la mettre à jour ?
 update: Mettre à jour
 </i18n>
-  
