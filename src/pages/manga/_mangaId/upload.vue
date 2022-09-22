@@ -39,7 +39,7 @@ watchEffect(() => {
           </v-card-title>
           <manga-row :manga="manga" :cover="cover" class="bg-background rounded mx-4" />
           <v-card-text>
-            <upload-form v-if="manga" :manga-id="mangaId.value" />
+            <upload-form v-if="manga" :manga-id="mangaId" />
           </v-card-text>
         </v-card>
       </v-col>

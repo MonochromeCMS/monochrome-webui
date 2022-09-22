@@ -22,8 +22,8 @@ const reader = useReader()
 
 const chapterId = useRouteSingleParam('chapterId')
 
-const fit = {
-  get value() {
+const fit = computed({
+  get() {
     switch (reader.fit) {
       case 'width':
         return 0
@@ -33,7 +33,7 @@ const fit = {
         return 1
     }
   },
-  set value(value: number) {
+  set(value: number) {
     switch (value) {
       case 0:
         reader.fit = 'width'
@@ -45,16 +45,16 @@ const fit = {
         reader.fit = 'auto'
     }
   },
-}
+})
 
-const width = {
-  get value() {
+const width = computed({
+  get() {
     return Number(reader.width.slice(0, -1))
   },
-  set value(value: number) {
+  set(value: number) {
     reader.width = `${value}%`
   },
-}
+})
 
 const readerMode = computed(() => props.chapter.webtoon ? 'webtoon' : reader.readerMode)
 
@@ -83,28 +83,27 @@ const chapterItems = computed(() => props.chapters.map(chapter => ({
       </v-btn>
     </v-card-title>
     <v-card-text>
-      <v-select :label="t('chapter')" :model-value="chapterId.value" :items="chapterItems" variant="outlined" @update:model-value="chapterId.value = $event" />
+      <v-select v-model="chapterId" :label="t('chapter')" :items="chapterItems" variant="outlined" />
       <v-divider />
       <div class="text-h6 my-3">
         {{ t('readerSettings') }}
       </div>
-      <v-select :model-value="readerMode" :label="t('readerMode')" :items="modeItems" variant="outlined" @update:model-value="reader.readerMode = $event" />
+      <v-select v-model="readerMode" :label="t('readerMode')" :items="modeItems" variant="outlined" />
       <!-- Width setting -->
       <template v-if="readerMode === 'webtoon'">
         <div class="text-caption mt-3">
           {{ t('width') }}
         </div>
         <v-slider
-          :model-value="width.value"
+          v-model="width"
           step="5"
           min="5"
           max="100"
           thumb-color="primary"
           thumb-label
-          @update:model-value="width.value = $event"
         >
           <template #thumb-label>
-            {{ width.value }}%
+            {{ width }}%
           </template>
         </v-slider>
       </template>
@@ -114,7 +113,7 @@ const chapterItems = computed(() => props.chapters.map(chapter => ({
           {{ t('imageFit') }}
         </v-col>
         <v-col class="text-right pa-2">
-          <v-btn-toggle :model-value="fit.value" divided mandatory @update:model-value="fit.value = $event">
+          <v-btn-toggle v-model="fit" divided mandatory>
             <v-btn color="primary">
               <v-icon>{{ mdiArrowExpandHorizontal }}</v-icon>
             </v-btn>

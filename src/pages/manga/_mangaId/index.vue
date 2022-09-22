@@ -42,17 +42,17 @@ watchEffect(getManga)
                 >
                   {{ t('startReading') }}
                 </v-btn>
-                <v-btn v-if="canUpload" :to="`/manga/${mangaId.value}/upload`" color="success">
+                <v-btn v-if="canUpload" :to="`/manga/${mangaId}/upload`" color="success">
                   {{ t('addChapter') }}
                 </v-btn>
-                <v-btn v-if="canEdit" :to="`/manga/${mangaId.value}/edit`" color="warning">
+                <v-btn v-if="canEdit" :to="`/manga/${mangaId}/edit`" color="warning">
                   {{ t('editManga') }}
                 </v-btn>
-                <manga-delete-button v-if="canEdit" :manga-id="mangaId.value" />
+                <manga-delete-button v-if="canEdit" :manga-id="mangaId" />
               </div>
             </manga-row>
 
-            <manga-chapters v-model:first-chapter="firstChapter" :manga-id="mangaId.value" />
+            <manga-chapters v-model:first-chapter="firstChapter" :manga-id="mangaId" />
           </template>
         </v-card>
       </v-col>

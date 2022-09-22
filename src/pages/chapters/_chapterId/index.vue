@@ -89,7 +89,7 @@ watchEffect(() => {
         />
       </v-col>
     </v-row>
-    <comment-box :chapter-id="chapterId.value" />
+    <comment-box :chapter-id="chapterId" />
     <reader-menu v-if="chapter" :chapter="chapter" :chapters="chapters" />
   </v-container>
 </template>
