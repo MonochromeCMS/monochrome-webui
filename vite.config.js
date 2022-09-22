@@ -1,6 +1,6 @@
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'url'
-import { defineConfig } from 'vite'
+import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
@@ -30,6 +30,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    splitVendorChunkPlugin(),
     vue(),
     vuetify({ autoImport: true }),
     Pages({ routeStyle: 'nuxt' }),
