@@ -48,7 +48,7 @@ export default defineConfig({
     }),
     createHtmlPlugin({
       minify: false,
-      entry: 'src/main.ts',
+      entry: '/src/main.ts',
       inject: {
         data: {
           baseUrl,
