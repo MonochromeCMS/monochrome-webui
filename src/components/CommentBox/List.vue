@@ -26,7 +26,7 @@ const offset = computed(() => (page.value - 1) * limit)
 
 function refresh() {
   replyTo.value = null
-  if (page.value === 1)
+  if (page.value === 1 && chapterId.value)
     getComments()
   else
     page.value = 1
@@ -53,7 +53,7 @@ async function getComments() {
 
 watch(chapterId, refresh)
 
-watchEffect(getComments)
+watchEffect(() => { if (chapterId.value) getComments() })
 
 defineExpose({ refresh })
 </script>

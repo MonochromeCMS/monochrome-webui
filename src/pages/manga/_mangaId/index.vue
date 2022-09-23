@@ -23,7 +23,7 @@ async function getManga() {
     error.value = response
 }
 
-watchEffect(getManga)
+watchEffect(() => { if(mangaId.value) getManga() })
 </script>
 
 <template>

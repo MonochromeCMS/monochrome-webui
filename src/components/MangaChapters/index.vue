@@ -42,7 +42,7 @@ watch(chapters, () => {
     firstChapter.value = chapters.value[chapters.value.length - 1].id
 })
 
-watchEffect(getChapters)
+watchEffect(() => {if(props.mangaId) getChapters()})
 </script>
 
 <template>

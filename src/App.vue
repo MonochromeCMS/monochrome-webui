@@ -27,7 +27,12 @@ onMounted(() => {
   <v-app>
     <nav-bar />
     <v-main class="background">
-      <router-view />
+      <router-view v-slot="{ Component }">
+          <keep-alive>
+              <component :is="Component" />
+          </keep-alive>
+      </router-view>
+
     </v-main>
     <notifications />
     <theme-toggle />
