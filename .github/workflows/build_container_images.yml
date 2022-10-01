@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get release
         id: get_release
@@ -61,7 +61,7 @@ jobs:
 
       - name: Node.js setup
         id: node-setup
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
           cache: yarn
@@ -81,11 +81,13 @@ jobs:
           DESCRIPTION: ${{ secrets.app_description }}
           PROTOCOL: ${{ secrets.protocol }}
           BASE_URL: ${{ secrets.public_url }}
+
       - name: Build and push nginx release
         id: docker_build_release_nginx
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
+          build-contexts: dist=dist
           file: .github/GHActions_Dockerfile
           platforms: ${{ env.BASE_IMAGE_PLATFORMS }}
           push: true
@@ -106,9 +108,10 @@ jobs:
 
       - name: Build and push caddy release
         id: docker_build_release_caddy
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
+          build-contexts: dist=dist
           file: .github/GHActions_Dockerfile
           platforms: ${{ env.BASE_IMAGE_PLATFORMS }}
           push: true

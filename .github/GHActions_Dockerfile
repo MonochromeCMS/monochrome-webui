@@ -25,9 +25,9 @@ LABEL maintainer="MonochromeCMS" \
       "monochrome.release_tag"=$RELEASE_TAG \
       org.opencontainers.image.licenses="AGPL-3.0"
 
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 WORKDIR /srv
-COPY ./dist/* ./
+COPY --from=dist . .
 RUN mkdir /srv/media
 
 
@@ -55,5 +55,5 @@ LABEL maintainer="MonochromeCMS" \
 
 COPY ./Caddyfile /etc/caddy/Caddyfile
 WORKDIR /srv
-COPY ./dist/* ./
+COPY --from=dist . .
 RUN mkdir /srv/media
