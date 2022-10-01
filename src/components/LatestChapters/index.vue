@@ -13,8 +13,8 @@ const total = ref(0)
 const offset = computed(() => (page.value - 1) * limit)
 const pageAmount = computed(() => Math.ceil(total.value / limit))
 
-async function getChapters(offset: number) {
-  const response = await Chapter.latest(limit, offset, auth.config)
+async function getChapters() {
+  const response = await Chapter.latest(limit, offset.value, auth.config)
 
   if (response.data !== null) {
     chapters.value = response.data.results
@@ -25,7 +25,9 @@ async function getChapters(offset: number) {
   }
 }
 
-watchEffect(() => getChapters(offset.value))
+watch(offset, getChapters)
+
+await getChapters()
 </script>
 
 <template>
@@ -50,7 +52,7 @@ watchEffect(() => getChapters(offset.value))
       >
         <latest-chapters-card
           :chapter="chapter"
-          @update="getChapters(offset)"
+          @update="getChapters()"
         />
       </v-col>
     </v-row>

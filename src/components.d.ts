@@ -51,6 +51,7 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     SettingsForm: typeof import('./components/SettingsForm/index.vue')['default']
     SettingsFormFields: typeof import('./components/SettingsForm/Fields.vue')['default']
+    SuspenseFallback: typeof import('./components/SuspenseFallback.vue')['default']
     ThemeToggle: typeof import('./components/ThemeToggle.vue')['default']
     UploadForm: typeof import('./components/UploadForm/index.vue')['default']
     UploadFormFields: typeof import('./components/UploadForm/Fields.vue')['default']

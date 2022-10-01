@@ -46,7 +46,7 @@ async function getManga() {
   }
 }
 
-onMounted(() => getManga())
+await getManga()
 </script>
 
 <template>

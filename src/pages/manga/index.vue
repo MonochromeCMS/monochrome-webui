@@ -6,26 +6,32 @@ const canCreate = computed(() => auth.isConnected && Manga.canCreate(auth.role))
 </script>
 
 <template>
-  <v-container class="fill-height">
-    <v-row class="h-100">
-      <v-col cols="12">
-        <v-card color="backgroundAlt" flat>
-          <v-card-title class="text-center lemon-milk">
-            {{ t("manga") }}
-          </v-card-title>
-          <manga-page />
-          <template v-if="canCreate">
-            <v-divider />
-            <v-card-actions>
-              <v-btn block to="/manga/new">
-                {{ t("addManga") }}
-              </v-btn>
-            </v-card-actions>
-          </template>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+  <suspense>
+    <template #fallback>
+      <suspense-fallback />
+    </template>
+
+    <v-container class="fill-height">
+      <v-row class="h-100">
+        <v-col cols="12">
+          <v-card color="backgroundAlt" flat>
+            <v-card-title class="text-center lemon-milk">
+              {{ t("manga") }}
+            </v-card-title>
+            <manga-page />
+            <template v-if="canCreate">
+              <v-divider />
+              <v-card-actions>
+                <v-btn block to="/manga/new">
+                  {{ t("addManga") }}
+                </v-btn>
+              </v-card-actions>
+            </template>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </suspense>
 </template>
 
 <i18n locale="en" lang="yaml">

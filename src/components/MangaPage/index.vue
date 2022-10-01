@@ -39,8 +39,11 @@ async function getManga() {
 }
 
 watch(search, () => page.value = 1)
+watch(search, getManga)
 
-watchEffect(getManga)
+watch(offset, getManga)
+
+await getManga()
 </script>
 
 <template>

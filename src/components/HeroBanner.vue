@@ -21,7 +21,7 @@ async function getManga() {
     await notifications.create('error', t('latestManga'), response.error)
 }
 
-onMounted(getManga)
+await getManga()
 </script>
 
 <template>

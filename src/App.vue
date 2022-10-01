@@ -28,11 +28,10 @@ onMounted(() => {
     <nav-bar />
     <v-main class="background">
       <router-view v-slot="{ Component }">
-          <keep-alive>
-              <component :is="Component" />
-          </keep-alive>
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
       </router-view>
-
     </v-main>
     <notifications />
     <theme-toggle />

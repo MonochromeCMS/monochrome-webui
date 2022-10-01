@@ -53,7 +53,10 @@ async function getComments() {
 
 watch(chapterId, refresh)
 
-watchEffect(() => { if (chapterId.value) getComments() })
+watchEffect(() => {
+  if (chapterId.value)
+    getComments()
+})
 
 defineExpose({ refresh })
 </script>
