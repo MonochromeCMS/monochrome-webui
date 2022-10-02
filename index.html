@@ -4,12 +4,15 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimal-ui">
-    
-    <link rel="icon" href="<%= baseUrl %>favicon.ico">
     <link rel="search" href="<%= fullUrl %>opensearch.xml" type="application/opensearchdescription+xml" title="<%= title %>">
-    <title><%= title %></title>
-      <!-- 'Dynamic' meta -->
+    <!-- PWA Required -->
+      <meta name="viewport" content="width=device-width,initial-scale=1.0,minimal-ui">
+      <title><%= title %></title>
+      <link rel="icon" href="<%= baseUrl %>favicon.ico">
+      <link rel="apple-touch-icon" href="<%= baseUrl %>apple-touch-icon.png" sizes="180x180">
+      <link rel="mask-icon" href="<%= baseUrl %>mask-icon.svg" color="#EEEEEE">
+      <meta name="theme-color" content="#eeeeee">
+    <!-- 'Dynamic' meta -->
       <meta name="twitter:title" content="<%= title %>">
       <meta property="og:title" content="<%= title %>">
       <meta name="twitter:card" content="summary">
