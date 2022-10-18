@@ -29,6 +29,15 @@ function imageIntersect(isIntersecting: boolean) {
     <v-progress-circular class="d-block ma-auto h-100" indeterminate />
   </v-responsive>
   <v-responsive v-else :width="width">
-    <img v-intersect="imageIntersect" :src="props.src" class="w-100 d-block">
+    <img v-intersect="imageIntersect" :src="props.src" class="preload-img">
   </v-responsive>
 </template>
+
+<style>
+.preload-img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+</style>
