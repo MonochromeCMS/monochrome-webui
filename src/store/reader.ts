@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 type FakeBoolean = 0 | 1
 
-type ReaderMode = 'single' | 'double' | 'vertical'
+export type ReaderMode = 'single' | 'double' | 'vertical' | 'webtoon'
 
 export const useReader = defineStore('reader', {
   state: () => ({

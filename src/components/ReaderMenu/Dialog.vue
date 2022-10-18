@@ -7,6 +7,7 @@ import {
   mdiClose,
 } from '@mdi/js'
 import type { ChapterResponse, DetailedChapterResponse } from '@/api/Chapter'
+import type { ReaderMode } from '@/store/reader'
 
 const props = defineProps<{
   chapter: DetailedChapterResponse
@@ -56,7 +57,15 @@ const width = computed({
   },
 })
 
-const readerMode = computed(() => props.chapter.webtoon ? 'webtoon' : reader.readerMode)
+const readerMode = computed({
+  get() {
+    return props.chapter.webtoon ? 'webtoon' : reader.readerMode
+  },
+  set(v: ReaderMode) {
+    if (!props.chapter.webtoon)
+      reader.readerMode = v
+  },
+})
 
 const modeItems = computed(() => props.chapter.webtoon ? [{ title: t('webtoon'), value: 'webtoon' }] : [{ title: t('single'), value: 'single' }, { title: t('double'), value: 'double' }, { title: t('vertical'), value: 'vertical' }])
 
