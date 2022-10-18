@@ -62,7 +62,6 @@ await getChapters()
         class="mx-auto py-4"
         color="background text-primary"
         :length="pageAmount"
-        total-visible="5"
       />
     </v-row>
   </v-card-text>
