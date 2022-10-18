@@ -2,7 +2,7 @@ FROM node:lts-slim as dev
 WORKDIR /app
 COPY package.json ./
 COPY yarn.lock ./
-RUN --mount=type=cache,target=/cache/yarn \
+RUN --mount=type=cache,target=/cache/yarn,id=yarn-cache \
   yarn --cache-folder /cache/yarn --frozen-lockfile
 
 ARG DOMAIN_NAME=localhost
