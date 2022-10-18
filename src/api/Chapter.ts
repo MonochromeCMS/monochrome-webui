@@ -22,7 +22,7 @@ export interface ChapterResponse extends ChapterSchema {
   length: number
   uploadTime: string
   ownerId: string
-  tracking?: ProgressTrackingSchema
+  tracking?: ProgressTrackingSchema[]
 }
 
 export interface DetailedChapterResponse extends ChapterResponse {

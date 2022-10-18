@@ -47,7 +47,7 @@ const cols = computed(() => {
     ]
   }
 })
-const read = computed(() => !!(props.chapter.tracking && props.chapter.tracking.read))
+const read = computed(() => !!(props.chapter.tracking && props.chapter.tracking[0] && props.chapter.tracking[0].read))
 
 async function setRead(read: boolean) {
   const tracking: ProgressTrackingSchema = {
@@ -139,9 +139,9 @@ async function setRead(read: boolean) {
 <i18n locale="en" lang="yaml">
 chapter: Chapter
 editChapter: Edit chapter
-  </i18n>
+</i18n>
 
-  <i18n locale="fr" lang="yaml">
+<i18n locale="fr" lang="yaml">
 chapter: Chapitre
 editChapter: Modifier chapitre
-  </i18n>
+</i18n>

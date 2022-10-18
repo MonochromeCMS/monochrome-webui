@@ -18,7 +18,7 @@ const notifications = useNotifications()
 const timeAgo = useAgo(new Date(props.chapter.uploadTime))
 
 const read = computed(
-  () => !!(props.chapter.tracking && props.chapter.tracking.read),
+  () => !!(props.chapter.tracking && props.chapter.tracking[0] && props.chapter.tracking[0].read),
 )
 
 async function setRead(read: boolean) {
