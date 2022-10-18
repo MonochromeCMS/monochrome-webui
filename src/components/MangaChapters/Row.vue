@@ -21,28 +21,28 @@ const ago = useAgo(new Date(props.chapter.uploadTime))
 const cols = computed(() => {
   if (auth.isConnected && props.showEdit) {
     return [
-      [5, 4, 2, 2, 2], // Number
-      [0, 0, 3, 3, 3], // Title
-      [4, 2, 3, 3, 3], // Group
-      [0, 3, 2, 2, 2], // Time Ago
-      [3, 3, 2, 2, 2], // Buttons
+      [6, 6, 2, 2, 2], // Number
+      [0, 6, 3, 3, 3], // Title
+      [6, 4, 3, 3, 3], // Group
+      [6, 4, 2, 2, 2], // Time Ago
+      [6, 4, 2, 2, 2], // Buttons
     ]
   }
   else if (auth.isConnected || props.showEdit) {
     return [
-      [5, 4, 2, 2, 2], // Number
-      [0, 0, 4, 4, 4], // Title
-      [5, 3, 3, 3, 3], // Group
-      [0, 3, 2, 2, 2], // Time Ago
-      [2, 2, 1, 1, 1], // Buttons
+      [6, 6, 2, 2, 2], // Number
+      [0, 6, 4, 4, 4], // Title
+      [6, 4, 3, 3, 3], // Group
+      [7, 4, 2, 2, 2], // Time Ago
+      [5, 4, 1, 1, 1], // Buttons
     ]
   }
   else {
     return [
-      [6, 5, 3, 3, 3], // Number
-      [0, 0, 4, 4, 4], // Title
-      [6, 4, 3, 3, 3], // Group
-      [0, 3, 2, 2, 2], // Time Ago
+      [4, 6, 3, 3, 3], // Number
+      [0, 6, 4, 4, 4], // Title
+      [4, 6, 3, 3, 3], // Group
+      [4, 6, 2, 2, 2], // Time Ago
       [0, 0, 0, 0, 0], // Buttons
     ]
   }
@@ -77,13 +77,13 @@ async function setRead(read: boolean) {
           {{ t("chapter") }}
           {{ chapter.number }}
         </v-col>
-        <v-col :md="cols[1][2]" class="hidden-sm-and-down ellipsis">
+        <v-col :cols="cols[1][0]" :sm="cols[1][1]" :md="cols[1][2]" class="ellipsis d-none d-sm-block">
           {{ chapter.name }}
         </v-col>
-        <v-col :cols="cols[2][0]" :sm="cols[2][1]" :md="cols[2][2]" class="ellipsis text-center">
+        <v-col :cols="cols[2][0]" :sm="cols[2][1]" :md="cols[2][2]" class="ellipsis text-right text-sm-left">
           {{ chapter.scanGroup }}
         </v-col>
-        <v-col :sm="cols[3][1]" :md="cols[3][2]" class="pa-0 text-right hidden-xs-only">
+        <v-col :sm="cols[3][1]" :md="cols[3][2]" class="pa-0 text-left text-sm-center text-md-right">
           <v-chip variant="outlined" color="primary" class="ma-2">
             {{ ago }}
           </v-chip>
