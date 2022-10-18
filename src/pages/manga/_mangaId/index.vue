@@ -80,12 +80,12 @@ addChapter: Add a chapter
 editManga: Edit manga
 deleteManga: Delete manga
 warningMessage: Are you sure you want to delete this manga?
-  </i18n>
+</i18n>
 
-  <i18n locale="fr" lang="yaml">
+<i18n locale="fr" lang="yaml">
 startReading: Commencer à lire
 addChapter: Ajouter un chapitre
 editManga: Modifier le manga
 deleteManga: Supprimer le manga
 warningMessage: Êtes-vous sûr de vouloir supprimer ce manga?
-  </i18n>
+</i18n>

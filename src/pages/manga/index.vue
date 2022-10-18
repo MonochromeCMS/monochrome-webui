@@ -37,9 +37,9 @@ const canCreate = computed(() => auth.isConnected && Manga.canCreate(auth.role))
 <i18n locale="en" lang="yaml">
 addManga: Add a manga
 manga: Manga
-  </i18n>
+</i18n>
 
-  <i18n locale="fr" lang="yaml">
+<i18n locale="fr" lang="yaml">
 addManga: Ajouter un manga
 manga: Manga
-  </i18n>
+</i18n>

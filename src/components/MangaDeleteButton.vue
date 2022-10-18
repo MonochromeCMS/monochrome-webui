@@ -14,9 +14,9 @@ async function deleteManga() {
   const response = await Manga.delete(props.mangaId, auth.config)
 
   if (response.data !== null || response.status === 404)
-    router.replace('/manga')
+    await router.replace('/manga')
   else
-    notifications.create('error', t('deleteManga'), response.error)
+    await notifications.create('error', t('deleteManga'), response.error)
 
   dialog.value = false
 }
@@ -57,7 +57,7 @@ deleteManga: Delete manga
 warningMessage: Are you sure you want to delete this manga?
   </i18n>
 
-  <i18n locale="fr" lang="yaml">
+<i18n locale="fr" lang="yaml">
 deleteManga: Supprimer le manga
 warningMessage: Êtes-vous sûr de vouloir supprimer ce manga?
-  </i18n>
+</i18n>

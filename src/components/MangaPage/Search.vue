@@ -31,8 +31,8 @@ const search = useVModel(props, 'modelValue', emits)
 
 <i18n locale="en" lang="yaml">
 search: Search
-  </i18n>
+</i18n>
 
-  <i18n locale="fr" lang="yaml">
+<i18n locale="fr" lang="yaml">
 search: Recherche
-  </i18n>
+</i18n>

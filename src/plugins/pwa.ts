@@ -4,6 +4,7 @@ export function setupPWA() {
   const intervalMS = 60 * 60 * 1000
 
   registerSW({
+    immediate: true,
     onRegisteredSW(swUrl, r) {
       r && setInterval(async () => {
         if (!(!r.installing && navigator))

@@ -70,9 +70,9 @@ watchEffect(() => {
 <i18n locale="en" lang="yaml">
 chapters: Chapters
 mangaChapters: Manga chapters
-  </i18n>
+</i18n>
 
-  <i18n locale="fr" lang="yaml">
+<i18n locale="fr" lang="yaml">
 chapters: Chapitres
 mangaChapters: Chapitres du manga
-  </i18n>
+</i18n>

@@ -11,7 +11,7 @@ const auth = useAuth()
 </script>
 
 <template>
-  <v-btn icon size="large" height="64" width="64" class="nav-btn">
+  <v-btn icon size="large" height="64" width="64" class="nav-btn" aria-label="Navigation menu">
     <v-icon :icon="mdiMenu" />
     <v-menu location="bottom" activator="parent">
       <v-list class="nav-list">
