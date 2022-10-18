@@ -53,7 +53,7 @@ watchEffect(() => {
     <v-col cols="12" class="text-h6 text-lg-h5 text-xl-h3 text-center pt-0" tag="h2">
       {{ t('chapters') }}
     </v-col>
-    <manga-chapters-row v-for="item in chaptersPage" :key="item.id" :chapter="item" :show-edit="canEdit" @update="getChapters" />
+    <manga-chapters-row v-for="item in chaptersPage" :key="item.id" :chapter="item" :show-edit="canEdit(item)" @update="getChapters" />
     <v-col v-if="chapters.length === 0" cols="12" class="text-body-1 text-center">
       {{ t("noChapters") }}
     </v-col>
