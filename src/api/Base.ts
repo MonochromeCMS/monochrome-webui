@@ -145,7 +145,7 @@ export class Base {
   ) {
     const defaultHandlers: Handlers<T> = {
       401: async (result: ApiResponse<T>, response: AxiosResponse) => {
-        result.error = 'api.401'
+        result.error = i18n.global.t('api.401')
         await this._handle_401(response.config, result, handlers)
       },
       404: 'api.404',

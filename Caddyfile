@@ -3,7 +3,14 @@
 
     header /opensearch.xml Content-Type "application/opensearchdescription+xml"
     header /manifest.webmanifest Content-Type "application/manifest+json"
-    header Cache-Control "max-age=1728000"
+    
+    route {
+        header Cache-Control "public,max-age=0,s-maxage=0,must-revalidate"
+        header /media/* Cache-Control "max-age=1728000"
+        header /workbox-* Cache-Control "public,max-age=31536000,s-maxage=31536000,immutable"
+        header /assets/* Cache-Control "public,max-age=31536000,s-maxage=31536000,immutable"
+    }
+
     header Access-Control-Allow-Origin "*"
 
     root * /srv
