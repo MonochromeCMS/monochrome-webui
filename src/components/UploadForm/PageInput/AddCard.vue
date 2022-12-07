@@ -25,7 +25,7 @@ function openFileInput() {
   <v-card color="background" :disabled="loading" @click="openFileInput()">
     <v-responsive :aspect-ratio="4 / 5">
       <div class="d-flex h-100">
-        <v-progress-circular v-if="loading" :indeterminate="progress === 100" :value="progress" class="ma-auto d-block" />
+        <v-progress-circular v-if="loading" :model-value="progress" :indeterminate="progress === 100" class="ma-auto d-block" />
         <v-icon v-else :icon="mdiPlus" size="x-large" class="ma-auto d-block" />
       </div>
     </v-responsive>
